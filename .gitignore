@@ -9,6 +9,7 @@ env
 vendor
 go.sum
 main.go
+main_test.go
 
 # vscode
 
