@@ -10,7 +10,7 @@ type table struct {
 func BenchmarkTestLatest(t *testing.B) {
 
 	for i := 0; i < t.N; i++ {
-		Latest([]interface{}{1, 2, 3})
+		Latest([]int{1, 2, 3})
 	}
 
 }
