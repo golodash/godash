@@ -5,6 +5,20 @@ import (
 	"testing"
 )
 
+func BenchmarkTestChunk(t *testing.B) {
+
+	for i := 0; i < t.N; i++ {
+
+		slice := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		_, err := Chunk(slice, 3)
+		if err != nil {
+			t.Error(err)
+		}
+
+	}
+
+}
+
 func TestChunk(t *testing.T) {
 
 	slice := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
