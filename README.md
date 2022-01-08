@@ -1,8 +1,8 @@
 # What Is Godash?
 
-<center>
+<p align="center">
 <img src="images/golang.png"></img>
-</center>
+</p>
 
 Godash is inspired by [lodash](https://github.com/lodash/lodash) nodejs utility library delivering modularity.
 
