@@ -2,49 +2,41 @@ package slice
 
 import (
 	"errors"
-	"reflect"
+
+	"github.com/gotorn/godash/internal"
 )
 
-func Chunk(slice interface{}, size int) (interface{}, error) {
+// Gets a slice and size as input and splits the slice into pieces in length of the size
+func Chunk(slice interface{}, size int) ([][]interface{}, error) {
 
-	if reflect.ValueOf(slice).Kind() != reflect.Slice {
-		return nil, errors.New("not a slice")
-	}
-
-	len := reflect.ValueOf(slice).Len()
-
-	if len == 0 {
-		return nil, errors.New("slice is empty")
+	s, err := internal.InterfaceToSlice(slice)
+	if err != nil {
+		return nil, err
 	}
 
 	if size <= 0 {
 		return nil, errors.New("size must be greater than zero")
 	}
 
-	// TODO: chose better name
-	numberOfChunkableValues := (len / size) * size
+	var lenPieces int
+	var length int = len(s)
 
-	chunks := make([]interface{}, 0)
-
-	for i := 0; i < numberOfChunkableValues; i += size {
-		value := reflect.ValueOf(slice).Slice(i, i+size).Interface()
-		chunks = append(chunks, value)
+	if float32(length)/float32(size) != float32(length/size) {
+		lenPieces = (length / size) + 1
+	} else {
+		lenPieces = length / size
 	}
 
-	// append left over values
-	if numberOfChunkableValues != len {
+	var chunks [][]interface{} = make([][]interface{}, lenPieces)
+	var i int = size
+	var j int = 0
 
-		leftOverChunk := make([]interface{}, 0)
-		for numberOfChunkableValues < len {
-
-			value := reflect.ValueOf(slice).Index(numberOfChunkableValues).Interface()
-			leftOverChunk = append(leftOverChunk, value)
-
-			numberOfChunkableValues++
-		}
-
-		chunks = append(chunks, leftOverChunk)
-
+	for ; i < length; i = i + size {
+		chunks[j] = s[i-size : i]
+		j = j + 1
+	}
+	if length > i-size {
+		chunks[j] = s[i-size : length]
 	}
 
 	return chunks, nil
