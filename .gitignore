@@ -3,13 +3,17 @@
 .env
 env.yaml
 env
+.commit
 
 # go
 
 vendor
 go.sum
 main.go
-main_test.go
+
+# node
+
+node_modules
 
 # vscode
 

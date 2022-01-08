@@ -1,0 +1,2 @@
+[core]
+  autocrlf = input # convert all EOFs with lf when added to repo
