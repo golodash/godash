@@ -22,17 +22,14 @@ func getFunctionName(temp interface{}) string {
 	return strs[len(strs)-1]
 }
 
-// Converts interface to slice
+// Converts interface{} to []interface{}
 func InterfaceToSlice(slice interface{}) ([]interface{}, error) {
+	err := SliceCheck(slice)
+	if err != nil {
+		return nil, err
+	}
+
 	s := reflect.ValueOf(slice)
-	if s.Kind() != reflect.Slice {
-		return nil, errors.New("not a slice")
-	}
-
-	if s.IsNil() {
-		return nil, errors.New("slice is nil")
-	}
-
 	result := make([]interface{}, s.Len())
 
 	for i := 0; i < s.Len(); i++ {
@@ -40,4 +37,19 @@ func InterfaceToSlice(slice interface{}) ([]interface{}, error) {
 	}
 
 	return result, nil
+}
+
+// Checks if `slice` interface variable is slice type and
+// if `slice` is nil
+func SliceCheck(slice interface{}) error {
+	s := reflect.ValueOf(slice)
+	if s.Kind() != reflect.Slice {
+		return errors.New("not a slice")
+	}
+
+	if s.IsNil() {
+		return errors.New("slice is nil")
+	}
+
+	return nil
 }
