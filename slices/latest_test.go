@@ -1,50 +1,94 @@
 package slices
 
-import "testing"
+import (
+	"fmt"
+	"strconv"
+	"testing"
+)
 
-type table struct {
-	data   interface{}
-	latest interface{}
+type TLatest struct {
+	name string
+	arr  []interface{}
+	want interface{}
 }
 
-func BenchmarkTestLatest(t *testing.B) {
+var tLatestBenchs = []TLatest{
+	{
+		name: "10",
+		arr:  []interface{}{},
+	},
+	{
+		name: "100",
+		arr:  []interface{}{},
+	},
+	{
+		name: "1000",
+		arr:  []interface{}{},
+	},
+	{
+		name: "10000",
+		arr:  []interface{}{},
+	},
+	{
+		name: "100000",
+		arr:  []interface{}{},
+	},
+	{
+		name: "1000000",
+		arr:  []interface{}{},
+	},
+}
 
-	for i := 0; i < t.N; i++ {
-		Latest([]int{1, 2, 3})
+func init() {
+	for j := 0; j < len(tLatestBenchs); j++ {
+		length, _ := strconv.Atoi(tLatestBenchs[j].name)
+		for i := 0; i < length/10; i++ {
+			tLatestBenchs[j].arr = append(tLatestBenchs[j].arr, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+		}
 	}
-
 }
 
 func TestLatest(t *testing.T) {
-
-	tabels := []table{
-
+	tests := []TLatest{
 		{
-			data:   []int{1, 2, 3},
-			latest: 3,
+			name: "nil",
+			arr:  nil,
+			want: nil,
 		},
 		{
-			data:   []string{"one", "two"},
-			latest: "two",
+			name: "empty",
+			arr:  []interface{}{},
+			want: nil,
 		},
 		{
-			data:   []bool{true, false},
-			latest: false,
+			name: "normal",
+			arr:  []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			want: 9,
 		},
 	}
 
-	for _, table := range tabels {
-
-		result, err := Latest(table.data)
-
+	for _, subject := range tests {
+		got, err := Latest(subject.arr)
 		if err != nil {
-			t.Error("cannot handel", table.data)
+			if subject.want != nil && got != nil {
+				t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+			}
+			return
 		}
 
-		if result != table.latest {
-			t.Errorf("expect %s but got %s", table.latest, result)
+		if got != subject.want {
+			t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+			return
 		}
-
 	}
+}
 
+func BenchmarkLatest(b *testing.B) {
+	for j := 0; j < len(tLatestBenchs); j++ {
+		b.Run(fmt.Sprintf("slice_size_%s", tLatestBenchs[j].name), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				Latest(tLatestBenchs[j].arr)
+			}
+		})
+	}
 }

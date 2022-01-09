@@ -6,14 +6,14 @@ import (
 	"testing"
 )
 
-type test struct {
+type TChunk struct {
 	name string
 	arr  []int
 	size int
 	want [][]int
 }
 
-var test_benchs = []test{
+var tChunkBenchs = []TChunk{
 	{
 		name: "10",
 		arr:  []int{},
@@ -47,17 +47,16 @@ var test_benchs = []test{
 }
 
 func init() {
-	for j := 0; j < len(test_benchs); j++ {
-		length, _ := strconv.Atoi(test_benchs[j].name)
+	for j := 0; j < len(tChunkBenchs); j++ {
+		length, _ := strconv.Atoi(tChunkBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			test_benchs[j].arr = append(test_benchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tChunkBenchs[j].arr = append(tChunkBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
 
 func TestChunk(t *testing.T) {
-
-	var tests = []test{
+	var tests = []TChunk{
 		{
 			name: "nil",
 			arr:  nil,
@@ -131,11 +130,10 @@ func TestChunk(t *testing.T) {
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
 			got, err := Chunk(subject.arr, subject.size)
-
-			if err != nil && got == nil && subject.want == nil {
-				return
-			} else if err == nil && got == nil {
-				t.Errorf("%v() got = %v, wanted = %v", "Chunk", got, subject.want)
+			if err != nil {
+				if subject.want != nil && got != nil {
+					t.Errorf("Compact() got = %v, wanted = %v", got, subject.want)
+				}
 				return
 			}
 
@@ -164,10 +162,10 @@ func TestChunk(t *testing.T) {
 }
 
 func BenchmarkChunk(b *testing.B) {
-	for j := 0; j < len(test_benchs); j++ {
-		b.Run(fmt.Sprintf("slice_size_%s", test_benchs[j].name), func(b *testing.B) {
+	for j := 0; j < len(tChunkBenchs); j++ {
+		b.Run(fmt.Sprintf("slice_size_%s", tChunkBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				Chunk(test_benchs[j].arr, test_benchs[j].size)
+				Chunk(tChunkBenchs[j].arr, tChunkBenchs[j].size)
 			}
 		})
 	}
