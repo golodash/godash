@@ -8,7 +8,6 @@ import (
 
 // Gets a slice and size as input and splits the slice into pieces in length of the size
 func Chunk(slice interface{}, size int) ([][]interface{}, error) {
-
 	s, err := internal.InterfaceToSlice(slice)
 	if err != nil {
 		return nil, err
@@ -40,5 +39,4 @@ func Chunk(slice interface{}, size int) ([][]interface{}, error) {
 	}
 
 	return chunks, nil
-
 }
