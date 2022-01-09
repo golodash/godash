@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-compact): Compact function added
 * ✅ test(slice-chunk): made test cases and benchmarks more accurate
 * 🎉 feat(slice-chunk): chunk function added, updated, and optimized
 
