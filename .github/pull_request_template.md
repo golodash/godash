@@ -26,6 +26,5 @@ Check off the following with your changes to be sure about you:
 - [ ] I have reviewed my changes and I'm sure about the code.
 - [ ] I have added a documentation for functions, interfaces and other important things I added to the project.
 - [ ] If you added new feature, make sure you created `test case` and `benchmark` for the function.
-- [ ] I did put my changes inside [CHANGELOG.rst](/CHANGELOG.rst).
 - [ ] I commit with at least considering least commit rules defined in [CONTRIBUTING.md](/CONTRIBUTING.md#commit-rules) file.
  -->
