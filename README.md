@@ -6,7 +6,7 @@
 
 Godash is inspired by [lodash](https://github.com/lodash/lodash) nodejs utility library delivering modularity.
 
-Basically we are going to use their functionality and recreate what they did in nodejs, inside golang.
+Basically we are going to use their documentation and recreate what they did in nodejs, inside golang and of course if anyone wants to add more tools than lodash documentation, please feel free to create an issue, fork and contribute.
 ## Our Goals
 
 This is a repository driven by golang community, 
@@ -22,11 +22,11 @@ Just a reminder on how to run test cases and benchmarks.
 #### Test Cases
 
 ```bash
-go1.18beta1 test github.com/gotorn/godash/<your desired package>
+go test github.com/gotorn/godash/<your desired package>
 ```
 
 #### Benchmarks
 
 ```bash
-go1.18beta1 test -bench=. -benchtime=5s github.com/gotorn/godash/<your desired package>
+go test -bench=. -benchtime=5s github.com/gotorn/godash/<your desired package>
 ```
