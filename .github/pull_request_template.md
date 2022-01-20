@@ -21,10 +21,10 @@ If there's an existing issue for your change, please link to that issue.
 If Why section is self explanatory, remove this section -->
 
 <!--
-Check off the following with your changes to be sure about you:
+Just a reminder to be sure everything is in place, you can delete this section or just let it be:
 
-- [ ] I have reviewed my changes and I'm sure about the code.
-- [ ] I have added a documentation for functions, interfaces and other important things I added to the project.
-- [ ] If you added new feature, make sure you created `test case` and `benchmark` for the function.
-- [ ] I commit with at least considering least commit rules defined in [CONTRIBUTING.md](/CONTRIBUTING.md#commit-rules) file.
+- [ ] I have reviewed my changes and I'm sure about the code and all test cases succeed.
+- [ ] I have added a documentation for functions, interfaces and other implementations I added to the project.
+- [ ] If I added new features, I made sure to create `test case` and `benchmark` for the new feature.
+- [ ] I committed with considering rules defined in [CONTRIBUTING.md](/CONTRIBUTING.md#commit-message-guidelines).
  -->
