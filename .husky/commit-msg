@@ -20,7 +20,7 @@ if len(message) == 0:
 if message[0] in ['🎉', '🐛', '🔧', '📖', '🚀', '✨', '✅']:
     sys.exit(0)
 
-did_pass = re.fullmatch(r"^((feat|fix|refactor|docs|perf|style|test|¯\\_\(ツ\)_/¯)(\(\w+(\-\w+)?\))?(!)?(: (.*\s*)*))|(Merge (.*\s*)*)|(Initial commit$)", message)
+did_pass = re.fullmatch(r"^((feat|fix|refactor|docs|perf|style|test|¯\\_\(ツ\)_/¯)(\(\w+(\-\w+)?\))?(!)?(: (.*\s*)*))|(: Merge (.*\s*)*)|(: Initial commit$)", message)
 # https://stackoverflow.com/a/62293234/14967240
 
 if not did_pass:
