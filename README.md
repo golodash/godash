@@ -20,10 +20,11 @@ And ofcourse don't forget to read [CONTRIBUTING](/CONTRIBUTING.md) documentation
 Just a reminder on how to run test cases and benchmarks.
 
 #### Test Cases
-
+dsadasdad
 ```bash
 go test github.com/gotorn/godash/<your desired package>
-```
+```fadfafafsfasfasfafasfasg
+dsrdfsafas
 
 #### Benchmarks
 
