@@ -24,7 +24,6 @@ dsadasdad
 ```bash
 go test github.com/gotorn/godash/<your desired package>
 ```fadfafafsfasfasfafasfasg
-dsrdfsafas
 
 #### Benchmarks
 
