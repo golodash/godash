@@ -3,7 +3,7 @@ package slices
 import (
 	"errors"
 
-	"github.com/gotorn/godash/internal"
+	"github.com/golodash/godash/internal"
 )
 
 // Gets a slice and size as input and splits the slice into pieces in length of the size

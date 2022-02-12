@@ -4,7 +4,7 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/gotorn/godash/internal"
+	"github.com/golodash/godash/internal"
 )
 
 func Latest(slice interface{}) (interface{}, error) {

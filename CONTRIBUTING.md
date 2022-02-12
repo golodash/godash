@@ -1,4 +1,4 @@
-# Welcome to GoTorn contributing guide
+# Welcome to GoLodash contributing guide
 
 Thank you for investing your time in contributing to our project! :sparkles:. 
 
@@ -27,14 +27,14 @@ Install requirements for contributing:
 
 #### Create a new issue
 
-1. **Bug**: If you spot a problem with a certain release or a problem in develop branch, search if the [issue already exists](https://github.com/gotorn/godash/issues). If a related issue doesn't exist, you can open a new issue using **Bug Report** form in [issue form](https://github.com/gotorn/godash/issues/new/choose) section.
-2. **Feature**: If you want to add a new functionality to the project (which you can find new functionalities that we still don't support, in [lodash documentation](https://lodash.com/docs/latest)), or you have a feature idea of your own, first look up in [issues](https://github.com/gotorn/godash/issues) and if a duplicate issue does not already exist, that means possibly (Take a look at [Picking An Issue](#picking-an-issue)) no one is working on it and you can create a **Feature Issue** from [issue form](https://github.com/gotorn/godash/issues/new/choose) section.
+1. **Bug**: If you spot a problem with a certain release or a problem in develop branch, search if the [issue already exists](https://github.com/golodash/godash/issues). If a related issue doesn't exist, you can open a new issue using **Bug Report** form in [issue form](https://github.com/golodash/godash/issues/new/choose) section.
+2. **Feature**: If you want to add a new functionality to the project (which you can find new functionalities that we still don't support, in [lodash documentation](https://lodash.com/docs/latest)), or you have a feature idea of your own, first look up in [issues](https://github.com/golodash/godash/issues) and if a duplicate issue does not already exist, that means possibly (Take a look at [Picking An Issue](#picking-an-issue)) no one is working on it and you can create a **Feature Issue** from [issue form](https://github.com/golodash/godash/issues/new/choose) section.
 
 #### Picking an issue
 
 If you just created an issue and you want to work on it by yourself, just mention it in the issue form that you handle it yourself or say it in comments.
 
-If there is an issue in [issues](https://github.com/gotorn/godash/issues) section that interests you, look up in issue description or comments if any one got the job and if not, you can write in the comments which you are working on it and that issue is yours for about a week after that.
+If there is an issue in [issues](https://github.com/golodash/godash/issues) section that interests you, look up in issue description or comments if any one got the job and if not, you can write in the comments which you are working on it and that issue is yours for about a week after that.
 
 After a week if you didn't create a pull request, anyone else can pick it up and that issue is not your's anymore.
 
