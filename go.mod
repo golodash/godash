@@ -1,3 +1,3 @@
-module github.com/gotorn/godash
+module github.com/golodash/godash
 
 go 1.17

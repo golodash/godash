@@ -1,7 +1,7 @@
 package slices
 
 import (
-	"github.com/gotorn/godash/internal"
+	"github.com/golodash/godash/internal"
 )
 
 // Removes falsey items from slice except values you mentioned.
