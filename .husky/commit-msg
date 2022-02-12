@@ -17,16 +17,16 @@ if len(message) == 0:
     sys.exit(1)
 
 # Check if it is formatted before or not
-if message[0] in ['🎉', '🐛', '🔧', '📖', '🚀', '✨', '✅']:
+if message[0] in ['🎉', '🐛', '🔧', '📖', '🚀', '✨', '✅', '😬']:
     sys.exit(0)
 
-did_pass = re.fullmatch(r"^((feat|fix|refactor|docs|perf|style|test|¯\\_\(ツ\)_/¯)(\(\w+(\-\w+)?\))?(!)?(: (.*\s*)*))|(: Merge (.*\s*)*)|(: Initial commit$)", message)
+did_pass = re.fullmatch(r"^((feat|fix|refactor|docs|perf|style|test|¯\\_\(ツ\)_/¯)(\(\w+(\-\w+)?\))?(!)?(: (.*\s*)*))|(: merge (.*\s*)*)|(: initial commit$)", message)
 # https://stackoverflow.com/a/62293234/14967240
 
 if not did_pass:
     print("""your commit message does not follow this repositories `Conventional Commit` check:
 
-feat|fix|refactor|docs|perf|style|test(optional): <necessary description>|Merge <what to what>|Initial commit""")
+feat|fix|refactor|docs|perf|style|test(optional): <necessary description>|merge <what to what>|initial commit""")
     sys.exit(1)
 
 first = messages[0].split(':')[0].split('(')[0]
@@ -45,6 +45,8 @@ elif first == "style":
     sticker = "✨ "
 elif first == "test":
     sticker = "✅ "
+elif "¯\_(ツ)_/¯" in messages[0]:
+    sticker = "😬 "
 else:
     print('how are we here? please don\'t change the script')
     sys.exit(1)
