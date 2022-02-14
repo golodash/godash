@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-concat): concat function added
 * 🐛 fix: git scripts now function properly
 * ✅ test(slice-compact): made test cases and benchmarks for compact function
 * 🎉 feat(slices-compact): Compact function added
