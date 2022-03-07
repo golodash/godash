@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat: main workflow for test cases added
 * 🎉 feat: husky now removed with a simple script
 * ✅ test(slices-difference): difference test cases and benchmarks added
 * 🎉 feat(slices-difference): difference function added
