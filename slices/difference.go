@@ -1,27 +1,15 @@
 package slices
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
-	"strings"
 
 	"github.com/golodash/godash/internal"
 )
 
-var errInterface error = errors.New("interface variable type is not comparable")
-var errNil error = errors.New("nil values are not allowed")
-var errNotSameType error = errors.New("imported slices are not same type")
-
 func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, error) {
-	if reflect.TypeOf(slice) == nil || reflect.TypeOf(notIncluded) == nil {
-		return nil, errNil
-	}
-	if reflect.TypeOf(slice).String() != reflect.TypeOf(notIncluded).String() {
-		return nil, errNotSameType
-	}
-	if strings.Contains(reflect.TypeOf(slice).String(), "interface{}") {
-		return nil, errInterface
+	if err := internal.AreComparable(slice, notIncluded); err != nil {
+		return nil, err
 	}
 	if err1, err2 := internal.SliceCheck(slice), internal.SliceCheck(notIncluded); err1 != nil || err2 != nil {
 		if err2 != nil {
@@ -132,8 +120,6 @@ func same(v1 reflect.Value, v2 reflect.Value) (condition bool, err error) {
 				return
 			}
 		}
-	case reflect.Interface:
-		condition, err = false, errInterface
 	case reflect.Ptr:
 		condition, err = same(v1.Elem(), v2.Elem())
 	default:

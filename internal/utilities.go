@@ -53,3 +53,25 @@ func SliceCheck(slice interface{}) error {
 
 	return nil
 }
+
+func CheckSameType(var1 interface{}, var2 interface{}) error {
+	if reflect.ValueOf(var1).IsNil() || reflect.ValueOf(var2).IsNil() {
+		return errors.New("nil values are not allowed")
+	}
+	if reflect.TypeOf(var1).String() != reflect.TypeOf(var2).String() {
+		return errors.New("two variables are not same type")
+	}
+
+	return nil
+}
+
+func AreComparable(var1 interface{}, var2 interface{}) error {
+	if err := CheckSameType(var1, var2); err != nil {
+		return err
+	}
+	if !reflect.TypeOf(var1).Comparable() {
+		return errors.New("two variables are not comparable")
+	}
+
+	return nil
+}
