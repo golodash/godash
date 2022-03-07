@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-difference_by): DifferenceBy test cases and benchmarks added
 * 🎉 feat(slices-difference_by): DifferenceBy function added
 * ✅ test(slices-difference): difference test cases and benchmarks added
 * 🎉 feat(slices-difference): difference function added
