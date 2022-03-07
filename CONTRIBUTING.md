@@ -15,13 +15,13 @@ To get an overview of the project, read the [README](/README.md).
 ## Contributor setup
 
 Install requirements for contributing:
-1. Please install python3 on your system. (It is needed for scripts to format your commit messages and handle [CHANGELOG](/CHANGELOG.rst) file)
-2. Run this command in your terminal when you are in project directory:
+1. Please install python3 on your system. (It is needed for scripts to format your commit messages and handle [CHANGELOG.rst](/CHANGELOG.rst) file)
+2. Install venv module for python (linux users only):
+   - `sudo apt-get install python3-venv`
+3. Run this command in your terminal when you are in project directory:
    - `python3 -m venv env`
-3. Install **nodejs** and then install **husky** with **npm** globally on your computer with this command:
-   - `npm i -g husky`
-4. Then setup hooks by:
-   - `husky install`
+4. Run `install.py` script:
+   - `./.githooks/install.py`
 
 ### Issues
 

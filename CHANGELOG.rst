@@ -6,6 +6,9 @@ UNRELEASED
 
 * ✅ test(slices-difference_by): DifferenceBy test cases and benchmarks added
 * 🎉 feat(slices-difference_by): DifferenceBy function added
+* 🐛 fix: test cases been running on go 1.18
+* 🎉 feat: main workflow for test cases added
+* 🎉 feat: husky now removed with a simple script
 * ✅ test(slices-difference): difference test cases and benchmarks added
 * 🎉 feat(slices-difference): difference function added
 * ✅ test(slices-concat): made test cases and benchmarks for concat function

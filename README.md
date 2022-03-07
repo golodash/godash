@@ -22,11 +22,11 @@ Just a reminder on how to run test cases and benchmarks.
 #### Test Cases
 
 ```bash
-go test github.com/golodash/godash/<your desired package>
+go test -run=. ./<your desired package>
 ```
 
 #### Benchmarks
 
 ```bash
-go test -bench=. -benchtime=5s github.com/golodash/godash/<your desired package>
+go test -bench=. -benchtime=2s ./<your desired package>
 ```

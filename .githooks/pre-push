@@ -26,7 +26,7 @@ try:
                     hast_test_files = True
             if hast_test_files:
                 print(f"Testing {mod}/{package.replace('./', '')} package:\n")
-                if os.system(f"go1.18beta2 test {mod}/{package.replace('./', '')}") != 0:
+                if os.system(f"go clean -testcache && go test -v {mod}/{package.replace('./', '')}") != 0:
                     print(f"❌ {package.replace('./', '')} package test cases didn't succeed.")
                     sys.exit(1)
 except:
