@@ -9,7 +9,7 @@ import (
 
 // Send a function as input param to this function and
 // get the package name of that function as string
-func getPackageName(temp interface{}) string {
+func GetPackageName(temp interface{}) string {
 	strs := strings.Split((runtime.FuncForPC(reflect.ValueOf(temp).Pointer()).Name()), ".")
 	strs = strings.Split(strs[len(strs)-2], "/")
 	return strs[len(strs)-1]
@@ -17,7 +17,7 @@ func getPackageName(temp interface{}) string {
 
 // Send a function as input param to this function and
 // get the function name as string
-func getFunctionName(temp interface{}) string {
+func GetFunctionName(temp interface{}) string {
 	strs := strings.Split((runtime.FuncForPC(reflect.ValueOf(temp).Pointer()).Name()), ".")
 	return strs[len(strs)-1]
 }
@@ -54,6 +54,7 @@ func SliceCheck(slice interface{}) error {
 	return nil
 }
 
+// Checks if two variables are the same or not
 func CheckSameType(var1 interface{}, var2 interface{}) error {
 	if reflect.ValueOf(var1).IsNil() || reflect.ValueOf(var2).IsNil() {
 		return errors.New("nil values are not allowed")
@@ -65,6 +66,7 @@ func CheckSameType(var1 interface{}, var2 interface{}) error {
 	return nil
 }
 
+// Checks if two given variables are comarable or not
 func AreComparable(var1 interface{}, var2 interface{}) error {
 	if err := CheckSameType(var1, var2); err != nil {
 		return err
