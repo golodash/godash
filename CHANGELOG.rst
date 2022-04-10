@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-drop): drop function added
 * ✅ test(slices-difference_by): DifferenceBy test cases and benchmarks added
 * 🎉 feat(slices-difference_by): DifferenceBy function added
 * 🐛 fix: test cases been running on go 1.18
