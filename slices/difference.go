@@ -7,8 +7,15 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Returns an slice of slice values not included in the
+// other given slice using SameValueZero `and` SameValueNonNumber
+// for equality comparisons.
+//
+// Link to descriptions of SameValueZero = https://262.ecma-international.org/7.0/#sec-samevaluezero
+//
+// Link to descriptions of SameValueNonNumber = https://262.ecma-international.org/7.0/#sec-samevaluenonnumber
 func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, error) {
-	if err := internal.AreComparable(slice, notIncluded); err != nil {
+	if err := internal.CheckSameType(slice, notIncluded); err != nil {
 		return nil, err
 	}
 	if err1, err2 := internal.SliceCheck(slice), internal.SliceCheck(notIncluded); err1 != nil || err2 != nil {
@@ -18,26 +25,30 @@ func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, erro
 		return nil, err1
 	}
 
-	s := reflect.ValueOf(slice)
+	s, err := internal.InterfaceToSlice(slice)
+	if err != nil {
+		return nil, err
+	}
+
 	notIn := reflect.ValueOf(notIncluded)
 
-	for i := s.Len() - 1; i > -1; i-- {
-		if i >= s.Len() {
+	for i := len(s) - 1; i > -1; i-- {
+		if i >= len(s) {
 			continue
 		}
 	firstLoop:
 		for j := 0; j < notIn.Len(); j++ {
-			res, err := same(s.Index(i), notIn.Index(j))
+			res, err := same(reflect.ValueOf(s[i]), notIn.Index(j))
 			if err != nil {
 				return nil, err
 			}
 			if res {
-				if i != 0 && i+1 < s.Len() {
-					s = reflect.AppendSlice(s.Slice(0, i), s.Slice(i+1, s.Len()))
+				if i != 0 && i+1 < len(s) {
+					s = append(s[0:i], s[i+1:]...)
 				} else if i == 0 {
-					s = s.Slice(i+1, s.Len())
-				} else if i+1 >= s.Len() {
-					s = s.Slice(0, i)
+					s = s[i+1:]
+				} else if i+1 >= len(s) {
+					s = s[0:i]
 				}
 				i++
 				break firstLoop
@@ -45,12 +56,7 @@ func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, erro
 		}
 	}
 
-	s1, err := internal.InterfaceToSlice(s.Interface())
-	if err != nil {
-		return nil, err
-	}
-
-	return s1, nil
+	return s, nil
 }
 
 func keyIsInHereToo(key reflect.Value, keys []reflect.Value) bool {

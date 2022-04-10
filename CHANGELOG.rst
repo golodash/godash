@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix: difference and difference_by functions debuged
 * ✅ test(slices-drop): made test cases and benchmarks for drop function
 * 🎉 feat(slices-drop): drop function added
 * ✅ test(slices-difference_by): DifferenceBy test cases and benchmarks added
