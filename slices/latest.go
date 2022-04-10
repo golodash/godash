@@ -7,6 +7,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Gets the last element of array.
 func Latest(slice interface{}) (interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {

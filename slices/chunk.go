@@ -6,7 +6,8 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Gets a slice and size as input and splits the slice into pieces in length of the size
+// Gets a slice and a size as input and splits the slice
+// into pieces in length of the size.
 func Chunk(slice interface{}, size int) ([][]interface{}, error) {
 	s, err := internal.InterfaceToSlice(slice)
 	if err != nil {

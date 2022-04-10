@@ -10,6 +10,7 @@ import (
 
 var errTypeCheck error = errors.New("element in %d index does not match its type with others")
 
+// Creates a new slice concatenating slice with other one.
 func Concat(slice interface{}, values ...interface{}) ([]interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
