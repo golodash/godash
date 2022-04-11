@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-find_index): find_index test cases and benchmarks added
 * 🎉 feat(slices-find_index): find_index function added
 * 🐛 fix: fixing the same problem on other test cases
 * ✅ test(slices-fill): fill test cases and benchmarks added
