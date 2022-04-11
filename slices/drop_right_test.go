@@ -105,7 +105,7 @@ func TestDropRight(t *testing.T) {
 		t.Run(subject.name, func(t *testing.T) {
 			got, err := DropRight(subject.arr, subject.num)
 			if err != nil {
-				if subject.want != nil && got != nil {
+				if subject.want != nil {
 					t.Errorf("DropRight() got = %v, wanted = %v", got, subject.want)
 				}
 				return
