@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-drop_by): drop_by test cases and benchmarks added
 * 🎉 feat(slices-drop_by): drop_by function added
 * ✅ test(slices-drop_right): drop_right test cases and benchmarks added
 * 🎉 feat(slices-drop_right): drop_right function added
