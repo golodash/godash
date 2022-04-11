@@ -131,7 +131,7 @@ func TestChunk(t *testing.T) {
 		t.Run(subject.name, func(t *testing.T) {
 			got, err := Chunk(subject.arr, subject.size)
 			if err != nil {
-				if subject.want != nil && got != nil {
+				if subject.want != nil {
 					t.Errorf("Compact() got = %v, wanted = %v", got, subject.want)
 				}
 				return

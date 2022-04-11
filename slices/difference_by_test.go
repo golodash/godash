@@ -97,7 +97,7 @@ func TestDifferenceBy(t *testing.T) {
 			got, err := DifferenceBy(subject.arr, subject.notIn, compareDifferenceByTest)
 
 			if err != nil {
-				if subject.want != nil && got != nil {
+				if subject.want != nil {
 					t.Errorf("DifferenceBy() got = %v, wanted = %v", got, subject.want)
 				}
 				return

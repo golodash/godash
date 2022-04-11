@@ -88,7 +88,7 @@ func TestDifference(t *testing.T) {
 		t.Run(subject.name, func(t *testing.T) {
 			got, err := Difference(subject.arr, subject.notIn)
 			if err != nil {
-				if subject.want != nil && got != nil {
+				if subject.want != nil {
 					t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
 				}
 				return

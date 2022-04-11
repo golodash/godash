@@ -70,7 +70,7 @@ func TestLatest(t *testing.T) {
 	for _, subject := range tests {
 		got, err := Latest(subject.arr)
 		if err != nil {
-			if subject.want != nil && got != nil {
+			if subject.want != nil {
 				t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
 			}
 			return

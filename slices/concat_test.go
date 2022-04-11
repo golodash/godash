@@ -95,7 +95,7 @@ func TestConcat(t *testing.T) {
 		t.Run(subject.name, func(t *testing.T) {
 			got, err := Concat(subject.arr, subject.values...)
 			if err != nil {
-				if subject.want != nil && got != nil {
+				if subject.want != nil {
 					t.Errorf("Concat() got = %v, wanted = %v", got, subject.want)
 				}
 				return
