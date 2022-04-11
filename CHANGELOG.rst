@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-find_index): find_index function added
 * 🐛 fix: fixing the same problem on other test cases
 * ✅ test(slices-fill): fill test cases and benchmarks added
 * 🎉 feat(slices-fill): fill function added
@@ -16,8 +17,8 @@ UNRELEASED
 * 🐛 fix: difference and difference_by functions debuged
 * ✅ test(slices-drop): made test cases and benchmarks for drop function
 * 🎉 feat(slices-drop): drop function added
-* ✅ test(slices-difference_by): DifferenceBy test cases and benchmarks added
-* 🎉 feat(slices-difference_by): DifferenceBy function added
+* ✅ test(slices-difference_by): difference_by test cases and benchmarks added
+* 🎉 feat(slices-difference_by): difference_by function added
 * 🐛 fix: test cases been running on go 1.18
 * 🎉 feat: main workflow for test cases added
 * 🎉 feat: husky now removed with a simple script
