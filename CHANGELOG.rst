@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix: fixing the same problem on other test cases
 * ✅ test(slices-fill): fill test cases and benchmarks added
 * 🎉 feat(slices-fill): fill function added
 * 🐛 fix: bug in drop_by_test fixed

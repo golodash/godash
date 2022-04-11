@@ -118,7 +118,7 @@ func TestFill(t *testing.T) {
 			err := Fill(subject.arr, subject.value, subject.start, subject.end)
 
 			if err != nil {
-				if subject.want != nil && subject.arr != nil {
+				if subject.want != nil {
 					t.Errorf("Fill() got = %v, wanted = %v", subject.arr, subject.want)
 				}
 				return
