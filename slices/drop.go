@@ -32,5 +32,5 @@ func Drop(slice interface{}, n ...int) ([]interface{}, error) {
 		return nil, err
 	}
 
-	return output, err
+	return output, nil
 }
