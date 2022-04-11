@@ -4,12 +4,13 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-drop_by): drop_by function added
+* ✅ test(slices-drop_right): drop_right test cases and benchmarks added
+* 🎉 feat(slices-drop_right): drop_right function added
 * 🐛 fix: bug on test cases fixed
 * 🐛 fix: difference and difference_by functions debuged
 * ✅ test(slices-drop): made test cases and benchmarks for drop function
 * 🎉 feat(slices-drop): drop function added
-* ✅ test(slices-drop_right): drop_right test cases and benchmarks added
-* 🎉 feat(slices-drop_right): drop_right function added
 * ✅ test(slices-difference_by): DifferenceBy test cases and benchmarks added
 * 🎉 feat(slices-difference_by): DifferenceBy function added
 * 🐛 fix: test cases been running on go 1.18
