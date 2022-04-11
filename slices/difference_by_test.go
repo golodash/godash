@@ -98,19 +98,19 @@ func TestDifferenceBy(t *testing.T) {
 
 			if err != nil {
 				if subject.want != nil && got != nil {
-					t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("DifferenceBy() got = %v, wanted = %v", got, subject.want)
 				}
 				return
 			}
 
 			if len(got) != len(subject.want) {
-				t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
+				t.Errorf("DifferenceBy() got = %v, wanted = %v", got, subject.want)
 				return
 			}
 
 			for i := 0; i < len(got); i++ {
 				if got[i] != subject.want[i] {
-					t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("DifferenceBy() got = %v, wanted = %v", got, subject.want)
 					return
 				}
 			}
