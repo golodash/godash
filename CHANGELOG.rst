@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-flatten): flatten test cases and benchmarks added
 * 🎉 feat(slices-flatten): flatten function added
 * ✅ test(slices-find_index): find_index test cases and benchmarks added
 * 🎉 feat(slices-find_index): find_index function added
