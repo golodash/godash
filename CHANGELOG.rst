@@ -4,6 +4,8 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-flatten_depth): flatten_depth test cases and benchmarks added
+* 🎉 feat(slices-flatten_depth): flatten_depth function added
 * ✅ test(slices-flatten_deep): flatten_deep test cases and benchmarks added
 * 🎉 feat(slices-flatten_deep): flatten_deep function added
 * ✅ test(slices-flatten): flatten test cases and benchmarks added
