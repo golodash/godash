@@ -7,6 +7,8 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// This method finds first index of the given slice which the given
+// function on that element, returns true.
 func FindIndex(slice interface{}, function interface{}) (int, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
