@@ -4,6 +4,8 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-head_first): head and first functions added
+* 🐛 fix(slices-latest): a big bug fixed in latest(it was returning the first element)
 * ✅ test(slices-flatten): flatten test cases and benchmarks added
 * ✅ test(slices-flatten_depth): flatten_depth test cases and benchmarks added
 * 🎉 feat(slices-flatten_depth): flatten_depth function added
