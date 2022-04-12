@@ -68,18 +68,20 @@ func TestLatest(t *testing.T) {
 	}
 
 	for _, subject := range tests {
-		got, err := Latest(subject.arr)
-		if err != nil {
-			if subject.want != nil {
-				t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+		t.Run(subject.name, func(t *testing.T) {
+			got, err := Latest(subject.arr)
+			if err != nil {
+				if subject.want != nil {
+					t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+				}
+				return
 			}
-			return
-		}
 
-		if got != subject.want {
-			t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
-			return
-		}
+			if got != subject.want {
+				t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+				return
+			}
+		})
 	}
 }
 

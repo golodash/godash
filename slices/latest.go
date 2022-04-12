@@ -20,5 +20,5 @@ func Latest(slice interface{}) (interface{}, error) {
 		return nil, errors.New("slice is empty")
 	}
 
-	return s.Index(0).Interface(), nil
+	return s.Index(s.Len() - 1).Interface(), nil
 }

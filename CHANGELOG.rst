@@ -4,11 +4,12 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-flatten): flatten test cases and benchmarks added
 * ✅ test(slices-flatten_depth): flatten_depth test cases and benchmarks added
 * 🎉 feat(slices-flatten_depth): flatten_depth function added
 * ✅ test(slices-flatten_deep): flatten_deep test cases and benchmarks added
 * 🎉 feat(slices-flatten_deep): flatten_deep function added
-* ✅ test(slices-flatten): flatten test cases and benchmarks added
+* 🐛 fix(slices-latest): a big bug fixed in latest(it was returning the first element)
 * 🎉 feat(slices-flatten): flatten function added
 * ✅ test(slices-find_index): find_index test cases and benchmarks added
 * 🎉 feat(slices-find_index): find_index function added
