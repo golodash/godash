@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix: bug fix on test file
 * ✅ test(slices-head_first): head and first test cases and benchmarks added
 * 🎉 feat(slices-head_first): head and first functions added
 * 🐛 fix(slices-latest): a big bug fixed in latest(it was returning the first element)
