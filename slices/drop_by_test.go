@@ -40,10 +40,7 @@ var tDropByBenchs = []TDropBy{
 }
 
 func removeDropByTest(intput int) bool {
-	if intput%2 == 0 {
-		return true
-	}
-	return false
+	return intput%2 == 0
 }
 
 func init() {
