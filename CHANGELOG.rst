@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-index_of): index_of test cases and benchmarks added
 * 🎉 feat(slices-index_of): index_of function added
 * ✅ test(slices-initial): initial test cases and benchmarks added
 * 🎉 feat(slices-initial): initial function added
