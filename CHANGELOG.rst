@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-intersection): intersection function added
 * ✅ test(slices-from_pairs): from_pairs test cases and benchmarks added
 * 🎉 feat(slices-from_pairs): from_pairs function added
 * 🎉 feat(slices-same): same function updated, debuged and ignores unexported struct fields
