@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-intersection_by): intersection_by test cases and benchmarks added
 * 🎉 feat(slices-intersection_by): intersection_by function added
 * ✅ test(slices-intersection): intersection test cases and benchmarks added
 * 🎉 feat(slices-intersection): intersection function added
