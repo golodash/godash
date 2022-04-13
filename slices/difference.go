@@ -7,13 +7,11 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Returns an slice of slice values not included in the
-// other given slice using SameValueZero `and` SameValueNonNumber
-// for equality comparisons.
+// Returns a slice of slice values not included in the
+// other given slice using equality comparisons.
 //
-// Link to descriptions of SameValueZero = https://262.ecma-international.org/7.0/#sec-samevaluezero
-//
-// Link to descriptions of SameValueNonNumber = https://262.ecma-international.org/7.0/#sec-samevaluenonnumber
+// Note: In comparing fields of a struct, unexported fields
+// are ignored.
 func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, error) {
 	if err := internal.CheckSameType(slice, notIncluded); err != nil {
 		return nil, err
@@ -38,7 +36,7 @@ func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, erro
 		}
 	firstLoop:
 		for j := 0; j < notIn.Len(); j++ {
-			res, err := same(reflect.ValueOf(s[i]), notIn.Index(j))
+			res, err := same(s[i], notIn.Index(j).Interface())
 			if err != nil {
 				return nil, err
 			}
@@ -69,10 +67,24 @@ func keyIsInHereToo(key reflect.Value, keys []reflect.Value) bool {
 	return false
 }
 
-func same(v1 reflect.Value, v2 reflect.Value) (condition bool, err error) {
+func same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 	condition, err = true, nil
+	v1 := reflect.ValueOf(value1)
+	v2 := reflect.ValueOf(value2)
 
 	if v1.Kind() != v2.Kind() {
+		if v1.Kind() == reflect.Interface && v2.Kind() != reflect.Interface {
+			if v1.CanConvert(v2.Type()) {
+				v1 = v1.Convert(v2.Type())
+			}
+		} else if v2.Kind() == reflect.Interface && v1.Kind() != reflect.Interface {
+			if v2.CanConvert(v1.Type()) {
+				v2 = v2.Convert(v1.Type())
+			}
+		}
+		if v1.Kind() == v2.Kind() && v1.Interface() == v2.Interface() {
+			return
+		}
 		condition, err = false, nil
 		return
 	}
@@ -90,8 +102,9 @@ func same(v1 reflect.Value, v2 reflect.Value) (condition bool, err error) {
 			return
 		}
 		for i, j := 0, 0; i < v1.Len(); i, j = i+1, j+1 {
-			condition, err = same(v1.Index(i), v2.Index(j))
+			condition, err = same(v1.Index(i).Interface(), v2.Index(j).Interface())
 			if err != nil || !condition {
+				condition, err = false, nil
 				return
 			}
 		}
@@ -109,25 +122,33 @@ func same(v1 reflect.Value, v2 reflect.Value) (condition bool, err error) {
 		}
 
 		for i := 0; i < len(keys1); i = i + 1 {
-			condition, err = same(v1.MapIndex(keys1[i]), v2.MapIndex(keys1[i]))
+			condition, err = same(v1.MapIndex(keys1[i]).Interface(), v2.MapIndex(keys1[i]).Interface())
 			if err != nil || !condition || !keyIsInHereToo(keys1[i], keys2) {
+				condition, err = false, nil
 				return
 			}
 		}
 	case reflect.Struct:
-		if reflect.TypeOf(v1) != reflect.TypeOf(v2) {
+		if v1.Type() != v2.Type() {
 			condition, err = false, nil
 			return
 		}
 
+		if reflect.TypeOf(v1) != reflect.TypeOf(v2) {
+			condition, err = false, nil
+			return
+		}
 		for i := 0; i < v1.NumField(); i++ {
-			condition, err = same(v1.Field(i), v2.Field(i))
-			if err != nil || !condition {
-				return
+			if v1.Field(i).CanInterface() && v2.Field(i).CanInterface() {
+				condition, err = same(v1.Field(i).Interface(), v2.Field(i).Interface())
+				if err != nil || !condition {
+					condition, err = false, nil
+					return
+				}
 			}
 		}
 	case reflect.Ptr:
-		condition, err = same(v1.Elem(), v2.Elem())
+		condition, err = same(v1.Elem().Interface(), v2.Elem().Interface())
 	default:
 		if v1.Interface() != v2.Interface() {
 			condition, err = false, nil
