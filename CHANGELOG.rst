@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-initial): initial function added
 * 🐛 fix: bug fix on test file
 * ✅ test(slices-head_first): head and first test cases and benchmarks added
 * 🎉 feat(slices-head_first): head and first functions added
