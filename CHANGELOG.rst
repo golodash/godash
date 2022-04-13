@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-from_pairs): from_pairs function added
 * 🎉 feat(slices-same): same function updated, debuged and ignores unexported struct fields
 * ✅ test(slices-index_of): index_of test cases and benchmarks added
 * 🎉 feat(slices-index_of): index_of function added
