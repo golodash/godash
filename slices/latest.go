@@ -22,3 +22,7 @@ func Latest(slice interface{}) (interface{}, error) {
 
 	return s.Index(s.Len() - 1).Interface(), nil
 }
+
+func Last(slice interface{}) (interface{}, error) {
+	return Latest(slice)
+}
