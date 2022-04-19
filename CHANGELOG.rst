@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-n_th): n_th function added
 * ✅ test(slices-join_test): join function's test cases and benchmarks added
 * 🎉 feat(slices-join): join function added
 * 🐛 fix: added fix in git hooks scripts for windows
