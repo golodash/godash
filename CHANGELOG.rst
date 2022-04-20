@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-pull_at): pull_at function with test cases and benchmarks added
 * 🎉 feat(internal-unique_int): unique_int function added
 * 🎉 feat(slices-pull): pull function added
 * 🎉 feat(slices-last_index_of): last_index_of function added
