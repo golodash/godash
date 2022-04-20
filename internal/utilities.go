@@ -77,3 +77,15 @@ func AreComparable(var1 interface{}, var2 interface{}) error {
 
 	return nil
 }
+
+func UniqueInt(s []int) []int {
+	inResult := make(map[int]bool)
+	var result []int
+	for _, num := range s {
+		if _, ok := inResult[num]; !ok {
+			inResult[num] = true
+			result = append(result, num)
+		}
+	}
+	return result
+}
