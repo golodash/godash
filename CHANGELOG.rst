@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices-n_th): n_th function's bug fixed on empty slices
 * 🎉 feat(slices-n_th): n_th function added
 * ✅ test(slices-join_test): join function's test cases and benchmarks added
 * 🎉 feat(slices-join): join function added

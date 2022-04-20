@@ -21,6 +21,9 @@ func Nth(slice interface{}, index int) (interface{}, error) {
 	if index < 0 {
 		index = values.Len() + index
 	}
+	if values.Len() == 0 {
+		return nil, nil
+	}
 
-	return values.Index(index), nil
+	return values.Index(index).Interface(), nil
 }
