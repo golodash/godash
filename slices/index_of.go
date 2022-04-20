@@ -1,6 +1,7 @@
 package slices
 
 import (
+	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -13,13 +14,9 @@ import (
 // Note: In comparing fields of a struct, unexported fields
 // are ignored.
 func IndexOf(slice interface{}, value interface{}, from ...int) (int, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
-		return -1, err
-	}
-
-	fr := 0
 	sliceValue := reflect.ValueOf(slice)
+	fr := 0
+
 	if len(from) != 0 {
 		if from[0] >= 0 {
 			fr = from[0]
@@ -27,8 +24,44 @@ func IndexOf(slice interface{}, value interface{}, from ...int) (int, error) {
 			fr = (sliceValue.Len() - 1) + from[0]
 		}
 	}
+	if fr >= sliceValue.Len() {
+		return -1, errors.New("`from` index is out of range")
+	} else if fr <= -1 {
+		return -1, nil
+	}
+	return indexOf(slice, value, fr, true)
+}
 
-	for i := fr; i < sliceValue.Len(); i++ {
+func indexOf(slice interface{}, value interface{}, from int, ltr bool) (int, error) {
+	err := internal.SliceCheck(slice)
+	if err != nil {
+		return -1, err
+	}
+
+	sliceValue := reflect.ValueOf(slice)
+
+	var until int
+	var count int
+	if ltr {
+		until = sliceValue.Len()
+		count = +1
+	} else {
+		until = -1
+		if sliceValue.Len() == 0 {
+			until = 0
+		}
+		count = -1
+	}
+
+	compare := func(i, until int) bool {
+		if until == -1 {
+			return i > until
+		} else {
+			return i < until
+		}
+	}
+
+	for i := from; compare(i, until); i += count {
 		res, err := same(sliceValue.Index(i).Interface(), value)
 		if err != nil {
 			return -1, err
