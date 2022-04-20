@@ -9,8 +9,6 @@ import (
 
 // Creates a new slice from the passed slice and removes elements
 // from it when passed function returns true on that element.
-//
-// By default n is equal to 0
 func DropBy(slice interface{}, function interface{}) ([]interface{}, error) {
 	s, err := internal.InterfaceToSlice(slice)
 	if err != nil {

@@ -7,6 +7,10 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// This method is like Intersection except that it accepts comparator which is
+// invoked to compare elements of slices. The order and references of result
+// values are determined by the first slice. The comparator is invoked with
+// two arguments: (slice, otherSlice).
 func IntersectionBy(slice interface{}, function interface{}) ([]interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {

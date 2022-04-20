@@ -4,6 +4,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// This method returns an object composed from key-value pairs.
 func FromPairs(slice interface{}) (map[string]interface{}, error) {
 	s, err := internal.InterfaceToSlice(slice)
 	if err != nil {

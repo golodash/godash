@@ -7,6 +7,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Gets the first element of slice.
 func Head(slice interface{}) (interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
@@ -22,6 +23,7 @@ func Head(slice interface{}) (interface{}, error) {
 	return s.Index(0).Interface(), nil
 }
 
+// Gets the first element of slice.
 func First(slice interface{}) (interface{}, error) {
 	return Head(slice)
 }

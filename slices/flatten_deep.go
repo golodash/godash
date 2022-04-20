@@ -6,7 +6,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Flattens slice a single level deep.
+// Recursively flattens slice.
 func FlattenDeep(slice interface{}) ([]interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {

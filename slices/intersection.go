@@ -6,6 +6,9 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Creates a slice of unique values that are included in all given slices
+// for equality comparisons. The order and references of result values are
+// determined by the first slice.
 func Intersection(slice interface{}) ([]interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
