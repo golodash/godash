@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-n_th_test): n_th function's benchmark added
 * ✅ test(slices-n_th_test): n_th function's test case added
 * 🐛 fix(slices-n_th): n_th function's bug fixed on empty slices
 * 🎉 feat(slices-n_th): n_th function added
