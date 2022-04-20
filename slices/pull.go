@@ -6,6 +6,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Removes all given values from slice.
 func Pull(slice interface{}, values interface{}) ([]interface{}, error) {
 	s, err := internal.InterfaceToSlice(slice)
 	if err != nil {
