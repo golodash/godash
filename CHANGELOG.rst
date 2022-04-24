@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-slice_test): 'slice' function's test cases and benchmarks added
 * 🎉 feat(slices-slice): 'slice' function added
 * ✅ test(slices-reverse): reverse function's test cases and benchmarks added
 * 🐛 fix(slices-reverse): reverse function's bug fixed
