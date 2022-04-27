@@ -7,8 +7,8 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-//Gets the (n)th element of a slice. If n is negative, the (nth) element from the end is returned.
-
+// Gets the (n)th element of a slice. If n is negative, the (nth)
+// element from the end is returned.
 func Nth(slice interface{}, index int) (interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
