@@ -7,13 +7,16 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Uses a binary search to determine the lowest index
+// at which value should be inserted into slice in order
+// to maintain its sort order.
 func SortedIndex(slice, value interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
 	}
 
 	val := reflect.ValueOf(value)
-	if !val.CanFloat() && !val.CanInt() && !val.CanUint() {
+	if res := internal.IsNumber(val.Interface()); !res {
 		return -1, errors.New("`value` is not a number")
 	}
 
