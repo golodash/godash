@@ -56,8 +56,8 @@ func SliceCheck(slice interface{}) error {
 
 // Checks if two variables are the same or not
 func CheckSameType(var1 interface{}, var2 interface{}) error {
-	if reflect.ValueOf(var1).IsNil() || reflect.ValueOf(var2).IsNil() {
-		return errors.New("nil values are not allowed")
+	if !reflect.ValueOf(var1).IsValid() || !reflect.ValueOf(var2).IsValid() {
+		return errors.New("invalid values are not allowed")
 	}
 	if reflect.TypeOf(var1).String() != reflect.TypeOf(var2).String() {
 		return errors.New("two variables are not same type")

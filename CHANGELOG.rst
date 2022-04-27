@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(internal): check_same_type function debug
 * 🎉 feat(slices-pull_at): pull_at function with test cases and benchmarks added
 * 🎉 feat(internal-unique_int): unique_int function added
 * 🎉 feat(slices-pull): pull function added
