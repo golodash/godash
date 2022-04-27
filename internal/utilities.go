@@ -89,3 +89,37 @@ func UniqueInt(s []int) []int {
 	}
 	return result
 }
+
+func IsNumber(input interface{}) bool {
+	v := reflect.ValueOf(input)
+
+	switch v.Kind() {
+	case reflect.Float64:
+		return true
+	case reflect.Float32:
+		return true
+	case reflect.Int:
+		return true
+	case reflect.Int8:
+		return true
+	case reflect.Int16:
+		return true
+	case reflect.Int32:
+		return true
+	case reflect.Int64:
+		return true
+	case reflect.Uint:
+		return true
+	case reflect.Uint8:
+		return true
+	case reflect.Uint16:
+		return true
+	case reflect.Uint32:
+		return true
+	case reflect.Uint64:
+		return true
+	case reflect.Uintptr:
+		return true
+	}
+	return false
+}
