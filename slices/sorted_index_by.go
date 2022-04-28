@@ -1,0 +1,77 @@
+package slices
+
+import (
+	"errors"
+	"reflect"
+
+	"github.com/golodash/godash/internal"
+)
+
+// This method is like SortedIndex except that it accepts a function
+// which is invoked for value and each element of slice to compute
+// their sort ranking. The function is invoked with one argument: (value).
+func SortedIndexBy(slice, value, function interface{}) (int, error) {
+	if err := internal.SliceCheck(slice); err != nil {
+		return -1, err
+	}
+
+	functionType := reflect.TypeOf(function)
+	sType := reflect.TypeOf(slice)
+	if functionType.Kind() != reflect.Func {
+		return -1, errors.New("`function` has to be function type")
+	}
+	if functionType.NumIn() != 1 {
+		return -1, errors.New("`function` inputs has to have just 1 input")
+	}
+	if functionType.In(0).Kind() != sType.Elem().Kind() &&
+		functionType.In(0).Kind() != reflect.Interface {
+		return -1, errors.New("`function` inputs have to be the same type as `slice` variable elements or have to be `interface` type")
+	}
+	if functionType.NumOut() != 1 || functionType.Out(0).Kind() != sType.Elem().Kind() {
+		return -1, errors.New("`function` output has to be the same type as `slice` variable elements and it has to have just 1 output")
+	}
+
+	val := reflect.ValueOf(value)
+	if val.Type().Kind() != sType.Elem().Kind() && sType.Elem().Kind() != reflect.Interface {
+		return -1, errors.New("`value` is not compatible with `slice` elements")
+	}
+
+	return whereToPutInSliceBy(slice, value, compareSortedIndex, function)
+}
+
+// Based on binary search, searchs on where to put the
+// sent value in the passed slice based on isBiggerEqualFunction
+// result and get the comparators by getComparatorParam function
+func whereToPutInSliceBy(slice, value, isBiggerEqualFunction, getComparatorParam interface{}) (int, error) {
+	sliceValue := reflect.ValueOf(slice)
+	getComparatorParamValue := reflect.ValueOf(getComparatorParam)
+	len := sliceValue.Len()
+
+	if len == 0 {
+		return 0, nil
+	}
+
+	item := sliceValue.Index(len / 2).Interface()
+
+	var err error = nil
+	if err = internal.AreComparable(item, value); err != nil {
+		return -1, errors.New("couldn't compare `value` with all items in passed slice")
+	}
+
+	var result int
+	firstItem := getComparatorParamValue.Call([]reflect.Value{reflect.ValueOf(item)})[0]
+	secondItem := getComparatorParamValue.Call([]reflect.Value{reflect.ValueOf(value)})[0]
+	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{firstItem, secondItem}); res[0].Bool() {
+		if result, err = whereToPutInSliceBy(sliceValue.Slice((len/2)+1, len).Interface(), value, isBiggerEqualFunction, getComparatorParam); err != nil {
+			return -1, err
+		}
+
+		return result + (len / 2) + 1, nil
+	} else {
+		if result, err = whereToPutInSliceBy(sliceValue.Slice(0, len/2).Interface(), value, isBiggerEqualFunction, getComparatorParam); err != nil {
+			return -1, err
+		}
+
+		return result, nil
+	}
+}
