@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(internal-utilities): is_number_type function added
 * 🎉 feat(slices-sorted_index_by): sorted_index_by function added
 * 🐛 fix: doc updated and bug fixed
 * 🎉 feat(internal-is_number): is_number function added

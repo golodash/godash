@@ -7,6 +7,22 @@ import (
 	"strings"
 )
 
+var NumberTypes = []reflect.Kind{
+	reflect.Int,
+	reflect.Int8,
+	reflect.Int16,
+	reflect.Int32,
+	reflect.Int64,
+	reflect.Uint,
+	reflect.Uint8,
+	reflect.Uint16,
+	reflect.Uint32,
+	reflect.Uint64,
+	reflect.Float32,
+	reflect.Float64,
+	reflect.Uintptr,
+}
+
 // Send a function as input param to this function and
 // get the package name of that function as string
 func GetPackageName(temp interface{}) string {
@@ -93,33 +109,15 @@ func UniqueInt(s []int) []int {
 func IsNumber(input interface{}) bool {
 	v := reflect.ValueOf(input)
 
-	switch v.Kind() {
-	case reflect.Float64:
-		return true
-	case reflect.Float32:
-		return true
-	case reflect.Int:
-		return true
-	case reflect.Int8:
-		return true
-	case reflect.Int16:
-		return true
-	case reflect.Int32:
-		return true
-	case reflect.Int64:
-		return true
-	case reflect.Uint:
-		return true
-	case reflect.Uint8:
-		return true
-	case reflect.Uint16:
-		return true
-	case reflect.Uint32:
-		return true
-	case reflect.Uint64:
-		return true
-	case reflect.Uintptr:
-		return true
+	return IsNumberType(v.Kind())
+}
+
+func IsNumberType(input reflect.Kind) bool {
+	for _, value := range NumberTypes {
+		if value == input {
+			return true
+		}
 	}
+
 	return false
 }
