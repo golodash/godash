@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-remove): 'remove' function added
 * ✅ test(slices-sorted_unique_by): sorted_unique_by test cases and benchmarks added
 * 🐛 fix(slices-sorted_unique_by): sorted_unique_by approach changed
 * 🎉 feat(slices-sorted_unique_by): 'SortedUniqueBy' function added
