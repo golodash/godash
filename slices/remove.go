@@ -7,6 +7,9 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Removes all elements from slice that the passed function returns true on them
+// and returns a slice of remaining elements and a slice of removed elements.
+// The passed function will invoke with one argument.
 func Remove(slice interface{}, function interface{}) (interface{}, interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
