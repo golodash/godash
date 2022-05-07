@@ -77,7 +77,13 @@ func TestSortedIndexBy(t *testing.T) {
 			name:  "normal",
 			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			value: 3,
-			want:  4,
+			want:  3,
+		},
+		{
+			name:  "more sequence",
+			arr:   []int{0, 1, 2, 3, 3, 3, 4, 5, 6, 7, 8, 9},
+			value: 3,
+			want:  3,
 		},
 	}
 

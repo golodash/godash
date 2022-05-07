@@ -7,6 +7,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// This method is like IndexOf except that it performs a binary search on a sorted slice.
 func SortedIndexOf(slice interface{}, value interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
@@ -22,11 +23,11 @@ func SortedIndexOf(slice interface{}, value interface{}) (int, error) {
 		return -1, errors.New("`value` is not comparable with `slice`")
 	}
 
-	return sortedIndexOf(slice, value, compareSortedIndex, isEqualToSortedIndexItem)
+	return sortedIndexOf(slice, value, compareLowerEqual, compareIsEqual)
 }
 
 // Compare function for SortedIndex function
-func isEqualToSortedIndexItem(midValue, value interface{}) bool {
+func compareIsEqual(midValue, value interface{}) bool {
 	mid := reflect.ValueOf(midValue)
 	v := reflect.ValueOf(value)
 
@@ -61,7 +62,7 @@ func isEqualToSortedIndexItem(midValue, value interface{}) bool {
 	return false
 }
 
-func sortedIndexOf(slice, value, isBiggerEqualFunction, isEqualSortedIndexItem interface{}) (int, error) {
+func sortedIndexOf(slice, value, isLowerEqualFunction, isEqualFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	len := sliceValue.Len()
 
@@ -77,20 +78,20 @@ func sortedIndexOf(slice, value, isBiggerEqualFunction, isEqualSortedIndexItem i
 	}
 
 	var result int
-	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if res := reflect.ValueOf(isEqualSortedIndexItem).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
+	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
+		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
 			return len / 2, nil
 		}
-		if result, err = sortedIndexOf(sliceValue.Slice((len/2)+1, len).Interface(), value, isBiggerEqualFunction, isEqualSortedIndexItem); err != nil {
-			return -1, err
-		}
-
-		return result + (len / 2) + 1, nil
-	} else {
-		if result, err = sortedIndexOf(sliceValue.Slice(0, len/2).Interface(), value, isBiggerEqualFunction, isEqualSortedIndexItem); err != nil {
+		if result, err = sortedIndexOf(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
 			return -1, err
 		}
 
 		return result, nil
+	} else {
+		if result, err = sortedIndexOf(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
+			return -1, err
+		}
+
+		return result + (len / 2) + 1, nil
 	}
 }

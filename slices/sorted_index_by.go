@@ -36,15 +36,15 @@ func SortedIndexBy(slice, value, function interface{}) (int, error) {
 		return -1, errors.New("`value` is not compatible with `slice` elements")
 	}
 
-	return whereToPutInSliceBy(slice, value, compareSortedIndex, function)
+	return whereToPutInSliceBy(slice, value, compareLowerEqual, function)
 }
 
 // Based on binary search, searchs on where to put the
 // sent value in the passed slice based on isBiggerEqualFunction
 // result and get the comparators by getComparatorParam function
-func whereToPutInSliceBy(slice, value, isBiggerEqualFunction, getComparatorParam interface{}) (int, error) {
+func whereToPutInSliceBy(slice, value, isLowerEqualFunction, comparableParamFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
-	getComparatorParamValue := reflect.ValueOf(getComparatorParam)
+	comparableParamFunctionValue := reflect.ValueOf(comparableParamFunction)
 	len := sliceValue.Len()
 
 	if len == 0 {
@@ -59,19 +59,19 @@ func whereToPutInSliceBy(slice, value, isBiggerEqualFunction, getComparatorParam
 	}
 
 	var result int
-	firstItem := getComparatorParamValue.Call([]reflect.Value{reflect.ValueOf(item)})[0]
-	secondItem := getComparatorParamValue.Call([]reflect.Value{reflect.ValueOf(value)})[0]
-	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{firstItem, secondItem}); res[0].Bool() {
-		if result, err = whereToPutInSliceBy(sliceValue.Slice((len/2)+1, len).Interface(), value, isBiggerEqualFunction, getComparatorParam); err != nil {
-			return -1, err
-		}
-
-		return result + (len / 2) + 1, nil
-	} else {
-		if result, err = whereToPutInSliceBy(sliceValue.Slice(0, len/2).Interface(), value, isBiggerEqualFunction, getComparatorParam); err != nil {
+	firstItem := comparableParamFunctionValue.Call([]reflect.Value{reflect.ValueOf(item)})[0]
+	secondItem := comparableParamFunctionValue.Call([]reflect.Value{reflect.ValueOf(value)})[0]
+	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{firstItem, secondItem}); res[0].Bool() {
+		if result, err = whereToPutInSliceBy(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction, comparableParamFunction); err != nil {
 			return -1, err
 		}
 
 		return result, nil
+	} else {
+		if result, err = whereToPutInSliceBy(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction, comparableParamFunction); err != nil {
+			return -1, err
+		}
+
+		return result + (len / 2) + 1, nil
 	}
 }
