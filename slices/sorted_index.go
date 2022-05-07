@@ -15,11 +15,11 @@ func SortedIndex(slice, value interface{}) (int, error) {
 		return -1, err
 	}
 
-	val := reflect.ValueOf(value)
-	if res := internal.IsNumber(val.Interface()); !res {
+	if res := internal.IsNumber(value); !res {
 		return -1, errors.New("`value` is not a number")
 	}
 
+	val := reflect.ValueOf(value)
 	sType := reflect.TypeOf(slice)
 	if !sType.Elem().ConvertibleTo(val.Type()) {
 		return -1, errors.New("`value` is not comparable with `slice`")
