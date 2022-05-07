@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-sorted_index_of): sorted_index_of test cases and benchmarks added
 * 🎉 feat(slices-sorted_index_of): sorted_index_of function added
 * 🎉 feat(slices-sorted_index_by): sorted_index_by test cases and benchmarks added
 * 🎉 feat(internal-utilities): is_number_type function added
