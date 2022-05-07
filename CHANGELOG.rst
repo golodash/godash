@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices-sorted_index_of): sorted_index_of behaviour fixed on not found senario
 * ✅ test(slices-sorted_index_of): sorted_index_of test cases and benchmarks added
 * 🎉 feat(slices-sorted_index_of): sorted_index_of function added
 * 🎉 feat(slices-sorted_index_by): sorted_index_by test cases and benchmarks added

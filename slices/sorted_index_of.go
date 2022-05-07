@@ -66,7 +66,7 @@ func sortedIndexOf(slice, value, isBiggerEqualFunction, isEqualSortedIndexItem i
 	len := sliceValue.Len()
 
 	if len == 0 {
-		return 0, nil
+		return -1, errors.New("item not found")
 	}
 
 	item := sliceValue.Index(len / 2).Interface()

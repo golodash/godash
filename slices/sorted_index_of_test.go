@@ -67,13 +67,19 @@ func TestSortedIndexOf(t *testing.T) {
 			name:  "empty",
 			arr:   []int{},
 			value: 5,
-			want:  0,
+			want:  -1,
 		},
 		{
 			name:  "normal",
 			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			value: 3,
 			want:  3,
+		},
+		{
+			name:  "fail",
+			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			value: 88,
+			want:  -1,
 		},
 	}
 
