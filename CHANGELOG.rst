@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-sorted_unique): 'Sorted_Unique' function's test cases and benchmarks added
 * 🎉 feat(slices-sorted_unique): 'Sorted_Unique' function added
 * 🎉 feat(slices-pull_at): pull_at function with test cases and benchmarks added
 * 🎉 feat(internal-unique_int): unique_int function added
