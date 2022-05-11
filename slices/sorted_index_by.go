@@ -36,13 +36,13 @@ func SortedIndexBy(slice, value, function interface{}) (int, error) {
 		return -1, errors.New("`value` is not compatible with `slice` elements")
 	}
 
-	return whereToPutInSliceBy(slice, value, compareLowerEqual, function)
+	return whereToPutInSliceLowerEqualBy(slice, value, compareLowerEqual, function)
 }
 
 // Based on binary search, searchs on where to put the
-// sent value in the passed slice based on isBiggerEqualFunction
+// sent value in the passed slice based on isLowerEqualFunction
 // result and get the comparators by getComparatorParam function
-func whereToPutInSliceBy(slice, value, isLowerEqualFunction, comparableParamFunction interface{}) (int, error) {
+func whereToPutInSliceLowerEqualBy(slice, value, isLowerEqualFunction, comparableParamFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	comparableParamFunctionValue := reflect.ValueOf(comparableParamFunction)
 	len := sliceValue.Len()
@@ -62,13 +62,13 @@ func whereToPutInSliceBy(slice, value, isLowerEqualFunction, comparableParamFunc
 	firstItem := comparableParamFunctionValue.Call([]reflect.Value{reflect.ValueOf(item)})[0]
 	secondItem := comparableParamFunctionValue.Call([]reflect.Value{reflect.ValueOf(value)})[0]
 	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{firstItem, secondItem}); res[0].Bool() {
-		if result, err = whereToPutInSliceBy(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction, comparableParamFunction); err != nil {
+		if result, err = whereToPutInSliceLowerEqualBy(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction, comparableParamFunction); err != nil {
 			return -1, err
 		}
 
 		return result, nil
 	} else {
-		if result, err = whereToPutInSliceBy(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction, comparableParamFunction); err != nil {
+		if result, err = whereToPutInSliceLowerEqualBy(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction, comparableParamFunction); err != nil {
 			return -1, err
 		}
 
