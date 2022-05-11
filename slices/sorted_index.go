@@ -25,7 +25,7 @@ func SortedIndex(slice, value interface{}) (int, error) {
 		return -1, errors.New("`value` is not comparable with `slice`")
 	}
 
-	return whereToPutInSlice(slice, value, compareLowerEqual)
+	return whereToPutInSliceLowerEqual(slice, value, compareLowerEqual)
 }
 
 // Compare function for SortedIndex function
@@ -65,9 +65,9 @@ func compareLowerEqual(midValue, value interface{}) bool {
 }
 
 // Based on binary search, searchs on where to put the
-// sent value in the passed slice based on isBiggerEqualFunction
+// sent value in the passed slice based on isLowerEqualFunction
 // result
-func whereToPutInSlice(slice, value, isLowerEqualFunction interface{}) (int, error) {
+func whereToPutInSliceLowerEqual(slice, value, isLowerEqualFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	len := sliceValue.Len()
 
@@ -84,13 +84,13 @@ func whereToPutInSlice(slice, value, isLowerEqualFunction interface{}) (int, err
 
 	var result int
 	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if result, err = whereToPutInSlice(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction); err != nil {
+		if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction); err != nil {
 			return -1, err
 		}
 
 		return result, nil
 	} else {
-		if result, err = whereToPutInSlice(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction); err != nil {
+		if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction); err != nil {
 			return -1, err
 		}
 
