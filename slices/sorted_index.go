@@ -73,6 +73,25 @@ func whereToPutInSliceLowerEqual(slice, value, isLowerEqualFunction interface{})
 
 	if len == 0 {
 		return 0, nil
+	} else if len == 1 {
+		item := sliceValue.Index(0)
+		if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
+			return 0, nil
+		} else {
+			return 1, nil
+		}
+	} else if len == 2 {
+		item := sliceValue.Index(0)
+		if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
+			return 0, nil
+		} else {
+			var result int
+			var err error
+			if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice(1, 2).Interface(), value, isLowerEqualFunction); err != nil {
+				return -1, err
+			}
+			return result + 1, nil
+		}
 	}
 
 	item := sliceValue.Index(len / 2).Interface()
@@ -84,16 +103,16 @@ func whereToPutInSliceLowerEqual(slice, value, isLowerEqualFunction interface{})
 
 	var result int
 	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction); err != nil {
+		if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice(0, (len/2)+1).Interface(), value, isLowerEqualFunction); err != nil {
 			return -1, err
 		}
 
 		return result, nil
 	} else {
-		if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction); err != nil {
+		if result, err = whereToPutInSliceLowerEqual(sliceValue.Slice(len/2, len).Interface(), value, isLowerEqualFunction); err != nil {
 			return -1, err
 		}
 
-		return result + (len / 2) + 1, nil
+		return result + (len / 2), nil
 	}
 }

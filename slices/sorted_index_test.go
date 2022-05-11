@@ -88,10 +88,10 @@ func TestSortedIndex(t *testing.T) {
 			want:  3,
 		},
 		{
-			name:  "does not exist",
-			arr:   []int{0, 1, 2, 3, 4, 6, 7, 8, 9},
+			name:  "at the end",
+			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			value: 10,
-			want:  -1,
+			want:  10,
 		},
 	}
 
