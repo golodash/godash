@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-sorted_last_index_of): sorted_last_index_of test cases and benchmarks added
 * 🎉 feat(slices-sorted_last_index_of): sorted_last_index_of function added
 * 🐛 fix(slices-sorted_index): sorted_index function bug on behaviour fixed
 * ✅ test(slices-sorted_last_index_by): sorted_last_index_by test cases and benchmarks added
