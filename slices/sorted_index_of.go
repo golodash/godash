@@ -68,6 +68,23 @@ func sortedIndexOf(slice, value, isLowerEqualFunction, isEqualFunction interface
 
 	if len == 0 {
 		return -1, errors.New("item not found")
+	} else if len == 1 {
+		item := sliceValue.Index(0)
+		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
+			return 0, nil
+		} else {
+			return -1, errors.New("item not found")
+		}
+	} else if len == 2 {
+		item0 := sliceValue.Index(0)
+		item1 := sliceValue.Index(1)
+		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item0, reflect.ValueOf(value)}); res[0].Bool() {
+			return 0, nil
+		} else if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item1, reflect.ValueOf(value)}); res[0].Bool() {
+			return 1, nil
+		} else {
+			return -1, errors.New("item not found")
+		}
 	}
 
 	item := sliceValue.Index(len / 2).Interface()
@@ -79,19 +96,16 @@ func sortedIndexOf(slice, value, isLowerEqualFunction, isEqualFunction interface
 
 	var result int
 	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-			return len / 2, nil
-		}
-		if result, err = sortedIndexOf(sliceValue.Slice(0, len/2).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
+		if result, err = sortedIndexOf(sliceValue.Slice(0, (len/2)+1).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
 			return -1, err
 		}
 
 		return result, nil
 	} else {
-		if result, err = sortedIndexOf(sliceValue.Slice((len/2)+1, len).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
+		if result, err = sortedIndexOf(sliceValue.Slice(len/2, len).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
 			return -1, err
 		}
 
-		return result + (len / 2) + 1, nil
+		return result + (len / 2), nil
 	}
 }
