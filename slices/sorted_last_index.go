@@ -73,6 +73,25 @@ func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{
 
 	if len == 0 {
 		return 0, nil
+	} else if len == 1 {
+		item := sliceValue.Index(0)
+		if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
+			return 1, nil
+		} else {
+			return 0, nil
+		}
+	} else if len == 2 {
+		item := sliceValue.Index(1)
+		if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
+			return 2, nil
+		} else {
+			var result int
+			var err error
+			if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, 1).Interface(), value, isBiggerEqualFunction); err != nil {
+				return -1, err
+			}
+			return result, nil
+		}
 	}
 
 	item := sliceValue.Index(len / 2).Interface()
@@ -84,13 +103,13 @@ func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{
 
 	var result int
 	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice((len/2)+1, len).Interface(), value, isBiggerEqualFunction); err != nil {
+		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(len/2, len).Interface(), value, isBiggerEqualFunction); err != nil {
 			return -1, err
 		}
 
-		return result + (len / 2) + 1, nil
+		return result + (len / 2), nil
 	} else {
-		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, len/2).Interface(), value, isBiggerEqualFunction); err != nil {
+		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, (len/2)+1).Interface(), value, isBiggerEqualFunction); err != nil {
 			return -1, err
 		}
 

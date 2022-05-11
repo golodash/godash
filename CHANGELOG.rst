@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices): sorted_last_index_by and sorted_last_index bug fixed
 * 🐛 fix(slices-sorted_index_by): bug fix
 * 🐛 fix(slices-sorted_index): sorted_index function bug fix
 * ✅ test(slices-sorted_last_index_of): sorted_last_index_of test cases and benchmarks added

@@ -85,6 +85,12 @@ func TestSortedLastIndexBy(t *testing.T) {
 			value: 3,
 			want:  6,
 		},
+		{
+			name:  "at the end",
+			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			value: 10,
+			want:  10,
+		},
 	}
 
 	for _, subject := range tests {
