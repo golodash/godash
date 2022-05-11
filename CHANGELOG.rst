@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-sorted_last_index_by): sorted_last_index_by test cases and benchmarks added
 * 🎉 feat(slices-sorted_last_index_by): sorted_last_index_by function added
 * ✅ test(slices-sorted_last_index): sorted_last_index test cases and benchmarks added
 * 🎉 feat(slices-sorted_last_index): sorted_last_index function added
