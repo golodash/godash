@@ -6,13 +6,13 @@ import (
 	"testing"
 )
 
-type TSUnique struct {
+type TSortedUnique struct {
 	name     string
 	arg1     []interface{}
 	expected interface{}
 }
 
-var TSUniqueBenchs = []TSUnique{
+var TSortedUniqueBenchs = []TSortedUnique{
 	{
 		name: "10",
 		arg1: []interface{}{},
@@ -36,17 +36,17 @@ var TSUniqueBenchs = []TSUnique{
 }
 
 func init() {
-	for i := 0; i < len(TSUniqueBenchs); i++ {
-		k, _ := strconv.Atoi(TSUniqueBenchs[i].name)
+	for i := 0; i < len(TSortedUniqueBenchs); i++ {
+		k, _ := strconv.Atoi(TSortedUniqueBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TSUniqueBenchs[i].arg1 = append(TSUniqueBenchs[i].arg1, []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TSortedUniqueBenchs[i].arg1 = append(TSortedUniqueBenchs[i].arg1, []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
 		}
 
 	}
 }
 
-func TestSUnique(t *testing.T) {
-	var tests = []TSUnique{
+func TestSortedUnique(t *testing.T) {
+	var tests = []TSortedUnique{
 		{
 			name:     "nil",
 			arg1:     nil,
@@ -85,13 +85,12 @@ func TestSUnique(t *testing.T) {
 	}
 }
 
-func BenchmarkSUnique(b *testing.B) {
-	for _, sample := range TSUniqueBenchs {
+func BenchmarkSortedUnique(b *testing.B) {
+	for _, sample := range TSortedUniqueBenchs {
 		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				SortedUnique(sample.arg1)
 			}
 		})
 	}
-
 }

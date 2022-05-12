@@ -4,13 +4,14 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-//This function creates a duplicate-free version of an slice.
-//This method is designed and optimized for sorted slices.
+// This function creates a duplicate-free version of an slice.
+//
+// This method is designed and optimized for sorted slices.
 func SortedUnique(slice interface{}) (interface{}, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
+
 	n, err := internal.InterfaceToSlice(slice)
 	if err != nil {
 		return nil, err
@@ -25,5 +26,6 @@ func SortedUnique(slice interface{}) (interface{}, error) {
 			unique = append(unique, value)
 		}
 	}
+
 	return unique, nil
 }
