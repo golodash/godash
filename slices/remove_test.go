@@ -42,13 +42,13 @@ func init() {
 		for j := 0; j < k/10; j++ {
 			TRemoveBenchs[i].arg1 = append(TRemoveBenchs[i].arg1, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
 		}
-
 	}
 }
 
-func RemoveFunctionTest(n int) bool {
+func removeFunctionTest(n int) bool {
 	return n%2 != 0
 }
+
 func TestRemove(t *testing.T) {
 	var tests = []TRemove{
 		{
@@ -79,7 +79,7 @@ func TestRemove(t *testing.T) {
 
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
-			got, got2, err := Remove(sample.arg1, RemoveFunctionTest)
+			got, got2, err := Remove(sample.arg1, removeFunctionTest)
 
 			if err != nil {
 				if sample.expectedSlice1 != nil && sample.expectedSlice2 != nil {
@@ -104,7 +104,7 @@ func BenchmarkRemove(b *testing.B) {
 	for _, sample := range TRemoveBenchs {
 		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				Remove(sample.arg1, RemoveFunctionTest)
+				Remove(sample.arg1, removeFunctionTest)
 			}
 		})
 	}

@@ -10,40 +10,36 @@ import (
 // Removes all elements from slice that the passed function returns true on them
 // and returns a slice of remaining elements and a slice of removed elements.
 // The passed function will invoke with one argument.
-func Remove(slice interface{}, function interface{}) (interface{}, interface{}, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
+func Remove(slice, function interface{}) (interface{}, interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, nil, err
 	}
-	funcType := reflect.TypeOf(function)
-	if funcType.Kind() != reflect.Func {
-		return nil, nil, errors.New("the second input should be a function")
+
+	functionType := reflect.TypeOf(function)
+	sliceType := reflect.TypeOf(slice)
+	if functionType.Kind() != reflect.Func {
+		return nil, nil, errors.New("`function` input should be a function type")
 	}
-	if funcType.NumIn() != 1 {
-		return nil, nil, errors.New("function should have a single input")
+	if functionType.NumIn() != 1 || (sliceType.Elem().String() != functionType.In(0).String() && functionType.In(0).Kind() != reflect.Interface) {
+		return nil, nil, errors.New("`function` should have a single input and be compatible with slice elements")
 	}
-	if funcType.NumOut() != 1 || funcType.Out(0).Kind() != reflect.Bool {
-		return nil, nil, errors.New("fnuction's output should be a single output and boolean type")
+	if functionType.NumOut() != 1 || functionType.Out(0).Kind() != reflect.Bool {
+		return nil, nil, errors.New("`function` should have a single output and it has to be boolean type")
 	}
+
 	newSlice, err := internal.InterfaceToSlice(slice)
 	if err != nil {
 		return nil, nil, err
 	}
-	funcValues := reflect.ValueOf(function)
-	var removed []interface{}
 
+	functionValue := reflect.ValueOf(function)
+	removed := []interface{}{}
 	for i := len(newSlice) - 1; i >= 0; i-- {
-		res := funcValues.Call([]reflect.Value{reflect.ValueOf(newSlice[i])})
-		if res[0].Bool() {
+		if res := functionValue.Call([]reflect.Value{reflect.ValueOf(newSlice[i])}); res[0].Bool() {
 			removed = append(removed, newSlice[i])
-			if i != 0 && i+1 < len(newSlice) {
-				newSlice = append(newSlice[0:i], newSlice[i+1:]...)
-			} else if i == 0 {
-				newSlice = newSlice[i+1:]
-			} else if i+1 == len(newSlice) {
-				newSlice = newSlice[0:i]
-			}
+			newSlice = append(newSlice[0:i], newSlice[i+1:]...)
 		}
 	}
+
 	return newSlice, removed, nil
 }
