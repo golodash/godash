@@ -45,7 +45,6 @@ func init() {
 		for j := 0; j < k/10; j++ {
 			TReverseBenchs[i].arg = append(TReverseBenchs[i].arg, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
-
 	}
 }
 
@@ -97,5 +96,4 @@ func BenchmarkReverse(b *testing.B) {
 			}
 		})
 	}
-
 }
