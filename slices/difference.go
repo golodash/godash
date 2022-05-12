@@ -129,24 +129,7 @@ func same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 			}
 		}
 	case reflect.Struct:
-		if v1.Type() != v2.Type() {
-			condition, err = false, nil
-			return
-		}
-
-		if reflect.TypeOf(v1) != reflect.TypeOf(v2) {
-			condition, err = false, nil
-			return
-		}
-		for i := 0; i < v1.NumField(); i++ {
-			if v1.Field(i).CanInterface() && v2.Field(i).CanInterface() {
-				condition, err = same(v1.Field(i).Interface(), v2.Field(i).Interface())
-				if err != nil || !condition {
-					condition, err = false, nil
-					return
-				}
-			}
-		}
+		condition, err = value1 == value2, nil
 	case reflect.Ptr:
 		condition, err = same(v1.Elem().Interface(), v2.Elem().Interface())
 	default:
