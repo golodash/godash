@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices-slice): added a new scenario test and satisfied it in slice function
 * 🐛 fix(slices-slice): bug fix
 * ✅ test(slices-slice_test): 'slice' function's test cases and benchmarks added
 * 🎉 feat(slices-slice): 'slice' function added

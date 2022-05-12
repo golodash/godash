@@ -66,11 +66,18 @@ func TestSlice(t *testing.T) {
 			expected: nil,
 		},
 		{
-			name:     "empty",
+			name:     "empty-error",
 			arg1:     []interface{}{},
 			arg2:     2,
 			arg3:     6,
 			expected: nil,
+		},
+		{
+			name:     "empty",
+			arg1:     []interface{}{},
+			arg2:     0,
+			arg3:     0,
+			expected: []interface{}{},
 		},
 		{
 			name:     "normal",
