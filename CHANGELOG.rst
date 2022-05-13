@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-tail): tail function added
 * 🐛 fix(slices-same): same function updated so it can compare struct unexported values too
 * 🐛 fix(slices-slice): added a new scenario test and satisfied it in slice function
 * 🐛 fix(slices-slice): bug fix
