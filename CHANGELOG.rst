@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-unique): unique test cases and benchmarks added
 * 🎉 feat(slices-unique): unique function added
 * ✅ test(slices-tail): tail test cases and benchmarks added
 * 🎉 feat(slices-tail): tail function added
