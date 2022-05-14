@@ -19,6 +19,5 @@ func Take(slice interface{}, number int) (interface{}, error) {
 	if values.Len() == 0 {
 		return slice, nil
 	}
-	j := values.Len() - number
-	return values.Slice(0, j).Interface(), nil
+	return values.Slice(0, number).Interface(), nil
 }
