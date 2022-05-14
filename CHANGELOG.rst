@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-take_right): 'take_right' function's test cases and benchmarks added
 * 🎉 feat(slices-take_right): 'take_right' function added
 * ✅ test(slices-take): 'take' function's benchmarks updated
 * 🐛 fix(slices-take): 'take' function's bug fixed
