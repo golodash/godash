@@ -19,11 +19,6 @@ func Take(slice interface{}, number int) (interface{}, error) {
 	if values.Len() == 0 {
 		return slice, nil
 	}
-
-	newSlice := reflect.MakeSlice(reflect.TypeOf(slice), 0, (values.Len() - number))
-	for i := 0; i < number; i++ {
-		newSlice = reflect.Append(newSlice, values.Index(i))
-	}
-
-	return newSlice.Interface(), nil
+	j := values.Len() - number
+	return values.Slice(0, j).Interface(), nil
 }
