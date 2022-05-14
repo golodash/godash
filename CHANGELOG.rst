@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-without): without alias of difference added
 * ✅ test(slices-unique_by): unique_by test cases and benchmarks added
 * 🎉 feat(slices-unique_by): unique_by function added
 * 🎉 feat(internal-duplicate_slice): duplicate_slice function added

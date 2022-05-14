@@ -140,3 +140,7 @@ func same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 
 	return
 }
+
+func Without(slice interface{}, notIncluded interface{}) ([]interface{}, error) {
+	return Difference(slice, notIncluded)
+}
