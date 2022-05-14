@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-take_right): 'take_right' function added
 * ✅ test(slices-take): 'take' function's benchmarks updated
 * 🐛 fix(slices-take): 'take' function's bug fixed
 * 🚀 perf(slices-take): 'take' function's complexity changed. O(n)-->O(1)
