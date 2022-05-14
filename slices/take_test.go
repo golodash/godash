@@ -1,6 +1,8 @@
 package slices
 
 import (
+	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -9,6 +11,38 @@ type TTake struct {
 	arg1     []int
 	arg2     int
 	expected []int
+}
+
+var TTakeBenchs = []TTake{
+	{
+		name: "10",
+		arg1: []int{},
+	},
+	{
+		name: "100",
+		arg1: []int{},
+	},
+	{
+		name: "1000",
+		arg1: []int{},
+	},
+	{
+		name: "10000",
+		arg1: []int{},
+	},
+	{
+		name: "100000",
+		arg1: []int{},
+	},
+}
+
+func init() {
+	for i := 0; i < len(TTakeBenchs); i++ {
+		k, _ := strconv.Atoi(TTakeBenchs[i].name)
+		for j := 0; j < k/10; j++ {
+			TTakeBenchs[i].arg1 = append(TTakeBenchs[i].arg1, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+		}
+	}
 }
 
 func TestTake(t *testing.T) {
@@ -57,6 +91,16 @@ func TestTake(t *testing.T) {
 			if ok, _ := same(got, sample.expected); !ok {
 				t.Errorf("got : %v,%v but expected : %v", got, err, sample.expected)
 				return
+			}
+		})
+	}
+}
+
+func BenchmarkTake(b *testing.B) {
+	for _, sample := range TTakeBenchs {
+		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				Take(sample.arg1, sample.arg2)
 			}
 		})
 	}
