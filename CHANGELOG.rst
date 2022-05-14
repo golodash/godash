@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-take): 'take' function's test cases and benchmarks added
 * 🎉 feat(slices-take): 'take' function added
 * 🎉 feat(slices-without): without alias of difference added
 * ✅ test(slices-unique_by): unique_by test cases and benchmarks added
