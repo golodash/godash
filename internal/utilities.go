@@ -121,3 +121,15 @@ func IsNumberType(input reflect.Kind) bool {
 
 	return false
 }
+
+func DuplicateSlice(slice interface{}) (interface{}, error) {
+	if err := SliceCheck(slice); err != nil {
+		return nil, err
+	}
+
+	sliceValue := reflect.ValueOf(slice)
+	newSlice := reflect.MakeSlice(reflect.TypeOf(slice), sliceValue.Len(), sliceValue.Len())
+	reflect.Copy(newSlice, sliceValue)
+
+	return newSlice.Interface(), nil
+}
