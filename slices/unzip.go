@@ -21,13 +21,14 @@ func Unzip(slice interface{}) ([]interface{}, error) {
 	length := -1
 	if sliceValue.Len() != 0 {
 		for i := 0; i < sliceValue.Len(); i++ {
-			if sliceValue.Index(i).Kind() != reflect.Slice {
-				return nil, fmt.Errorf("item in %d index is not slice type", i)
+			itemValue := reflect.ValueOf(sliceValue.Index(i).Interface())
+			if err := internal.SliceCheck(sliceValue.Index(i).Interface()); err != nil {
+				return nil, err
 			}
 			if length == -1 {
-				length = sliceValue.Index(i).Len()
+				length = itemValue.Len()
 			}
-			if sliceValue.Index(i).Len() != length {
+			if itemValue.Len() != length {
 				return nil, fmt.Errorf("item in %d index is not the same length with its previous item", i)
 			}
 		}
@@ -38,18 +39,20 @@ func Unzip(slice interface{}) ([]interface{}, error) {
 	// Actual unzip
 	tempMap := map[string]interface{}{}
 	for j := 0; j < length; j++ {
-		tempTypeString := reflect.TypeOf(sliceValue.Index(0).Index(j).Interface()).String()
+		tempTypeString := reflect.TypeOf(reflect.ValueOf(sliceValue.Index(0).Interface()).Index(j).Interface()).String()
 		indexMap := fmt.Sprint(j)
 		for i := 0; i < sliceValue.Len(); i++ {
-			if tempTypeString != reflect.TypeOf(sliceValue.Index(i).Index(j).Interface()).String() {
-				return nil, errors.New("these values are edited and unzip can't happen")
+			innerSliceValue := reflect.ValueOf(sliceValue.Index(i).Interface())
+			itemValue := reflect.ValueOf(innerSliceValue.Index(j).Interface())
+			if tempTypeString != itemValue.Type().String() {
+				return nil, errors.New("these values types are edited and unzip can't happen")
 			}
 
 			if _, ok := tempMap[indexMap]; !ok {
-				tempMap[indexMap] = reflect.MakeSlice(reflect.SliceOf(reflect.TypeOf(sliceValue.Index(0).Index(j).Interface())), 0, length).Interface()
+				tempMap[indexMap] = reflect.MakeSlice(reflect.SliceOf(itemValue.Type()), 0, length).Interface()
 			}
 
-			tempMap[indexMap] = reflect.Append(reflect.ValueOf(tempMap[indexMap]), reflect.ValueOf(sliceValue.Index(i).Index(j).Interface())).Interface()
+			tempMap[indexMap] = reflect.Append(reflect.ValueOf(tempMap[indexMap]), itemValue).Interface()
 		}
 	}
 
