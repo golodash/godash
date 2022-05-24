@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-zip): zip function added
 * 🐛 fix(slices-unzip): applying better functionality in unzip
 * ✅ test(slices-unzip): 'unzip' function's test cases and benchmarks added
 * 🎉 feat(slices-unzip): unzip function added
