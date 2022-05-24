@@ -8,6 +8,9 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// This method is like Zip except that it accepts
+// a slice of grouped elements and creates a slice
+// regrouping the elements to their pre-zip configuration.
 func Unzip(slice interface{}) ([]interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
@@ -50,6 +53,7 @@ func Unzip(slice interface{}) ([]interface{}, error) {
 		}
 	}
 
+	// Put outputs into slice
 	output := []interface{}{}
 	for i := 0; i < len(tempMap); i++ {
 		output = append(output, tempMap[fmt.Sprint(i)])
