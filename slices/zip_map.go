@@ -7,6 +7,9 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// This method is like FromPairs except that it accepts
+// two slices, one of property identifiers and one of
+// corresponding values.
 func ZipMap(keys, values interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(keys); err != nil {
 		return nil, err
