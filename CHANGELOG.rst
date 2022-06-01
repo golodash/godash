@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-union): 'union' function's test cases and benchmarks added
 * 🎉 feat(slices-union): 'union' function added
 * ✅ test(slices-xor_by): 'xor_by' function's test cases and benchmarks added
 * 🎉 feat(slices-xor_by): xor_by function added
