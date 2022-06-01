@@ -27,7 +27,7 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 	var output interface{}
 	if outType.Kind() == reflect.Map {
 		output = reflect.MakeMap(outType).Interface()
-	} else if outType.Kind() == reflect.Pointer {
+	} else if outType.Kind() == reflect.Ptr {
 		value := reflect.New(outType.Elem())
 		value.Elem().Set(reflect.MakeSlice(outType.Elem(), 0, 0))
 		output = value.Interface()
@@ -35,7 +35,7 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 	for i := 0; i < keysValue.Len(); i++ {
 		propertyKey := keysValue.Index(i).String()
 		tempValue := reflect.ValueOf(output)
-		if outType.Kind() == reflect.Pointer {
+		if outType.Kind() == reflect.Ptr {
 			tempValue = reflect.ValueOf(output).Elem()
 		}
 		for propertyKey != "" {
@@ -53,7 +53,7 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 						if outType, err := GetPropertyPathType(propertyKey, valuesValue.Type().Elem()); err != nil {
 							return nil, err
 						} else {
-							if outType.Kind() == reflect.Pointer {
+							if outType.Kind() == reflect.Ptr {
 								value := reflect.New(outType.Elem())
 								value.Elem().Set(reflect.MakeSlice(outType.Elem(), 0, 0))
 								tempValue.Set(reflect.Append(tempValue, value))
@@ -170,7 +170,7 @@ func GetPropertyPathType(key string, elementType reflect.Type) (reflect.Type, er
 				if t, err := GetPropertyPathType(key[i+1:], elementType); err != nil {
 					return nil, err
 				} else {
-					return reflect.PointerTo(reflect.SliceOf(t)), nil
+					return reflect.PtrTo(reflect.SliceOf(t)), nil
 				}
 			} else if single == "." || single == "[" {
 				return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))

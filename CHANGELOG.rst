@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices-zip_map_deep): bug fix on go1.17 test files fix
 * ✅ test(slices-zip_map_deep): 'zip_map_deep' function's test cases and benchmarks added
 * 🎉 feat(slices-zip_map_deep): zip_map_deep function added
 * 🎉 feat(internal-generate_nil): generate_nil function added
