@@ -133,3 +133,9 @@ func DuplicateSlice(slice interface{}) (interface{}, error) {
 
 	return newSlice.Interface(), nil
 }
+
+func GenerateNil() reflect.Value {
+	typeOfEmptyInterface := reflect.TypeOf((*interface{})(nil)).Elem()
+	valueOfZeroEmptyInterface := reflect.Zero(typeOfEmptyInterface)
+	return valueOfZeroEmptyInterface
+}

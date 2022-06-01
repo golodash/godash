@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(internal-generate_nil): generate_nil function added
 * ✅ test(slices-zip_map): 'zip_map' function's test cases and benchmarks added
 * 🎉 feat(slices-zip_map): zip_map function added
 * ✅ test(slices-zip): 'zip' function's test cases and benchmarks added
