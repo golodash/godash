@@ -15,16 +15,6 @@ func Xor(slices ...interface{}) (interface{}, error) {
 		length += reflect.ValueOf(slices[i]).Len()
 	}
 
-	// seenItems := map[interface{}]bool{}
-	// for i := 0; i < len(slices); i++ {
-	// 	item := reflect.ValueOf(slices[i])
-	// 	for j := 0; j < item.Len(); j++ {
-	// 		if _, ok := seenItems[item.Index(j).Interface()]; !ok {
-	// 			seenItems[item.Index(j).Interface()] = true
-	// 		}
-	// 	}
-	// }
-
 	unSeenItems := make([]interface{}, 0, length)
 	var sCheck bool
 	for i := 0; i < len(slices); i++ {
