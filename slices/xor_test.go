@@ -43,7 +43,7 @@ func init() {
 	for i := 0; i < len(TXorBenchs); i++ {
 		k, _ := strconv.Atoi(TXorBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TXorBenchs[i].arg = append(TXorBenchs[i].arg, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			TXorBenchs[i].arg = append(TXorBenchs[i].arg, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 		}
 	}
 }
@@ -87,7 +87,7 @@ func BenchmarkXor(b *testing.B) {
 	for _, sample := range TXorBenchs {
 		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				Xor(sample.arg)
+				Xor(sample.arg...)
 			}
 		})
 	}

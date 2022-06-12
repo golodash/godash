@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices-xor): fixed a bug in benchmarks
 * ✅ test(slices-xor): 'xor' function's test cases and benchmarks added
 * 🎉 feat(slices-xor): xor new function added
 * ✅ test(slices-zip_by): zip_by function's test cases and benchmarks added
