@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-take_right_while): take_right_while function added
 * ✅ test(slices-union_by): 'union_by' test cases and benchmarks added
 * 🎉 feat(slices-union_by): union_by function added
 * ✅ test(slices-union): a new test case updated
