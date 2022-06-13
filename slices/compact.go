@@ -1,25 +1,34 @@
 package slices
 
 import (
+	"errors"
+	"reflect"
+
 	"github.com/golodash/godash/internal"
 )
 
 // Removes falsey items from slice except values you mentioned.
 //
 // Falsey items are {"", nil, 0, false}
-func Compact(slice interface{}, excepts ...interface{}) ([]interface{}, error) {
-	s, err := internal.InterfaceToSlice(slice)
-	if err != nil {
+func Compact(slice interface{}, excepts interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
+	}
+
+	exceptsValue := reflect.ValueOf(excepts)
+	if exceptsValue.Kind() != reflect.Slice && excepts != nil {
+		return nil, errors.New("just slice accepted as excepts value")
+	}
+	if !exceptsValue.IsValid() {
+		exceptsValue = reflect.MakeSlice(reflect.TypeOf([]interface{}{}), 0, 0)
 	}
 
 	defaultFalsey := []interface{}{"", nil, 0, false}
 	falsey := []interface{}{}
-
 	for i := 0; i < len(defaultFalsey); i++ {
 		remain := true
-		for j := 0; j < len(excepts); j++ {
-			if defaultFalsey[i] == excepts[j] {
+		for j := 0; j < exceptsValue.Len(); j++ {
+			if defaultFalsey[i] == exceptsValue.Index(j).Interface() {
 				remain = false
 			}
 		}
@@ -28,26 +37,26 @@ func Compact(slice interface{}, excepts ...interface{}) ([]interface{}, error) {
 		}
 	}
 
-	result := []interface{}{}
+	sliceValue := reflect.ValueOf(slice)
+	length := sliceValue.Len()
+	result := reflect.MakeSlice(reflect.TypeOf(slice), 0, length)
 	j := 0
-	length := len(s)
-
 	for i := 0; i < length; i++ {
 		for k := 0; k < len(falsey); k++ {
-			if s[i] == falsey[k] {
+			if sliceValue.Index(i).Interface() == falsey[k] {
 				if i == j {
 					j = i + 1
 					continue
 				}
-				result = append(result, s[j:i]...)
+				result = reflect.AppendSlice(result, sliceValue.Slice(j, i))
 				j = i + 1
 			}
 		}
 	}
 
-	if j < len(s) {
-		result = append(result, s[j:length]...)
+	if j < sliceValue.Len() {
+		result = reflect.AppendSlice(result, sliceValue.Slice(j, length))
 	}
 
-	return result, nil
+	return result.Interface(), nil
 }

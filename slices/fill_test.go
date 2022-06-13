@@ -51,13 +51,6 @@ var tFillBenchs = []TFill{
 		start: 0,
 		end:   -1,
 	},
-	{
-		name:  "1000000",
-		arr:   []int{},
-		value: 0,
-		start: 0,
-		end:   -1,
-	},
 }
 
 func init() {

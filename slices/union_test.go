@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TUnion struct {
@@ -94,7 +96,7 @@ func TestUnion(t *testing.T) {
 				}
 				return
 			}
-			if ok, _ := same(got, sample.expected); !ok {
+			if ok, _ := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
 				return
 			}

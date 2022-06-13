@@ -33,10 +33,6 @@ var tIntersectionByBenchs = []TIntersectionBy{
 		name: "100000",
 		arr:  []interface{}{},
 	},
-	{
-		name: "1000000",
-		arr:  []interface{}{},
-	},
 }
 
 func removeIntersectionByTest(value1 interface{}, value2 interface{}) bool {

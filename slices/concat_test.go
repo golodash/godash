@@ -41,11 +41,6 @@ var tConcatBenchs = []TConcat{
 		arr:    []interface{}{},
 		values: []interface{}{},
 	},
-	{
-		name:   "1000000",
-		arr:    []interface{}{},
-		values: []interface{}{},
-	},
 }
 
 func init() {

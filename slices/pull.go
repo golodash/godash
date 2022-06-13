@@ -19,7 +19,7 @@ func Pull(slice interface{}, values interface{}) ([]interface{}, error) {
 	valuesValue := reflect.ValueOf(values)
 	for i := 0; i < len(s); i++ {
 		for j := 0; j < valuesValue.Len(); j++ {
-			if ok, _ := same(s[i], valuesValue.Index(j).Interface()); ok {
+			if ok, _ := internal.Same(s[i], valuesValue.Index(j).Interface()); ok {
 				s = append(s[:i], s[i+1:]...)
 				i = i - 1
 				break

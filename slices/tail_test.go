@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TTail struct {
@@ -31,10 +33,6 @@ var tTailBenchs = []TTail{
 	},
 	{
 		name: "100000",
-		arr:  []int{},
-	},
-	{
-		name: "1000000",
 		arr:  []int{},
 	},
 }
@@ -92,7 +90,7 @@ func TestTail(t *testing.T) {
 				return
 			}
 
-			if ok, _ := same(got, subject.want); !ok {
+			if ok, _ := internal.Same(got, subject.want); !ok {
 				t.Errorf("Tail() got = %v, wanted = %v", got, subject.want)
 				return
 			}

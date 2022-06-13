@@ -60,10 +60,6 @@ var TNthBenchs = []TNth{
 		name: "100000",
 		arg1: []interface{}{},
 	},
-	{
-		name: "1000000",
-		arg1: []interface{}{},
-	},
 }
 
 func init() {

@@ -40,11 +40,6 @@ var tPullAtBenchs = []TPullAt{
 		arr:  []int{},
 		rems: []int{},
 	},
-	{
-		name: "1000000",
-		arr:  []int{},
-		rems: []int{},
-	},
 }
 
 func init() {

@@ -40,11 +40,6 @@ var tFlattenDepthBenchs = []TFlattenDepth{
 		arr:   []interface{}{},
 		depth: 100,
 	},
-	{
-		name:  "1000000",
-		arr:   []interface{}{},
-		depth: 100,
-	},
 }
 
 func init() {

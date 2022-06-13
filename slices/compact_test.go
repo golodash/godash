@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TCompact struct {
 	name   string
-	arr    []interface{}
-	except []interface{}
-	want   []interface{}
+	arr    interface{}
+	except interface{}
+	want   interface{}
 }
 
 var tCompactBenchs = []TCompact{
@@ -39,18 +41,13 @@ var tCompactBenchs = []TCompact{
 		arr:    []interface{}{},
 		except: []interface{}{},
 	},
-	{
-		name:   "1000000",
-		arr:    []interface{}{},
-		except: []interface{}{},
-	},
 }
 
 func init() {
 	for j := 0; j < len(tCompactBenchs); j++ {
 		length, _ := strconv.Atoi(tCompactBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tCompactBenchs[j].arr = append(tCompactBenchs[j].arr, []interface{}{0, nil, 2, false, 4, 5, "", nil, 8, 9}...)
+			tCompactBenchs[j].arr = append(tCompactBenchs[j].arr.([]interface{}), []interface{}{0, nil, 2, false, 4, 5, "", nil, 8, 9}...)
 		}
 	}
 }
@@ -93,28 +90,27 @@ func TestCompact(t *testing.T) {
 			except: []interface{}{0, "", nil, false},
 			want:   []interface{}{0, nil, 0, false, nil, "", nil, 0, false, ""},
 		},
+		{
+			name:   "type specific",
+			arr:    []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			except: nil,
+			want:   []int{1, 2, 3, 4, 5, 6, 7, 8, 9},
+		},
 	}
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			got, err := Compact(subject.arr, subject.except...)
+			got, err := Compact(subject.arr, subject.except)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Compact() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Compact() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("Compact() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}
@@ -124,7 +120,7 @@ func BenchmarkCompact(b *testing.B) {
 	for j := 0; j < len(tCompactBenchs); j++ {
 		b.Run(fmt.Sprintf("slice_size_%s", tCompactBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				Compact(tCompactBenchs[j].arr, tCompactBenchs[j].except...)
+				Compact(tCompactBenchs[j].arr, tCompactBenchs[j].except)
 			}
 		})
 	}

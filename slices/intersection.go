@@ -32,7 +32,7 @@ func Intersection(slice interface{}) ([]interface{}, error) {
 			val := item[j]
 			seen := false
 			for k := 0; k < len(values); k++ {
-				res, err := same(val, values[k])
+				res, err := internal.Same(val, values[k])
 				if err == nil && res {
 					seen = true
 					break
@@ -43,7 +43,7 @@ func Intersection(slice interface{}) ([]interface{}, error) {
 			} else {
 				seen = false
 				for k := 0; k < len(doubleSeen); k++ {
-					res, err := same(val, doubleSeen[k])
+					res, err := internal.Same(val, doubleSeen[k])
 					if err == nil && res {
 						seen = true
 						break

@@ -39,11 +39,6 @@ var tSortedIndexOfBenchs = []TSortedIndexOf{
 		arr:  []int{},
 		want: 1000000,
 	},
-	{
-		name: "1000000",
-		arr:  []int{},
-		want: 10000000,
-	},
 }
 
 func init() {

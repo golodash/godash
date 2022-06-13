@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TTakeWhile struct {
@@ -75,7 +77,7 @@ func TestTakeWhile(t *testing.T) {
 				}
 				return
 			}
-			if ok, _ := same(got, sample.expected); !ok {
+			if ok, _ := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got : %v but expected : %v", got, sample.expected)
 				return
 			}

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TRemove struct {
@@ -88,11 +90,11 @@ func TestRemove(t *testing.T) {
 				return
 			}
 
-			if ok, _ := same(got, sample.expectedSlice1); !ok {
+			if ok, _ := internal.Same(got, sample.expectedSlice1); !ok {
 				t.Errorf("got : %v but expected : %v", got, sample.expectedSlice1)
 				return
 			}
-			if ok, _ := same(got2, sample.expectedSlice2); !ok {
+			if ok, _ := internal.Same(got2, sample.expectedSlice2); !ok {
 				t.Errorf("got : %v but expected : %v", got2, sample.expectedSlice2)
 				return
 			}

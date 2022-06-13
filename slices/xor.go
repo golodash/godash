@@ -22,7 +22,7 @@ func Xor(slices ...interface{}) (interface{}, error) {
 		for j := 0; j < item.Len(); j++ {
 			sCheck = true
 			for sIndex, s := range unSeenItems {
-				if ok, _ := same(item.Index(j).Interface(), s); ok {
+				if ok, _ := internal.Same(item.Index(j).Interface(), s); ok {
 					unSeenItems = append(unSeenItems[:sIndex], unSeenItems[sIndex+1:]...)
 					sCheck = false
 					break

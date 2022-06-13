@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TFromPairs struct {
@@ -31,10 +33,6 @@ var tFromPairsBenchs = []TFromPairs{
 	},
 	{
 		name: "100000",
-		arr:  [][]interface{}{},
-	},
-	{
-		name: "1000000",
 		arr:  [][]interface{}{},
 	},
 }
@@ -96,7 +94,7 @@ func TestFromPairs(t *testing.T) {
 				for j := 0; j < 2; j++ {
 					if len(subject.arr[i]) == 2 {
 						if key, ok := subject.arr[i][0].(string); ok {
-							res, err := same(got[key], subject.arr[i][1])
+							res, err := internal.Same(got[key], subject.arr[i][1])
 							if err != nil || !res {
 								t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
 								return

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TZipBy struct {
@@ -31,10 +33,6 @@ var tZipByBenchs = []TZipBy{
 	},
 	{
 		name: "100000",
-		arr:  [][]int{},
-	},
-	{
-		name: "1000000",
 		arr:  [][]int{},
 	},
 }
@@ -102,7 +100,7 @@ func TestZipBy(t *testing.T) {
 				return
 			}
 
-			if _, err := same(got, subject.want); err != nil {
+			if _, err := internal.Same(got, subject.want); err != nil {
 				t.Errorf("ZipBy() got = %v, wanted = %v, error = %v", got, subject.want, err)
 
 			}

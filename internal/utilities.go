@@ -2,6 +2,7 @@ package internal
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"runtime"
 	"strings"
@@ -138,4 +139,94 @@ func GenerateNil() reflect.Value {
 	typeOfEmptyInterface := reflect.TypeOf((*interface{})(nil)).Elem()
 	valueOfZeroEmptyInterface := reflect.Zero(typeOfEmptyInterface)
 	return valueOfZeroEmptyInterface
+}
+
+func keyIsInHereToo(key reflect.Value, keys []reflect.Value) bool {
+	for i := range keys {
+		if key.Interface() == keys[i].Interface() {
+			return true
+		}
+	}
+
+	return false
+}
+
+func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
+	condition, err = true, nil
+	v1 := reflect.ValueOf(value1)
+	v2 := reflect.ValueOf(value2)
+
+	// Check for nil and "" and other zero values
+	if ((!v1.IsValid() && !v2.IsValid()) || (v1.IsZero() && v2.IsZero())) && (v1.Kind() == v2.Kind()) {
+		return true, nil
+	}
+
+	if v1.Kind() != v2.Kind() {
+		if v1.Kind() == reflect.Interface && v2.Kind() != reflect.Interface {
+			if v1.CanConvert(v2.Type()) {
+				v1 = v1.Convert(v2.Type())
+			}
+		} else if v2.Kind() == reflect.Interface && v1.Kind() != reflect.Interface {
+			if v2.CanConvert(v1.Type()) {
+				v2 = v2.Convert(v1.Type())
+			}
+		}
+		if v1.Kind() == v2.Kind() && v1.Interface() == v2.Interface() {
+			return
+		}
+		condition, err = false, nil
+		return
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+			condition, err = false, fmt.Errorf("%s", r)
+		}
+	}()
+
+	switch v1.Kind() {
+	case reflect.Array, reflect.Slice:
+		if v1.Len() != v2.Len() {
+			condition, err = false, nil
+			return
+		}
+		for i := 0; i < v1.Len(); i = i + 1 {
+			condition, err = Same(v1.Index(i).Interface(), v2.Index(i).Interface())
+			if err != nil || !condition {
+				condition, err = false, nil
+				return
+			}
+		}
+	case reflect.Map:
+		if v1.Len() != v2.Len() {
+			condition, err = false, nil
+			return
+		}
+
+		keys1 := v1.MapKeys()
+		keys2 := v2.MapKeys()
+		if len(keys1) != len(keys2) {
+			condition, err = false, nil
+			return
+		}
+
+		for i := 0; i < len(keys1); i = i + 1 {
+			condition, err = Same(v1.MapIndex(keys1[i]).Interface(), v2.MapIndex(keys1[i]).Interface())
+			if err != nil || !condition || !keyIsInHereToo(keys1[i], keys2) {
+				condition, err = false, nil
+				return
+			}
+		}
+	case reflect.Struct:
+		condition, err = value1 == value2, nil
+	case reflect.Ptr:
+		condition, err = Same(v1.Elem().Interface(), v2.Elem().Interface())
+	default:
+		if v1.Interface() != v2.Interface() {
+			condition, err = false, nil
+		}
+	}
+
+	return
 }

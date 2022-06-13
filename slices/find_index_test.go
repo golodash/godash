@@ -33,10 +33,6 @@ var tFindIndexBenchs = []TFindIndex{
 		name: "100000",
 		arr:  []int{},
 	},
-	{
-		name: "1000000",
-		arr:  []int{},
-	},
 }
 
 func init() {

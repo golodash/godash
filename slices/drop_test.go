@@ -39,11 +39,6 @@ var tDropBenchs = []TDrop{
 		arr:  []int{},
 		num:  50000,
 	},
-	{
-		name: "1000000",
-		arr:  []int{},
-		num:  500000,
-	},
 }
 
 func init() {

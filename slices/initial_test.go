@@ -34,10 +34,6 @@ var tInitialBenchs = []TInitial{
 		name: "100000",
 		arr:  []interface{}{},
 	},
-	{
-		name: "1000000",
-		arr:  []interface{}{},
-	},
 }
 
 func init() {

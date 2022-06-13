@@ -40,11 +40,6 @@ var tDifferenceByBenchs = []TDifferenceBy{
 		arr:   []int{},
 		notIn: []int{},
 	},
-	{
-		name:  "1000000",
-		arr:   []int{},
-		notIn: []int{},
-	},
 }
 
 func init() {

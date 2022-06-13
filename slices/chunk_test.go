@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TChunk struct {
@@ -132,7 +134,7 @@ func TestChunk(t *testing.T) {
 				return
 			}
 
-			if ok, _ := same(got, subject.want); !ok {
+			if ok, _ := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
