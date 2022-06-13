@@ -101,8 +101,8 @@ func same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 			condition, err = false, nil
 			return
 		}
-		for i, j := 0, 0; i < v1.Len(); i, j = i+1, j+1 {
-			condition, err = same(v1.Index(i).Interface(), v2.Index(j).Interface())
+		for i := 0; i < v1.Len(); i = i + 1 {
+			condition, err = same(v1.Index(i).Interface(), v2.Index(i).Interface())
 			if err != nil || !condition {
 				condition, err = false, nil
 				return
