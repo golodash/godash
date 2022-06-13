@@ -8,9 +8,9 @@ import (
 
 type TUnion struct {
 	name     string
-	arg1     []int
-	arg2     []int
-	expected []int
+	arg1     interface{}
+	arg2     interface{}
+	expected interface{}
 }
 
 var TUnionBenchs = []TUnion{
@@ -45,8 +45,8 @@ func init() {
 	for i := 0; i < len(TUnionBenchs); i++ {
 		k, _ := strconv.Atoi(TUnionBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TUnionBenchs[i].arg1 = append(TUnionBenchs[i].arg1, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
-			TUnionBenchs[i].arg2 = append(TUnionBenchs[i].arg2, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TUnionBenchs[i].arg1 = append(TUnionBenchs[i].arg1.([]int), []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TUnionBenchs[i].arg2 = append(TUnionBenchs[i].arg2.([]int), []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
 		}
 	}
 }
@@ -77,6 +77,12 @@ func TestUnion(t *testing.T) {
 			arg2:     []int{1, 2, 3, 4, 5, 6, 7, 8},
 			expected: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
 		},
+		{
+			name:     "interface output",
+			arg1:     []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+			arg2:     []string{"a", "b", "c"},
+			expected: []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "a", "b", "c"},
+		},
 	}
 
 	for _, sample := range tests {
@@ -84,12 +90,12 @@ func TestUnion(t *testing.T) {
 			got, err := Union(sample.arg1, sample.arg2)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
