@@ -43,7 +43,7 @@ func Compact(slice interface{}, excepts interface{}) (interface{}, error) {
 	j := 0
 	for i := 0; i < length; i++ {
 		for k := 0; k < len(falsey); k++ {
-			if sliceValue.Index(i).Interface() == falsey[k] {
+			if ok, _ := internal.Same(sliceValue.Index(i).Interface(), falsey[k]); ok {
 				if i == j {
 					j = i + 1
 					continue

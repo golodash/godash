@@ -157,7 +157,7 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 	v2 := reflect.ValueOf(value2)
 
 	// Check for nil and "" and other zero values
-	if ((!v1.IsValid() && !v2.IsValid()) || (v1.IsZero() && v2.IsZero())) && (v1.Kind() == v2.Kind()) {
+	if (!v1.IsValid() && !v2.IsValid()) && (v1.Kind() == v2.Kind()) {
 		return true, nil
 	}
 

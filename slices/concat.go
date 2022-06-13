@@ -1,44 +1,43 @@
 package slices
 
 import (
-	"errors"
-	"fmt"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
 )
 
-var errTypeCheck error = errors.New("element in %d index does not match its type with others")
-
 // Creates a new slice concatenating slice with other one.
-func Concat(slice interface{}, values ...interface{}) ([]interface{}, error) {
+func Concat(slice interface{}, values interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
-	s := reflect.TypeOf(slice)
-	v := reflect.ValueOf(slice)
-
-	for i := range values {
-		if reflect.TypeOf(values[i]) != nil {
-			if reflect.TypeOf(values[i]).Kind() == reflect.Slice && (reflect.TypeOf(values[i]).String() == s.String() || s.Elem().Kind() == reflect.Interface) {
-				a := values[i]
-				if s.Elem().Kind() == reflect.Interface && reflect.TypeOf(values[i]).Kind() != reflect.Interface {
-					a, _ = internal.InterfaceToSlice(values[i])
+	valuesValue := reflect.ValueOf(values)
+	sliceValue := reflect.ValueOf(slice)
+	sliceType := reflect.TypeOf(slice)
+	for i := 0; i < valuesValue.Len(); i++ {
+		item := reflect.ValueOf(valuesValue.Index(i).Interface())
+		if !item.IsValid() {
+			continue
+		}
+		if item.Kind() == reflect.Slice {
+			if sliceType.Kind() == item.Kind() || sliceType.Elem().Kind() == reflect.Interface || item.Elem().Kind() == reflect.Interface {
+				for j := 0; j < item.Len(); j++ {
+					innerItem := reflect.ValueOf(item.Index(j).Interface())
+					if !innerItem.IsValid() {
+						continue
+					}
+					if innerItem.Kind() == sliceType.Elem().Kind() || sliceType.Elem().Kind() == reflect.Interface {
+						sliceValue = reflect.Append(sliceValue, innerItem)
+					}
 				}
-				v = reflect.AppendSlice(v, reflect.ValueOf(a))
-			} else if reflect.TypeOf(values[i]).Kind() == s.Elem().Kind() || s.Elem().Kind() == reflect.Interface {
-				v = reflect.Append(v, reflect.ValueOf(values[i]))
-			} else {
-				return nil, fmt.Errorf(errTypeCheck.Error(), i)
+			}
+		} else {
+			if item.Kind() == sliceType.Elem().Kind() || sliceType.Elem().Kind() == reflect.Interface {
+				sliceValue = reflect.Append(sliceValue, item)
 			}
 		}
 	}
 
-	res, err := internal.InterfaceToSlice(v.Interface())
-	if err != nil {
-		return nil, err
-	}
-
-	return res, nil
+	return sliceValue.Interface(), nil
 }

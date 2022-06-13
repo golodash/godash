@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type (
 	TConcat struct {
 		name   string
-		arr    []interface{}
-		values []interface{}
-		want   []interface{}
+		arr    interface{}
+		values interface{}
+		want   interface{}
 	}
 )
 
@@ -47,7 +49,7 @@ func init() {
 	for j := 0; j < len(tConcatBenchs); j++ {
 		length, _ := strconv.Atoi(tConcatBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tConcatBenchs[j].values = append(tConcatBenchs[j].values, []interface{}{0, nil, 2, false, 4, 5, "", nil, 8, 9}...)
+			tConcatBenchs[j].values = append(tConcatBenchs[j].values.([]interface{}), []interface{}{0, nil, 2, false, 4, 5, "", nil, 8, 9}...)
 		}
 	}
 }
@@ -79,33 +81,32 @@ func TestConcat(t *testing.T) {
 			want:   []interface{}{1, 2, 15, "l"},
 		},
 		{
-			name:   "a bit weird again",
+			name:   "more complicated",
 			arr:    []interface{}{0, nil, 0, false, nil, "", nil, 0, false, ""},
 			values: []interface{}{[]interface{}{0}, ""},
 			want:   []interface{}{0, nil, 0, false, nil, "", nil, 0, false, "", 0, ""},
+		},
+		{
+			name:   "type based",
+			arr:    []int{0, 1, 2, 3, 4, 5},
+			values: []int{6, 7, 8, 9},
+			want:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 	}
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			got, err := Concat(subject.arr, subject.values...)
+			got, err := Concat(subject.arr, subject.values)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Concat() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Concat() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("Concat() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}
@@ -115,7 +116,7 @@ func BenchmarkConcat(b *testing.B) {
 	for j := 0; j < len(tConcatBenchs); j++ {
 		b.Run(fmt.Sprintf("slice_size_%s", tConcatBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				Concat(tConcatBenchs[j].arr, tConcatBenchs[j].values...)
+				Concat(tConcatBenchs[j].arr, tConcatBenchs[j].values)
 			}
 		})
 	}
