@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-union_by): union_by function added
 * ✅ test(slices-union): a new test case updated
 * 🐛 fix(slices-union): different types allowed
 * ✅ test(slices-union): 'union' function's test cases and benchmarks added
