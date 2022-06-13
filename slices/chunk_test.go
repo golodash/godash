@@ -8,9 +8,9 @@ import (
 
 type TChunk struct {
 	name string
-	arr  []int
+	arr  interface{}
 	size int
-	want [][]int
+	want interface{}
 }
 
 var tChunkBenchs = []TChunk{
@@ -39,18 +39,13 @@ var tChunkBenchs = []TChunk{
 		arr:  []int{},
 		size: 1,
 	},
-	{
-		name: "1000000",
-		arr:  []int{},
-		size: 1,
-	},
 }
 
 func init() {
 	for j := 0; j < len(tChunkBenchs); j++ {
 		length, _ := strconv.Atoi(tChunkBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tChunkBenchs[j].arr = append(tChunkBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tChunkBenchs[j].arr = append(tChunkBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -67,7 +62,7 @@ func TestChunk(t *testing.T) {
 			name: "empty",
 			arr:  []int{},
 			size: 5,
-			want: nil,
+			want: []int{},
 		},
 		{
 			name: "negative",
@@ -132,30 +127,14 @@ func TestChunk(t *testing.T) {
 			got, err := Chunk(subject.arr, subject.size)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Compact() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("%v() got = %v, wanted = %v", "Chunk", got, subject.want)
+			if ok, _ := same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if len(got[i]) != len(subject.want[i]) {
-					t.Errorf("%v() got = %v, wanted = %v", "Chunk", got, subject.want)
-					return
-				}
-			}
-
-			for i := 0; i < len(got); i++ {
-				for j := 0; j < len(got[i]); j++ {
-					if got[i][j] != subject.want[i][j] {
-						t.Errorf("%v() got = %v, wanted = %v", "Chunk", got, subject.want)
-						return
-					}
-				}
 			}
 		})
 	}
