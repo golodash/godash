@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TDifference struct {
 	name  string
-	arr   []int
-	notIn []int
-	want  []int
+	arr   interface{}
+	notIn interface{}
+	want  interface{}
 }
 
 var tDifferenceBenchs = []TDifference{
@@ -45,9 +47,9 @@ func init() {
 	for j := 0; j < len(tDifferenceBenchs); j++ {
 		length, _ := strconv.Atoi(tDifferenceBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tDifferenceBenchs[j].arr = append(tDifferenceBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tDifferenceBenchs[j].arr = append(tDifferenceBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
-		tDifferenceBenchs[j].notIn = append(tDifferenceBenchs[j].notIn, 0, 1, 2, 3, 4, 5)
+		tDifferenceBenchs[j].notIn = append(tDifferenceBenchs[j].notIn.([]int), 0, 1, 2, 3, 4, 5)
 	}
 }
 
@@ -77,6 +79,12 @@ func TestDifference(t *testing.T) {
 			notIn: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			want:  []int{},
 		},
+		{
+			name:  "type based",
+			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			notIn: []string{"0", "1"},
+			want:  []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+		},
 	}
 
 	for _, subject := range tests {
@@ -84,21 +92,14 @@ func TestDifference(t *testing.T) {
 			got, err := Difference(subject.arr, subject.notIn)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("Difference() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}

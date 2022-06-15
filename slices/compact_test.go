@@ -91,7 +91,7 @@ func TestCompact(t *testing.T) {
 			want:   []interface{}{0, nil, 0, false, nil, "", nil, 0, false, ""},
 		},
 		{
-			name:   "type specific",
+			name:   "type based",
 			arr:    []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			except: nil,
 			want:   []int{1, 2, 3, 4, 5, 6, 7, 8, 9},

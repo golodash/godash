@@ -11,51 +11,37 @@ import (
 //
 // Note: In comparing fields of a struct, unexported fields
 // are ignored.
-func Difference(slice interface{}, notIncluded interface{}) ([]interface{}, error) {
-	if err := internal.CheckSameType(slice, notIncluded); err != nil {
+func Difference(slice interface{}, notIncluded interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
-	if err1, err2 := internal.SliceCheck(slice), internal.SliceCheck(notIncluded); err1 != nil || err2 != nil {
-		if err2 != nil {
-			return nil, err2
-		}
-		return nil, err1
-	}
-
-	s, err := internal.InterfaceToSlice(slice)
-	if err != nil {
+	if err := internal.SliceCheck(notIncluded); err != nil {
 		return nil, err
 	}
 
-	notIn := reflect.ValueOf(notIncluded)
-
-	for i := len(s) - 1; i > -1; i-- {
-		if i >= len(s) {
+	notInValue := reflect.ValueOf(notIncluded)
+	sliceValue := reflect.ValueOf(slice)
+	for i := sliceValue.Len() - 1; i > -1; i-- {
+		if i >= sliceValue.Len() {
 			continue
 		}
 	firstLoop:
-		for j := 0; j < notIn.Len(); j++ {
-			res, err := internal.Same(s[i], notIn.Index(j).Interface())
+		for j := 0; j < notInValue.Len(); j++ {
+			res, err := internal.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface())
 			if err != nil {
 				return nil, err
 			}
 			if res {
-				if i != 0 && i+1 < len(s) {
-					s = append(s[0:i], s[i+1:]...)
-				} else if i == 0 {
-					s = s[i+1:]
-				} else if i+1 >= len(s) {
-					s = s[0:i]
-				}
+				sliceValue = reflect.AppendSlice(sliceValue.Slice(0, i), sliceValue.Slice(i+1, sliceValue.Len()))
 				i++
 				break firstLoop
 			}
 		}
 	}
 
-	return s, nil
+	return sliceValue.Interface(), nil
 }
 
-func Without(slice interface{}, notIncluded interface{}) ([]interface{}, error) {
+func Without(slice interface{}, notIncluded interface{}) (interface{}, error) {
 	return Difference(slice, notIncluded)
 }
