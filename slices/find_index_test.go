@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TFindIndex struct {
 	name string
-	arr  []int
+	arr  interface{}
 	want int
 }
 
@@ -39,13 +41,13 @@ func init() {
 	for j := 0; j < len(tFindIndexBenchs); j++ {
 		length, _ := strconv.Atoi(tFindIndexBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tFindIndexBenchs[j].arr = append(tFindIndexBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tFindIndexBenchs[j].arr = append(tFindIndexBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
 
-func compareFindIndexTest(value int) bool {
-	return value == 5
+func compareFindIndexTest(value interface{}) bool {
+	return value.(int) == 5
 }
 
 func TestFindIndex(t *testing.T) {
@@ -66,7 +68,7 @@ func TestFindIndex(t *testing.T) {
 			want: 5,
 		},
 		{
-			name: "all remove",
+			name: "can't be found",
 			arr:  []int{0, 1, 2, 3, 4, 6, 7, 8, 9},
 			want: -1,
 		},
@@ -77,13 +79,13 @@ func TestFindIndex(t *testing.T) {
 			got, err := FindIndex(subject.arr, compareFindIndexTest)
 			if err != nil {
 				if subject.want != -1 {
-					t.Errorf("FindIndex() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if got != subject.want {
-				t.Errorf("FindIndex() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
