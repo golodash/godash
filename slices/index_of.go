@@ -25,7 +25,7 @@ func IndexOf(slice interface{}, value interface{}, from ...int) (int, error) {
 		}
 	}
 	if fr >= sliceValue.Len() {
-		return -1, errors.New("`from` index is out of range")
+		return -1, errors.New("'from' index is out of range")
 	} else if fr <= -1 {
 		return -1, nil
 	}

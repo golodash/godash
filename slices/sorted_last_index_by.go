@@ -18,22 +18,22 @@ func SortedLastIndexBy(slice, value, function interface{}) (int, error) {
 	functionType := reflect.TypeOf(function)
 	sType := reflect.TypeOf(slice)
 	if functionType.Kind() != reflect.Func {
-		return -1, errors.New("`function` has to be function type")
+		return -1, errors.New("'function' has to be function type")
 	}
 	if functionType.NumIn() != 1 {
-		return -1, errors.New("`function` inputs has to have just 1 input")
+		return -1, errors.New("'function' inputs has to have just 1 input")
 	}
 	if functionType.In(0).Kind() != sType.Elem().Kind() &&
 		functionType.In(0).Kind() != reflect.Interface {
-		return -1, errors.New("`function` inputs have to be the same type as `slice` variable elements or have to be `interface` type")
+		return -1, errors.New("'function' inputs have to be the same type as 'slice' variable elements or have to be 'interface' type")
 	}
 	if functionType.NumOut() != 1 || functionType.Out(0).Kind() != sType.Elem().Kind() {
-		return -1, errors.New("`function` output has to be the same type as `slice` variable elements and it has to have just 1 output")
+		return -1, errors.New("'function' output has to be the same type as 'slice' variable elements and it has to have just 1 output")
 	}
 
 	val := reflect.ValueOf(value)
 	if val.Type().Kind() != sType.Elem().Kind() && sType.Elem().Kind() != reflect.Interface {
-		return -1, errors.New("`value` is not compatible with `slice` elements")
+		return -1, errors.New("'value' is not compatible with 'slice' elements")
 	}
 
 	return whereToPutInSliceBiggerEqualBy(slice, value, compareHigherEqual, function)
@@ -75,7 +75,7 @@ func whereToPutInSliceBiggerEqualBy(slice, value, isBiggerEqualFunction, compara
 
 	var err error = nil
 	if err = internal.AreComparable(item, value); err != nil {
-		return -1, errors.New("couldn't compare `value` with all items in passed slice")
+		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
 	}
 
 	var result int

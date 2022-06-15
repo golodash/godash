@@ -16,7 +16,7 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 	}
 	valuesValue := reflect.ValueOf(values)
 	if len(keys) != valuesValue.Len() || len(keys) == 0 || valuesValue.Len() == 0 {
-		return nil, errors.New("length of both `keys` and `values` slices has to be same and not empty")
+		return nil, errors.New("length of both 'keys' and 'values' slices has to be same and not empty")
 	}
 
 	keysValue := reflect.ValueOf(keys)

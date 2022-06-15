@@ -11,7 +11,7 @@ import (
 //
 // Note: In comparing fields of a struct, unexported fields
 // are ignored.
-func Difference(slice interface{}, notIncluded interface{}) (interface{}, error) {
+func Difference(slice, notIncluded interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
@@ -42,6 +42,6 @@ func Difference(slice interface{}, notIncluded interface{}) (interface{}, error)
 	return sliceValue.Interface(), nil
 }
 
-func Without(slice interface{}, notIncluded interface{}) (interface{}, error) {
+func Without(slice, notIncluded interface{}) (interface{}, error) {
 	return Difference(slice, notIncluded)
 }

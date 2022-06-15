@@ -35,13 +35,13 @@ func ZipBy(function interface{}, slices ...interface{}) (interface{}, error) {
 
 	functionValue := reflect.ValueOf(function)
 	if functionValue.Kind() != reflect.Func {
-		return nil, errors.New("`function` variable has to be `function` type")
+		return nil, errors.New("'function' variable has to be 'function' type")
 	}
 	if functionValue.Type().NumOut() != 1 {
-		return nil, errors.New("number of `function` output has to be one")
+		return nil, errors.New("number of 'function' output has to be one")
 	}
 	if functionValue.Type().In(0).Kind() != reflect.Slice && functionValue.Type().In(0).Elem().String() != typeOfSlices.Elem().String() && functionValue.Type().In(0).Kind() != reflect.Interface {
-		return nil, errors.New("number of `function` input has to be one and be compatible with inputs slices elements type")
+		return nil, errors.New("number of 'function' input has to be one and be compatible with inputs slices elements type")
 	}
 
 	output := reflect.MakeSlice(reflect.SliceOf(functionValue.Type().Out(0)), 0, sizeOfAllSlices)

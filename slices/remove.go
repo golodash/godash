@@ -18,13 +18,13 @@ func Remove(slice, function interface{}) (interface{}, interface{}, error) {
 	functionType := reflect.TypeOf(function)
 	sliceType := reflect.TypeOf(slice)
 	if functionType.Kind() != reflect.Func {
-		return nil, nil, errors.New("`function` input should be a function type")
+		return nil, nil, errors.New("'function' input should be a function type")
 	}
 	if functionType.NumIn() != 1 || (sliceType.Elem().String() != functionType.In(0).String() && functionType.In(0).Kind() != reflect.Interface) {
-		return nil, nil, errors.New("`function` should have a single input and be compatible with slice elements")
+		return nil, nil, errors.New("'function' should have a single input and be compatible with slice elements")
 	}
 	if functionType.NumOut() != 1 || functionType.Out(0).Kind() != reflect.Bool {
-		return nil, nil, errors.New("`function` should have a single output and it has to be boolean type")
+		return nil, nil, errors.New("'function' should have a single output and it has to be boolean type")
 	}
 
 	newSlice, err := internal.InterfaceToSlice(slice)

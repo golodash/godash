@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TFill struct {
 	name  string
-	arr   []int
+	arr   interface{}
 	value int
 	start int
 	end   int
-	want  []int
+	want  interface{}
 }
 
 var tFillBenchs = []TFill{
@@ -57,7 +59,7 @@ func init() {
 	for j := 0; j < len(tFillBenchs); j++ {
 		length, _ := strconv.Atoi(tFillBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tFillBenchs[j].arr = append(tFillBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tFillBenchs[j].arr = append(tFillBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -85,8 +87,16 @@ func TestFill(t *testing.T) {
 			arr:   []int{},
 			value: 0,
 			start: 0,
-			end:   -1,
+			end:   0,
 			want:  []int{},
+		},
+		{
+			name:  "negative start",
+			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			value: 0,
+			start: -5,
+			end:   3,
+			want:  nil,
 		},
 		{
 			name:  "normal",
@@ -101,32 +111,33 @@ func TestFill(t *testing.T) {
 			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			value: 0,
 			start: 0,
-			end:   -1,
+			end:   10,
 			want:  []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		{
+			name:  "negative end",
+			arr:   []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			value: 0,
+			start: 0,
+			end:   -5,
+			want:  nil,
 		},
 	}
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			err := Fill(subject.arr, subject.value, subject.start, subject.end)
+			got, err := Fill(subject.arr, subject.value, subject.start, subject.end)
 
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Fill() got = %v, wanted = %v", subject.arr, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(subject.arr) != len(subject.want) {
-				t.Errorf("Fill() got = %v, wanted = %v", subject.arr, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(subject.arr); i++ {
-				if subject.arr[i] != subject.want[i] {
-					t.Errorf("Fill() got = %v, wanted = %v", subject.arr, subject.want)
-					return
-				}
 			}
 		})
 	}

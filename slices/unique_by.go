@@ -20,13 +20,13 @@ func UniqueBy(slice, function interface{}) (interface{}, error) {
 	functionType := reflect.TypeOf(function)
 	sliceType := reflect.TypeOf(slice)
 	if functionType.Kind() != reflect.Func {
-		return nil, errors.New("`function` input should be a function type")
+		return nil, errors.New("'function' input should be a function type")
 	}
 	if functionType.NumIn() != 1 || (sliceType.Elem().String() != functionType.In(0).String() && functionType.In(0).Kind() != reflect.Interface) {
-		return nil, errors.New("`function` should have a single input and be compatible with slice elements")
+		return nil, errors.New("'function' should have a single input and be compatible with slice elements")
 	}
 	if functionType.NumOut() != 1 {
-		return nil, errors.New("`function` should have a single output")
+		return nil, errors.New("'function' should have a single output")
 	}
 
 	functionValue := reflect.ValueOf(function)

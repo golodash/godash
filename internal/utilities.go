@@ -56,8 +56,8 @@ func InterfaceToSlice(slice interface{}) ([]interface{}, error) {
 	return result, nil
 }
 
-// Checks if `slice` interface variable is slice type and
-// if `slice` is nil
+// Checks if 'slice' interface variable is slice type and
+// if 'slice' is nil
 func SliceCheck(slice interface{}) error {
 	s := reflect.ValueOf(slice)
 	if s.Kind() != reflect.Slice {
@@ -180,7 +180,6 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println(r)
 			condition, err = false, fmt.Errorf("%s", r)
 		}
 	}()
@@ -191,7 +190,7 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 			condition, err = false, nil
 			return
 		}
-		for i := 0; i < v1.Len(); i = i + 1 {
+		for i := 0; i < v1.Len(); i++ {
 			condition, err = Same(v1.Index(i).Interface(), v2.Index(i).Interface())
 			if err != nil || !condition {
 				condition, err = false, nil

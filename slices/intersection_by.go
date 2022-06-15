@@ -19,18 +19,18 @@ func IntersectionBy(slice interface{}, function interface{}) ([]interface{}, err
 
 	functionType := reflect.TypeOf(function)
 	if functionType.Kind() != reflect.Func {
-		return nil, errors.New("`function` has to be function type")
+		return nil, errors.New("'function' has to be function type")
 	}
 	if functionType.NumIn() != 2 {
-		return nil, errors.New("`function` inputs have to have just 2 inputs")
+		return nil, errors.New("'function' inputs have to have just 2 inputs")
 	}
 	if functionType.In(0).Kind() != functionType.In(1).Kind() ||
 		functionType.In(0).Kind() != reflect.TypeOf(slice).Elem().Kind() &&
 			functionType.In(0).Kind() != reflect.Interface {
-		return nil, errors.New("`function` inputs have to be the same type as `slice` variable elements or have to be `interface` type")
+		return nil, errors.New("'function' inputs have to be the same type as 'slice' variable elements or have to be 'interface' type")
 	}
 	if functionType.NumOut() != 1 || functionType.Out(0).Kind() != reflect.Bool {
-		return nil, errors.New("`function` function output has to be `bool` type and it has to have just 1 output")
+		return nil, errors.New("'function' function output has to be 'bool' type and it has to have just 1 output")
 	}
 
 	sliceValue := reflect.ValueOf(slice)

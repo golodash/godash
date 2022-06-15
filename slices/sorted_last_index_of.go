@@ -17,7 +17,7 @@ func SortedLastIndexOf(slice, value interface{}) (int, error) {
 	sType := reflect.TypeOf(slice)
 	val := reflect.ValueOf(value)
 	if val.Type().Kind() != sType.Elem().Kind() && sType.Elem().Kind() != reflect.Interface {
-		return -1, errors.New("`value` is not compatible with `slice` elements")
+		return -1, errors.New("'value' is not compatible with 'slice' elements")
 	}
 
 	return sortedLastIndexOf(slice, value, compareHigherEqual, compareIsEqual)
@@ -52,7 +52,7 @@ func sortedLastIndexOf(slice, value, isHigherEqualFunction, isEqualFunction inte
 
 	var err error = nil
 	if err = internal.AreComparable(item, value); err != nil {
-		return -1, errors.New("couldn't compare `value` with all items in passed slice")
+		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
 	}
 
 	var result int

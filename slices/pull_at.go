@@ -15,7 +15,7 @@ import (
 func PullAt(slice interface{}, remSlice []int) ([]interface{}, []interface{}, error) {
 	s, err := internal.InterfaceToSlice(slice)
 	if err != nil {
-		return nil, nil, errors.New("`slice` variable is not slice type")
+		return nil, nil, errors.New("'slice' variable is not slice type")
 	}
 
 	sort.Ints(remSlice)

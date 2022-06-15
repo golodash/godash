@@ -16,13 +16,13 @@ func SortedIndex(slice, value interface{}) (int, error) {
 	}
 
 	if res := internal.IsNumber(value); !res {
-		return -1, errors.New("`value` is not a number")
+		return -1, errors.New("'value' is not a number")
 	}
 
 	val := reflect.ValueOf(value)
 	sType := reflect.TypeOf(slice)
 	if !sType.Elem().ConvertibleTo(val.Type()) {
-		return -1, errors.New("`value` is not comparable with `slice`")
+		return -1, errors.New("'value' is not comparable with 'slice'")
 	}
 
 	return whereToPutInSliceLowerEqual(slice, value, compareLowerEqual)
@@ -98,7 +98,7 @@ func whereToPutInSliceLowerEqual(slice, value, isLowerEqualFunction interface{})
 
 	var err error = nil
 	if err = internal.AreComparable(item, value); err != nil {
-		return -1, errors.New("couldn't compare `value` with all items in passed slice")
+		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
 	}
 
 	var result int

@@ -19,13 +19,13 @@ func SortedUniqueBy(slice, function interface{}) (interface{}, error) {
 	sliceType := reflect.TypeOf(slice)
 	funcType := reflect.TypeOf(function)
 	if funcType.Kind() != reflect.Func {
-		return nil, errors.New("`function` input should be function type")
+		return nil, errors.New("'function' input should be function type")
 	}
 	if funcType.NumIn() != 1 || (funcType.In(0).String() != sliceType.Elem().String() && funcType.In(0).Kind() != reflect.Interface) {
-		return nil, errors.New("`function` should have a single input and it's input type has to be compatible with slice elements types")
+		return nil, errors.New("'function' should have a single input and it's input type has to be compatible with slice elements types")
 	}
 	if funcType.NumOut() != 1 || !internal.IsNumberType(funcType.Out(0).Kind()) {
-		return nil, errors.New("`function`'s output should be a single output and it's type has to be a number")
+		return nil, errors.New("'function''s output should be a single output and it's type has to be a number")
 	}
 
 	newSlice, err := internal.InterfaceToSlice(slice)

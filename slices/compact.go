@@ -10,7 +10,7 @@ import (
 // Removes falsey items from slice except values you mentioned.
 //
 // Falsey items are {"", nil, 0, false}
-func Compact(slice interface{}, excepts interface{}) (interface{}, error) {
+func Compact(slice, excepts interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
