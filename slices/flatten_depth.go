@@ -7,50 +7,50 @@ import (
 )
 
 // Flattens slice 'depth' level deep.
-func FlattenDepth(slice interface{}, depth int) ([]interface{}, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
+func FlattenDepth(slice interface{}, depth int) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
 	if depth == 0 {
-		return internal.InterfaceToSlice(slice)
+		return slice, nil
 	} else if depth < 0 {
-		s, err := internal.InterfaceToSlice(slice)
-		if err != nil {
-			return nil, err
-		}
-		return negativeFlatten(s, -depth), nil
+		return negativeFlatten(slice, -depth), nil
 	} else {
-		return internal.InterfaceToSlice(recursiveFlattenDepth(reflect.ValueOf(slice), depth).Interface())
+		return recursiveFlattenDepth(slice, depth, getTypeInGivenDepth(slice, depth)).Interface(), nil
 	}
 }
 
-func negativeFlatten(slice []interface{}, depth int) []interface{} {
+func getTypeInGivenDepth(slice interface{}, depth int) reflect.Type {
+	sliceItemType := reflect.TypeOf(slice)
+	for sliceItemType.Kind() == reflect.Slice {
+		if depth == 0 {
+			break
+		}
+		sliceItemType = sliceItemType.Elem()
+		depth--
+	}
+
+	return sliceItemType
+}
+
+func negativeFlatten(slice interface{}, depth int) interface{} {
+	sliceValue := reflect.ValueOf(slice)
 	if depth > 0 {
-		slice = []interface{}{negativeFlatten(slice, depth-1)}
+		returnedSlice := negativeFlatten(slice, depth-1)
+		sliceValue = reflect.Append(reflect.MakeSlice(reflect.SliceOf(reflect.TypeOf(returnedSlice)), 0, 1), reflect.ValueOf(returnedSlice))
 	}
-	return slice
+
+	return sliceValue.Interface()
 }
 
-func recursiveFlattenDepth(slice reflect.Value, depth int) reflect.Value {
-	s := reflect.ValueOf([]interface{}{})
-	for i := 0; i < slice.Len(); i++ {
-		item := slice.Index(i)
-		if val, ok := item.Interface().([]interface{}); ok || item.Kind() == reflect.Slice {
-			if val != nil {
-				if depth != 0 {
-					s = reflect.AppendSlice(s, recursiveFlattenDepth(reflect.ValueOf(val), depth-1))
-				} else {
-					s = reflect.Append(s, reflect.ValueOf(val))
-				}
-			} else {
-				if depth != 0 {
-					s = reflect.AppendSlice(s, recursiveFlattenDepth(item, depth-1))
-				} else {
-					s = reflect.Append(s, item)
-				}
-			}
+func recursiveFlattenDepth(slice interface{}, depth int, itemType reflect.Type) reflect.Value {
+	s := reflect.MakeSlice(reflect.SliceOf(itemType), 0, 0)
+	sliceValue := reflect.ValueOf(slice)
+	for i := 0; i < sliceValue.Len(); i++ {
+		item := reflect.ValueOf(sliceValue.Index(i).Interface())
+		if item.Kind() == reflect.Slice && depth != 0 {
+			s = reflect.AppendSlice(s, recursiveFlattenDepth(item.Interface(), depth-1, itemType))
 		} else {
 			s = reflect.Append(s, item)
 		}

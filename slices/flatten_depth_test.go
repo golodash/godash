@@ -2,16 +2,17 @@ package slices
 
 import (
 	"fmt"
-	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TFlattenDepth struct {
 	name  string
-	arr   []interface{}
+	arr   interface{}
 	depth int
-	want  []interface{}
+	want  interface{}
 }
 
 var tFlattenDepthBenchs = []TFlattenDepth{
@@ -46,7 +47,7 @@ func init() {
 	for j := 0; j < len(tFlattenDepthBenchs); j++ {
 		length, _ := strconv.Atoi(tFlattenDepthBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tFlattenDepthBenchs[j].arr = append(tFlattenDepthBenchs[j].arr, []interface{}{[]interface{}{[]interface{}{[]interface{}{0, []interface{}{1}, 2}, 3, 4}, 5}, 6, []interface{}{7, 8}, 9}...)
+			tFlattenDepthBenchs[j].arr = append(tFlattenDepthBenchs[j].arr.([]interface{}), []interface{}{[]interface{}{[]interface{}{[]interface{}{0, []interface{}{1}, 2}, 3, 4}, 5}, 6, []interface{}{7, 8}, 9}...)
 		}
 	}
 }
@@ -102,38 +103,15 @@ func TestFlattenDepth(t *testing.T) {
 			got, err := FlattenDepth(subject.arr, subject.depth)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("FlattenDepth() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("FlattenDepth() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
-
-			check := func(subgot, want []interface{}, function interface{}) {
-				for i := 0; i < len(subgot); i++ {
-					if gotVal, ok := subgot[i].([]interface{}); ok {
-						if wantVal, ok := want[i].([]interface{}); ok {
-							for j := 0; j < len(subgot); j++ {
-								reflect.ValueOf(function).Call([]reflect.Value{reflect.ValueOf(gotVal), reflect.ValueOf(wantVal), reflect.ValueOf(function)})
-							}
-						} else {
-							t.Errorf("FlattenDepth() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-
-					} else {
-						if subgot[i] != want[i] {
-							t.Errorf("FlattenDepth() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-					}
-				}
-			}
-
-			check(got, subject.want, check)
 		})
 	}
 }
