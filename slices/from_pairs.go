@@ -1,37 +1,43 @@
 package slices
 
 import (
+	"fmt"
+	"reflect"
+
 	"github.com/golodash/godash/internal"
 )
 
 // This method returns an object composed from key-value pairs.
-func FromPairs(slice interface{}) (map[string]interface{}, error) {
-	s, err := internal.InterfaceToSlice(slice)
-	if err != nil {
+func FromPairs(slice interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
-	var output = map[string]interface{}{}
-	for i := 0; i < len(s); i++ {
-		item, err := internal.InterfaceToSlice(s[i])
-		ok := false
-		if err != nil {
-			item, ok = s[i].([]interface{})
-			if !ok {
-				continue
-			}
+	sliceItemType := reflect.TypeOf(slice)
+	if sliceItemType = sliceItemType.Elem(); sliceItemType.Kind() == reflect.Slice {
+		if sliceItemType = sliceItemType.Elem(); sliceItemType.Kind() == reflect.Slice {
+			_ = 0
+		}
+	}
+
+	sliceValue := reflect.ValueOf(slice)
+	output := reflect.MakeMap(reflect.MapOf(sliceItemType, sliceItemType))
+	for i := 0; i < sliceValue.Len(); i++ {
+		item := reflect.ValueOf(sliceValue.Index(i).Interface())
+		if err := internal.SliceCheck(item.Interface()); err != nil {
+			return nil, fmt.Errorf("item in index %d is not even a slice", i)
 		}
 
-		if len(item) == 2 {
-			if key, ok := item[0].(string); ok {
-				output[key] = item[1]
+		if item.Len() == 2 {
+			if key, ok := item.Index(0).Interface().(string); ok {
+				output.SetMapIndex(reflect.ValueOf(key), item.Index(1))
 			}
-		} else if len(item) == 1 {
-			if key, ok := item[0].(string); ok {
-				output[key] = nil
+		} else if item.Len() == 1 {
+			if key, ok := item.Index(0).Interface().(string); ok {
+				output.SetMapIndex(reflect.ValueOf(key), reflect.Zero(sliceItemType))
 			}
 		}
 	}
 
-	return output, nil
+	return output.Interface(), nil
 }

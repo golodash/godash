@@ -10,8 +10,8 @@ import (
 
 type TFromPairs struct {
 	name string
-	arr  [][]interface{}
-	want map[string]interface{}
+	arr  interface{}
+	want interface{}
 }
 
 var tFromPairsBenchs = []TFromPairs{
@@ -41,7 +41,7 @@ func init() {
 	for j := 0; j < len(tFromPairsBenchs); j++ {
 		length, _ := strconv.Atoi(tFromPairsBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tFromPairsBenchs[j].arr = append(tFromPairsBenchs[j].arr, [][]interface{}{{"0", 1}, {"2", 3}, {"4", 5}, {"6", 7}, {"8", 9}}...)
+			tFromPairsBenchs[j].arr = append(tFromPairsBenchs[j].arr.([][]interface{}), [][]interface{}{{"0", 1}, {"2", 3}, {"4", 5}, {"6", 7}, {"8", 9}}...)
 		}
 	}
 }
@@ -56,22 +56,27 @@ func TestFromPairs(t *testing.T) {
 		{
 			name: "empty",
 			arr:  [][]interface{}{},
-			want: map[string]interface{}{},
+			want: map[interface{}]interface{}{},
 		},
 		{
 			name: "none",
 			arr:  [][]interface{}{{}, {}, {"4", 5, 76}, {"6", 7, "*88"}, {}},
-			want: map[string]interface{}{},
+			want: map[interface{}]interface{}{},
 		},
 		{
 			name: "normal",
 			arr:  [][]interface{}{{"0", 1}, {"2", 3}, {"4", 5}, {"6", 7}, {"8", 9}},
-			want: map[string]interface{}{"0": 1, "2": 3, "4": 5, "6": 7, "8": 9},
+			want: map[interface{}]interface{}{"0": 1, "2": 3, "4": 5, "6": 7, "8": 9},
+		},
+		{
+			name: "type based",
+			arr:  [][]string{{"0", "1"}, {"2", "3"}, {"4", "5"}, {"6", "7"}, {"8", "9"}},
+			want: map[string]string{"0": "1", "2": "3", "4": "5", "6": "7", "8": "9"},
 		},
 		{
 			name: "multiple",
 			arr:  [][]interface{}{{"0", 1}, {"2", 3, 45, 98, "["}, {"4"}, {"5", 6}, {"8", 9}},
-			want: map[string]interface{}{"0": 1, "4": nil, "5": 6, "8": 9},
+			want: map[interface{}]interface{}{"0": 1, "4": nil, "5": 6, "8": 9},
 		},
 	}
 
@@ -80,41 +85,14 @@ func TestFromPairs(t *testing.T) {
 			got, err := FromPairs(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(subject.arr); i++ {
-				for j := 0; j < 2; j++ {
-					if len(subject.arr[i]) == 2 {
-						if key, ok := subject.arr[i][0].(string); ok {
-							res, err := internal.Same(got[key], subject.arr[i][1])
-							if err != nil || !res {
-								t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
-								return
-							}
-						} else {
-							t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-					} else if len(subject.arr[i]) == 1 {
-						if key, ok := subject.arr[i][0].(string); ok {
-							if got[key] != nil {
-								t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
-								return
-							}
-						} else {
-							t.Errorf("FromPairs() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-					}
-				}
 			}
 		})
 	}
