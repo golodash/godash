@@ -7,30 +7,31 @@ import (
 )
 
 // Flattens slice a single level deep.
-func Flatten(slice interface{}) ([]interface{}, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
+func Flatten(slice interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
-	s := []interface{}{}
 	sliceValue := reflect.ValueOf(slice)
+	var output reflect.Value
+	if sliceValue.Type().Elem().Kind() == reflect.Interface {
+		output = reflect.MakeSlice(reflect.TypeOf([]interface{}{}), 0, sliceValue.Len())
+	} else if sliceValue.Type().Elem().Kind() == reflect.Slice {
+		output = reflect.MakeSlice(sliceValue.Type().Elem(), 0, sliceValue.Len())
+	} else {
+		return slice, nil
+	}
+
 	for i := 0; i < sliceValue.Len(); i++ {
-		item := sliceValue.Index(i)
-		if val, ok := item.Interface().([]interface{}); ok || item.Kind() == reflect.Slice {
-			if val != nil {
-				for j := 0; j < len(val); j++ {
-					s = append(s, val[j])
-				}
-			} else {
-				for j := 0; j < item.Len(); j++ {
-					s = append(s, item.Index(j).Interface())
-				}
+		item := reflect.ValueOf(sliceValue.Index(i).Interface())
+		if item.Kind() == reflect.Slice {
+			for j := 0; j < item.Len(); j++ {
+				output = reflect.Append(output, item.Index(j))
 			}
 		} else {
-			s = append(s, item.Interface())
+			output = reflect.Append(output, item)
 		}
 	}
 
-	return s, nil
+	return output.Interface(), nil
 }

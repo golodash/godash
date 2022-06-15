@@ -2,15 +2,16 @@ package slices
 
 import (
 	"fmt"
-	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TFlatten struct {
 	name string
-	arr  []interface{}
-	want []interface{}
+	arr  interface{}
+	want interface{}
 }
 
 var tFlattenBenchs = []TFlatten{
@@ -40,7 +41,7 @@ func init() {
 	for j := 0; j < len(tFlattenBenchs); j++ {
 		length, _ := strconv.Atoi(tFlattenBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tFlattenBenchs[j].arr = append(tFlattenBenchs[j].arr, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tFlattenBenchs[j].arr = append(tFlattenBenchs[j].arr.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -68,6 +69,11 @@ func TestFlatten(t *testing.T) {
 			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 		{
+			name: "more simple",
+			arr:  [][]int{{0}, {1, 2}, {3, 4, 5}, {6, 7}, {8, 9}},
+			want: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+		},
+		{
 			name: "more layer",
 			arr:  []interface{}{[]interface{}{0, []interface{}{1, 2}}, 3, []interface{}{4, 5, []interface{}{6, 7}, 8}, []interface{}{9}},
 			want: []interface{}{0, []interface{}{1, 2}, 3, 4, 5, []interface{}{6, 7}, 8, 9},
@@ -79,38 +85,15 @@ func TestFlatten(t *testing.T) {
 			got, err := Flatten(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Flatten() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Flatten() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
-
-			check := func(subgot, want []interface{}, function interface{}) {
-				for i := 0; i < len(subgot); i++ {
-					if gotVal, ok := subgot[i].([]interface{}); ok {
-						if wantVal, ok := want[i].([]interface{}); ok {
-							for j := 0; j < len(subgot); j++ {
-								reflect.ValueOf(function).Call([]reflect.Value{reflect.ValueOf(gotVal), reflect.ValueOf(wantVal), reflect.ValueOf(function)})
-							}
-						} else {
-							t.Errorf("Flatten() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-
-					} else {
-						if subgot[i] != want[i] {
-							t.Errorf("Flatten() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-					}
-				}
-			}
-
-			check(got, subject.want, check)
 		})
 	}
 }
