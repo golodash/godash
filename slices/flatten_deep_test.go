@@ -2,15 +2,16 @@ package slices
 
 import (
 	"fmt"
-	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TFlattenDeep struct {
 	name string
-	arr  []interface{}
-	want []interface{}
+	arr  interface{}
+	want interface{}
 }
 
 var tFlattenDeepBenchs = []TFlattenDeep{
@@ -40,7 +41,7 @@ func init() {
 	for j := 0; j < len(tFlattenDeepBenchs); j++ {
 		length, _ := strconv.Atoi(tFlattenDeepBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tFlattenDeepBenchs[j].arr = append(tFlattenDeepBenchs[j].arr, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tFlattenDeepBenchs[j].arr = append(tFlattenDeepBenchs[j].arr.([]interface{}), [][][]interface{}{{{0, 1, 2}}, {{3, 4, 5, 6, 7, 8, 9}}})
 		}
 	}
 }
@@ -59,18 +60,18 @@ func TestFlattenDeep(t *testing.T) {
 		},
 		{
 			name: "none",
-			arr:  []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
-			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			arr:  []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			want: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 		{
 			name: "normal",
-			arr:  []interface{}{0, []interface{}{1, 2}, []interface{}{3, 4, 5}, []interface{}{6, 7}, 8, 9},
+			arr:  []interface{}{0, []interface{}{1, 2}, [][]interface{}{{3}, {4, 5}}, []interface{}{6, 7}, 8, 9},
 			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 		{
 			name: "more layer",
-			arr:  []interface{}{[]interface{}{0, []interface{}{1, 2}}, 3, []interface{}{4, 5, []interface{}{6, 7}, 8}, []interface{}{9}},
-			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			arr:  [][][]int{{{0, 1, 2}}, {{3}, {4, 5, 6}}, {{}}, {{7}}, {{8, 9}}},
+			want: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 	}
 
@@ -79,38 +80,15 @@ func TestFlattenDeep(t *testing.T) {
 			got, err := FlattenDeep(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("FlattenDeep() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("FlattenDeep() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
-
-			check := func(subgot, want []interface{}, function interface{}) {
-				for i := 0; i < len(subgot); i++ {
-					if gotVal, ok := subgot[i].([]interface{}); ok {
-						if wantVal, ok := want[i].([]interface{}); ok {
-							for j := 0; j < len(subgot); j++ {
-								reflect.ValueOf(function).Call([]reflect.Value{reflect.ValueOf(gotVal), reflect.ValueOf(wantVal), reflect.ValueOf(function)})
-							}
-						} else {
-							t.Errorf("FlattenDeep() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-
-					} else {
-						if subgot[i] != want[i] {
-							t.Errorf("FlattenDeep() got = %v, wanted = %v", got, subject.want)
-							return
-						}
-					}
-				}
-			}
-
-			check(got, subject.want, check)
 		})
 	}
 }
