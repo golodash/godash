@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TDropBy struct {
 	name string
-	arr  []int
-	want []int
+	arr  interface{}
+	want interface{}
 }
 
 var tDropByBenchs = []TDropBy{
@@ -35,15 +37,15 @@ var tDropByBenchs = []TDropBy{
 	},
 }
 
-func removeDropByTest(intput int) bool {
-	return intput%2 == 0
+func removeDropByTest(intput interface{}) bool {
+	return intput.(int)%2 == 0
 }
 
 func init() {
 	for j := 0; j < len(tDropByBenchs); j++ {
 		length, _ := strconv.Atoi(tDropByBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tDropByBenchs[j].arr = append(tDropByBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tDropByBenchs[j].arr = append(tDropByBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -72,21 +74,14 @@ func TestDropBy(t *testing.T) {
 			got, err := DropBy(subject.arr, removeDropByTest)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("DropBy() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("DropBy() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("DropBy() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}
