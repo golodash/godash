@@ -13,35 +13,21 @@ func FlattenDeep(slice interface{}) (interface{}, error) {
 		return nil, err
 	}
 
-	return getTypeRecursiveFlattenDeep(slice), nil
-}
-
-func getTypeRecursiveFlattenDeep(slice interface{}) interface{} {
-	sliceType := reflect.TypeOf(slice)
-	for sliceType.Kind() == reflect.Slice {
-		sliceType = sliceType.Elem()
+	sliceItemType := reflect.TypeOf(slice)
+	for sliceItemType.Kind() == reflect.Slice {
+		sliceItemType = sliceItemType.Elem()
 	}
 
-	outputItems := recursiveFlattenDeep(slice).Interface().([]interface{})
-	if sliceType.Kind() != reflect.Interface {
-		output := reflect.MakeSlice(reflect.SliceOf(sliceType), 0, len(outputItems))
-		for i := 0; i < len(outputItems); i++ {
-			output = reflect.Append(output, reflect.ValueOf(outputItems[i]))
-		}
-
-		return output.Interface()
-	} else {
-		return outputItems
-	}
+	return recursiveFlattenDeep(slice, sliceItemType).Interface(), nil
 }
 
-func recursiveFlattenDeep(slice interface{}) reflect.Value {
-	s := reflect.ValueOf([]interface{}{})
+func recursiveFlattenDeep(slice interface{}, itemType reflect.Type) reflect.Value {
+	s := reflect.MakeSlice(reflect.SliceOf(itemType), 0, 0)
 	sliceValue := reflect.ValueOf(slice)
 	for i := 0; i < sliceValue.Len(); i++ {
 		item := reflect.ValueOf(sliceValue.Index(i).Interface())
 		if item.Kind() == reflect.Slice {
-			s = reflect.AppendSlice(s, recursiveFlattenDeep(item.Interface()))
+			s = reflect.AppendSlice(s, recursiveFlattenDeep(item.Interface(), itemType))
 		} else {
 			s = reflect.Append(s, item)
 		}
