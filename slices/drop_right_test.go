@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TDropRight struct {
 	name string
-	arr  []int
+	arr  interface{}
 	num  int
-	want []int
+	want interface{}
 }
 
 var tDropRightBenchs = []TDropRight{
@@ -45,7 +47,7 @@ func init() {
 	for j := 0; j < len(tDropRightBenchs); j++ {
 		length, _ := strconv.Atoi(tDropRightBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tDropRightBenchs[j].arr = append(tDropRightBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tDropRightBenchs[j].arr = append(tDropRightBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -63,6 +65,12 @@ func TestDropRight(t *testing.T) {
 			arr:  []int{},
 			num:  0,
 			want: []int{},
+		},
+		{
+			name: "lower that length",
+			arr:  []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			num:  -2,
+			want: nil,
 		},
 		{
 			name: "normal",
@@ -101,21 +109,14 @@ func TestDropRight(t *testing.T) {
 			got, err := DropRight(subject.arr, subject.num)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("DropRight() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("DropRight() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("DropRight() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}

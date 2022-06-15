@@ -11,26 +11,18 @@ import (
 // dropped from the end.
 //
 // By default n is equal to 0
-func DropRight(slice interface{}, n ...int) ([]interface{}, error) {
-	var err error = internal.SliceCheck(slice)
-	if err != nil {
+func DropRight(slice interface{}, n int) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
-	s := reflect.ValueOf(slice)
-	var to int = 0
-	if len(n) > 0 {
-		to = n[0]
+	sliceValue := reflect.ValueOf(slice)
+	if sliceValue.Len() < n {
+		return nil, errors.New("'num' is bigger than slice length")
+	}
+	if n < 0 {
+		return nil, errors.New("'num' is lower that zero")
 	}
 
-	if s.Len() < to {
-		return nil, errors.New("num is bigger than slice length")
-	}
-
-	output, err := internal.InterfaceToSlice(s.Slice(0, s.Len()-to).Interface())
-	if err != nil {
-		return nil, err
-	}
-
-	return output, nil
+	return sliceValue.Slice(0, sliceValue.Len()-n).Interface(), nil
 }
