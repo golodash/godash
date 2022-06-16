@@ -19,27 +19,27 @@ var tSortedIndexBenchs = []TSortedIndex{
 	{
 		name:  "10",
 		arr:   []int{},
-		value: 0,
+		value: 100,
 	},
 	{
 		name:  "100",
 		arr:   []int{},
-		value: 0,
+		value: 1000,
 	},
 	{
 		name:  "1000",
 		arr:   []int{},
-		value: 0,
+		value: 10000,
 	},
 	{
 		name:  "10000",
 		arr:   []int{},
-		value: 0,
+		value: 100000,
 	},
 	{
 		name:  "100000",
 		arr:   []int{},
-		value: 0,
+		value: 1000000,
 	},
 }
 

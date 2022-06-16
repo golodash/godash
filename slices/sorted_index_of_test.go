@@ -17,29 +17,29 @@ type TSortedIndexOf struct {
 
 var tSortedIndexOfBenchs = []TSortedIndexOf{
 	{
-		name: "10",
-		arr:  []int{},
-		want: 100,
+		name:  "10",
+		arr:   []int{},
+		value: 0,
 	},
 	{
-		name: "100",
-		arr:  []int{},
-		want: 1000,
+		name:  "100",
+		arr:   []int{},
+		value: 0,
 	},
 	{
-		name: "1000",
-		arr:  []int{},
-		want: 10000,
+		name:  "1000",
+		arr:   []int{},
+		value: 0,
 	},
 	{
-		name: "10000",
-		arr:  []int{},
-		want: 100000,
+		name:  "10000",
+		arr:   []int{},
+		value: 0,
 	},
 	{
-		name: "100000",
-		arr:  []int{},
-		want: 1000000,
+		name:  "100000",
+		arr:   []int{},
+		value: 0,
 	},
 }
 

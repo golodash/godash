@@ -7,9 +7,10 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Uses a binary search to determine the Highest index
-// at which value should be inserted into slice in order
-// to maintain its sort order.
+// Uses a binary search to determine the Highest index at which value should be
+// inserted into slice in order to maintain its sort order.
+//
+// Complexity: O(log(n))
 func SortedLastIndex(slice, value interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
@@ -64,9 +65,10 @@ func compareHigherEqual(midValue, value interface{}) bool {
 	return false
 }
 
-// Based on binary search, searchs on where to put the
-// sent value in the passed slice based on isBiggerEqualFunction
-// result
+// Based on binary search, searchs on where to put the sent value in the
+// passed slice based on isBiggerEqualFunction result
+//
+// Complexity: O(log(n))
 func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	len := sliceValue.Len()

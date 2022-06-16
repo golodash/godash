@@ -7,9 +7,8 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Uses a binary search to determine the Highest index
-// at which value should be inserted into slice in order
-// to maintain its sort order.
+// Uses a binary search to determine the Highest index at which value should be
+// inserted into slice in order to maintain its sort order.
 //
 // Complexity: O(log(n))
 func SortedLastIndexBy(slice, value interface{}, function func(interface{}) interface{}) (int, error) {

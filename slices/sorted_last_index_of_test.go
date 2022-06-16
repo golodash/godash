@@ -17,27 +17,27 @@ var tSortedLastIndexOfBenchs = []TSortedLastIndexOf{
 	{
 		name:  "10",
 		arr:   []int{},
-		value: 10,
+		value: 0,
 	},
 	{
 		name:  "100",
 		arr:   []int{},
-		value: 10,
+		value: 0,
 	},
 	{
 		name:  "1000",
 		arr:   []int{},
-		value: 10,
+		value: 0,
 	},
 	{
 		name:  "10000",
 		arr:   []int{},
-		value: 10,
+		value: 0,
 	},
 	{
 		name:  "100000",
 		arr:   []int{},
-		value: 10,
+		value: 0,
 	},
 }
 
