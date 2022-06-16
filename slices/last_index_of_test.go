@@ -4,35 +4,42 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TLastIndexOf struct {
 	name  string
-	arr   []int
-	value int
+	arr   interface{}
+	value interface{}
 	want  int
 }
 
 var tLastIndexOfBenchs = []TLastIndexOf{
 	{
-		name: "10",
-		arr:  []int{},
+		name:  "10",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "100",
-		arr:  []int{},
+		name:  "100",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "1000",
-		arr:  []int{},
+		name:  "1000",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "10000",
-		arr:  []int{},
+		name:  "10000",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "100000",
-		arr:  []int{},
+		name:  "100000",
+		arr:   []int{},
+		value: 10,
 	},
 }
 
@@ -40,10 +47,9 @@ func init() {
 	for j := 0; j < len(tLastIndexOfBenchs); j++ {
 		length, _ := strconv.Atoi(tLastIndexOfBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tLastIndexOfBenchs[j].arr = append(tLastIndexOfBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tLastIndexOfBenchs[j].arr = append(tLastIndexOfBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
-		tLastIndexOfBenchs[j].arr = append(tLastIndexOfBenchs[j].arr, 10)
-		tLastIndexOfBenchs[j].value = 10
+		tLastIndexOfBenchs[j].arr = append(tLastIndexOfBenchs[j].arr.([]int), 10)
 	}
 }
 
@@ -77,16 +83,16 @@ func TestLastIndexOf(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			got, err := LastIndexOf(subject.arr, subject.value)
+			got, err := LastIndexOf(subject.arr, subject.value, -1)
 			if err != nil {
 				if subject.want != -1 {
-					t.Errorf("LastIndexOf() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if got != subject.want {
-				t.Errorf("LastIndexOf() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
@@ -97,7 +103,7 @@ func BenchmarkLastIndexOf(b *testing.B) {
 	for j := 0; j < len(tLastIndexOfBenchs); j++ {
 		b.Run(fmt.Sprintf("slice_size_%s", tLastIndexOfBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				LastIndexOf(tLastIndexOfBenchs[j].arr, tLastIndexOfBenchs[j].value)
+				LastIndexOf(tLastIndexOfBenchs[j].arr, tLastIndexOfBenchs[j].value, -1)
 			}
 		})
 	}

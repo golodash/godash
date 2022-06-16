@@ -28,6 +28,10 @@ func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
 		return -1, errors.New("'from' index is out of range")
 	}
 
+	if sliceValue.Len() == 0 {
+		return -1, nil
+	}
+
 	var until int
 	var count int
 	if ltr {
