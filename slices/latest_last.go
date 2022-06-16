@@ -8,6 +8,8 @@ import (
 )
 
 // Gets the last element of slice.
+//
+// Complexity: O(1)
 func Latest(slice interface{}) (interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
@@ -15,7 +17,6 @@ func Latest(slice interface{}) (interface{}, error) {
 	}
 
 	s := reflect.ValueOf(slice)
-
 	if s.Len() == 0 {
 		return nil, errors.New("slice is empty")
 	}
@@ -24,6 +25,8 @@ func Latest(slice interface{}) (interface{}, error) {
 }
 
 // Gets the last element of slice.
+//
+// Complexity: O(1)
 func Last(slice interface{}) (interface{}, error) {
 	return Latest(slice)
 }

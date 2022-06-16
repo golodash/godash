@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TLatest struct {
 	name string
-	arr  []interface{}
+	arr  interface{}
 	want interface{}
 }
 
@@ -39,7 +41,7 @@ func init() {
 	for j := 0; j < len(tLatestBenchs); j++ {
 		length, _ := strconv.Atoi(tLatestBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tLatestBenchs[j].arr = append(tLatestBenchs[j].arr, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tLatestBenchs[j].arr = append(tLatestBenchs[j].arr.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -68,13 +70,13 @@ func TestLatest(t *testing.T) {
 			got, err := Latest(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if got != subject.want {
-				t.Errorf("Latest() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
