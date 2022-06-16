@@ -10,7 +10,7 @@ import (
 
 type TSlice struct {
 	name     string
-	arg1     []interface{}
+	arg1     interface{}
 	arg2     int
 	arg3     int
 	expected interface{}
@@ -53,7 +53,7 @@ func init() {
 	for i := 0; i < len(TSliceBenchs); i++ {
 		k, _ := strconv.Atoi(TSliceBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TSliceBenchs[i].arg1 = append(TSliceBenchs[i].arg1, []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
+			TSliceBenchs[i].arg1 = append(TSliceBenchs[i].arg1.([]interface{}), []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
 		}
 	}
 }
@@ -108,12 +108,12 @@ func TestSlice(t *testing.T) {
 			got, err := Slice(sample.arg1, sample.arg2, sample.arg3)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
