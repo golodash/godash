@@ -16,10 +16,6 @@ func Slice(slice interface{}, from, to int) (interface{}, error) {
 	}
 
 	sliceValue := reflect.ValueOf(slice)
-	if sliceValue.Len() == 0 {
-		return slice, nil
-	}
-
 	if from < 0 {
 		from = sliceValue.Len() + from
 	}
@@ -36,6 +32,10 @@ func Slice(slice interface{}, from, to int) (interface{}, error) {
 	}
 	if to > sliceValue.Len() {
 		return nil, errors.New("'to' should be in range of 'slice'")
+	}
+
+	if sliceValue.Len() == 0 {
+		return slice, nil
 	}
 
 	return sliceValue.Slice(from, to).Interface(), nil
