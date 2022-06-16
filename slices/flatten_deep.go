@@ -7,6 +7,10 @@ import (
 )
 
 // Recursively flattens slice.
+//
+// Complexity: O(n)
+//
+// n = count of all non-slice type elements of 'slice'
 func FlattenDeep(slice interface{}) (interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {

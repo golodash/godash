@@ -7,8 +7,9 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Creates a sub slice from a slice with n elements
-// dropped from the end.
+// Creates a sub slice from a slice with n elements dropped from the end.
+//
+// Complexity: O(1)
 func DropRight(slice interface{}, n int) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

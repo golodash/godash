@@ -7,6 +7,8 @@ import (
 )
 
 // Flattens slice a single level deep.
+//
+// Complexity: O(n)
 func Flatten(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

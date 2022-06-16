@@ -6,11 +6,14 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Returns a slice of slice values not included in the
+// Returns a slice of 'slice' elements that are not included in the
 // other given slice using equality comparisons.
 //
-// Note: In comparing fields of a struct, unexported fields
-// are ignored.
+// Complexity: O(n*m)
+//
+// n = length of 'slice'
+//
+// m = length of 'notIncluded'
 func Difference(slice, notIncluded interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
@@ -42,6 +45,14 @@ func Difference(slice, notIncluded interface{}) (interface{}, error) {
 	return sliceValue.Interface(), nil
 }
 
+// Returns a slice of 'slice' elements that are not included in the
+// other given slice using equality comparisons.
+//
+// Complexity: O(n*m)
+//
+// n = length of 'slice'
+//
+// m = length of 'notIncluded'
 func Without(slice, notIncluded interface{}) (interface{}, error) {
 	return Difference(slice, notIncluded)
 }

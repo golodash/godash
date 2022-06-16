@@ -7,6 +7,10 @@ import (
 )
 
 // Flattens slice 'depth' level deep.
+//
+// Complexity: O(n)
+//
+// n = count of all elements at 'depth' level of 'slice'
 func FlattenDepth(slice interface{}, depth int) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

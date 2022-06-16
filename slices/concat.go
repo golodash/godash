@@ -7,6 +7,10 @@ import (
 )
 
 // Creates a new slice concatenating slice with other one.
+//
+// Complexity: O(n)
+//
+// n = number of 'values' length
 func Concat(slice, values interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

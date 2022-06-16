@@ -7,7 +7,11 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Fills a slice with a value from 'start' up to but not including 'end'
+// Fills a slice with a value from 'start' up to but not including 'end'.
+//
+// Complexity: O(n)
+//
+// n = end - start
 func Fill(slice, value interface{}, start, end int) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

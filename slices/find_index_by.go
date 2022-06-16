@@ -11,8 +11,8 @@ import (
 //
 // example for function:
 //
-//  func compare(value interface{}) bool {
-// 	  return value.(int) == 5
+//  func isEqual(value interface{}) bool {
+//    return value.(int) == 5
 //  }
 //
 // Complexity: O(n)

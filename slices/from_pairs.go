@@ -8,6 +8,8 @@ import (
 )
 
 // This method returns an object composed from key-value pairs.
+//
+// Complexity: O(n)
 func FromPairs(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

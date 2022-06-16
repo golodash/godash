@@ -7,6 +7,8 @@ import (
 )
 
 // Gets all but the last element of slice.
+//
+// Complexity: O(1)
 func Initial(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

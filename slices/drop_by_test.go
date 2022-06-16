@@ -37,8 +37,8 @@ var tDropByBenchs = []TDropBy{
 	},
 }
 
-func removeDropByTest(intput interface{}) bool {
-	return intput.(int)%2 == 0
+func removeDropByTest(input interface{}) bool {
+	return input.(int)%2 == 0
 }
 
 func init() {

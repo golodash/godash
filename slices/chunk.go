@@ -9,6 +9,8 @@ import (
 
 // Gets a slice and a size as input and splits the slice
 // into pieces in length of the size.
+//
+// Complexity: O(n)
 func Chunk(slice interface{}, size int) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

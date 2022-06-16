@@ -10,6 +10,8 @@ import (
 // Gets the index at which the first occurrence of value is found in slice
 // with equality comparisons. If 'from' is negative, it's used as the offset
 // from the end of slice.
+//
+// Complexity: O(n)
 func IndexOf(slice, value interface{}, from int) (int, error) {
 	return indexOf(slice, value, from, true)
 }
@@ -21,7 +23,7 @@ func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
 	}
 
 	if from < 0 {
-		from = (sliceValue.Len() - 1) + from
+		from = sliceValue.Len() + from
 	} else if from >= sliceValue.Len() {
 		return -1, errors.New("'from' index is out of range")
 	}

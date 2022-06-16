@@ -10,6 +10,8 @@ import (
 // Removes falsey items from slice except values you mentioned.
 //
 // Falsey items are {"", nil, 0, false}
+//
+// Complexity: O(n)
 func Compact(slice, excepts interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
@@ -17,7 +19,7 @@ func Compact(slice, excepts interface{}) (interface{}, error) {
 
 	exceptsValue := reflect.ValueOf(excepts)
 	if exceptsValue.Kind() != reflect.Slice && excepts != nil {
-		return nil, errors.New("just slice accepted as excepts value")
+		return nil, errors.New("just slice accepted as 'excepts' value")
 	}
 	if !exceptsValue.IsValid() {
 		exceptsValue = reflect.MakeSlice(reflect.TypeOf([]interface{}{}), 0, 0)

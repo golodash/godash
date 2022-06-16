@@ -9,6 +9,10 @@ import (
 // Creates a slice of unique values that are included in all given slices
 // for equality comparisons. The order and references of result values are
 // determined by the first slice.
+//
+// Complexity: O(n)
+//
+// n = number of all elements in slices of 'slices'
 func Intersection(slices interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slices); err != nil {
 		return nil, err

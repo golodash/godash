@@ -8,6 +8,8 @@ import (
 )
 
 // Gets the first element of slice.
+//
+// Complexity: O(1)
 func Head(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

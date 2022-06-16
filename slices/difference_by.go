@@ -6,18 +6,18 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// This method is like 'difference' except that it accepts a custom
-// function function which is invoked to compare elements of slices to values.
+// This method is like 'difference' except that it accepts a custom function
+// which is invoked to compare elements of 'slice' to 'notIncluded' slice.
 //
 // function has to indicate if two given variables as inputs are equal or not.
 //
-// function example function:
+// example for 'function':
 //
-// 	func compareDifferenceByTest(value1, value2 interface{}) bool {
-// 		v1 := value1.(int)
-// 		v2 := value2.(int)
-// 		return v1 == v2
+// 	func isEqual(value1, value2 interface{}) bool {
+// 		return value1.(int) == value2.(int)
 // 	}
+//
+// Complexity: O(n)
 func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, interface{}) bool) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

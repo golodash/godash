@@ -7,9 +7,26 @@ import (
 )
 
 // This method is like Intersection except that it accepts comparator which is
-// invoked to compare elements of slices. The order and references of result
+// invoked to compare elements of 'slices'. The order and references of result
 // values are determined by the first slice. The comparator is invoked with
-// two arguments: (slice, otherSlice).
+// two arguments: (slice1, slice2).
+//
+// example for function:
+//
+//  func isEqual(value1, value2 interface{}) bool {
+//    v1 := value1.([]int)
+//    v2 := value2.([]int)
+//    same := true
+//    for i := 0; i < v1.len(); i ++ {
+//      if v1[i] != v2[i] {
+//        same = false
+//        break
+//      }
+//    }
+//    return same
+//  }
+//
+// Complexity: O(n.log(n))
 func IntersectionBy(slices interface{}, function func(interface{}, interface{}) bool) (interface{}, error) {
 	if err := internal.SliceCheck(slices); err != nil {
 		return nil, err
