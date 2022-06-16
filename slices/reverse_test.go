@@ -10,7 +10,7 @@ import (
 
 type TReverse struct {
 	name     string
-	arg      []interface{}
+	arg      interface{}
 	expected interface{}
 }
 
@@ -41,7 +41,7 @@ func init() {
 	for i := 0; i < len(TReverseBenchs); i++ {
 		k, _ := strconv.Atoi(TReverseBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TReverseBenchs[i].arg = append(TReverseBenchs[i].arg, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			TReverseBenchs[i].arg = append(TReverseBenchs[i].arg.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -60,13 +60,13 @@ func TestReverse(t *testing.T) {
 		},
 		{
 			name:     "default",
-			arg:      []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
-			expected: []interface{}{0, 9, 8, 7, 6, 5, 4, 3, 2, 1},
+			arg:      []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+			expected: []int{0, 9, 8, 7, 6, 5, 4, 3, 2, 1},
 		},
 		{
 			name:     "default1",
-			arg:      []interface{}{"a", "b", "c", "d", "e", "f", "u"},
-			expected: []interface{}{"u", "f", "e", "d", "c", "b", "a"},
+			arg:      []string{"a", "b", "c", "d", "e", "f", "u"},
+			expected: []string{"u", "f", "e", "d", "c", "b", "a"},
 		},
 	}
 	for _, sample := range tests {
@@ -74,12 +74,13 @@ func TestReverse(t *testing.T) {
 			got, err := Reverse(sample.arg)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
