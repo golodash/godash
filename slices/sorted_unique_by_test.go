@@ -10,7 +10,7 @@ import (
 
 type TSortedUniqueBy struct {
 	name     string
-	arg1     []interface{}
+	arg1     interface{}
 	expected interface{}
 }
 
@@ -41,13 +41,13 @@ func init() {
 	for i := 0; i < len(TSortedUniqueByBenchs); i++ {
 		k, _ := strconv.Atoi(TSortedUniqueByBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TSortedUniqueByBenchs[i].arg1 = append(TSortedUniqueByBenchs[i].arg1, []interface{}{1 * j, 2 * j, 3 * j, 4 * j, 5 * j, 6 * j, 7 * j, 8 * j, 9 * j, 10 * j}...)
+			TSortedUniqueByBenchs[i].arg1 = append(TSortedUniqueByBenchs[i].arg1.([]interface{}), []interface{}{1 * j, 2 * j, 3 * j, 4 * j, 5 * j, 6 * j, 7 * j, 8 * j, 9 * j, 10 * j}...)
 		}
 	}
 }
 
-func compareValueForSortedUniqueBy(value interface{}) int {
-	return value.(int)
+func compareValueForSortedUniqueBy(value interface{}) interface{} {
+	return value
 }
 
 func TestSortedUniqueBy(t *testing.T) {
@@ -72,6 +72,11 @@ func TestSortedUniqueBy(t *testing.T) {
 			arg1:     []interface{}{0, 0, 1, 2, 2, 3, 4, 4, 4, 4, 4, 5, 6, 7, 7, 8, 9},
 			expected: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
+		{
+			name:     "type based",
+			arg1:     []int{0, 0, 1, 2, 2, 3, 4, 4, 4, 4, 4, 5, 6, 7, 7, 8, 9},
+			expected: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+		},
 	}
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
@@ -82,6 +87,7 @@ func TestSortedUniqueBy(t *testing.T) {
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got : %v but expected : %v", got, sample.expected)
 				return

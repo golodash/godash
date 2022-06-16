@@ -1,48 +1,38 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
 )
 
-// This method is like 'UniqueBy' except that it's designed and optimized for sorted slices.
+// This method is like 'UniqueBy' except that it's designed and optimized
+// for sorted slices.
 //
-// it accepts iteratee which is invoked for each element in array to generate the criterion by which uniqueness is computed.
-func SortedUniqueBy(slice, function interface{}) (interface{}, error) {
+// It accepts a function which is invoked for each element in slice to
+// generate the criterion by which uniqueness is computed.
+//
+// Complexity: O(n)
+func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) (interface{}, error) {
 	err := internal.SliceCheck(slice)
 	if err != nil {
 		return nil, err
 	}
 
 	sliceType := reflect.TypeOf(slice)
-	funcType := reflect.TypeOf(function)
-	if funcType.Kind() != reflect.Func {
-		return nil, errors.New("'function' input should be function type")
-	}
-	if funcType.NumIn() != 1 || (funcType.In(0).String() != sliceType.Elem().String() && funcType.In(0).Kind() != reflect.Interface) {
-		return nil, errors.New("'function' should have a single input and it's input type has to be compatible with slice elements types")
-	}
-	if funcType.NumOut() != 1 || !internal.IsNumberType(funcType.Out(0).Kind()) {
-		return nil, errors.New("'function''s output should be a single output and it's type has to be a number")
-	}
+	sliceValue := reflect.ValueOf(slice)
+	output := reflect.MakeSlice(sliceType, 0, sliceValue.Len())
 
-	newSlice, err := internal.InterfaceToSlice(slice)
-	if err != nil {
-		return nil, err
-	}
-
-	funcValue := reflect.ValueOf(function)
-	m := make(map[interface{}]bool)
-	unique := []interface{}{}
-	for _, value := range newSlice {
-		key := funcValue.Call([]reflect.Value{reflect.ValueOf(value)})[0].Interface()
-		if _, ok := m[key]; !ok {
-			m[key] = true
-			unique = append(unique, value)
+	sliceItemType := sliceType.Elem()
+	tempMap := reflect.MakeMap(reflect.MapOf(sliceItemType, reflect.TypeOf(true)))
+	for i := 0; i < sliceValue.Len(); i++ {
+		item := reflect.ValueOf(sliceValue.Index(i).Interface())
+		key := function(item.Interface())
+		if exist := tempMap.MapIndex(reflect.ValueOf(key)); !exist.IsValid() {
+			tempMap.SetMapIndex(reflect.ValueOf(key), reflect.ValueOf(true))
+			output = reflect.Append(output, item)
 		}
 	}
 
-	return unique, nil
+	return output.Interface(), nil
 }
