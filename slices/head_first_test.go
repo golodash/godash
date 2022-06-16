@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type THead struct {
 	name string
-	arr  []interface{}
+	arr  interface{}
 	want interface{}
 }
 
@@ -39,7 +41,7 @@ func init() {
 	for j := 0; j < len(tHeadBenchs); j++ {
 		length, _ := strconv.Atoi(tHeadBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tHeadBenchs[j].arr = append(tHeadBenchs[j].arr, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tHeadBenchs[j].arr = append(tHeadBenchs[j].arr.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
 	}
 }
@@ -58,7 +60,7 @@ func TestHead(t *testing.T) {
 		},
 		{
 			name: "normal",
-			arr:  []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			arr:  []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			want: 0,
 		},
 	}
@@ -68,13 +70,13 @@ func TestHead(t *testing.T) {
 			got, err := Head(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Head() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if got != subject.want {
-				t.Errorf("Head() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
