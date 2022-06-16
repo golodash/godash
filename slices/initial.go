@@ -1,17 +1,21 @@
 package slices
 
-import "github.com/golodash/godash/internal"
+import (
+	"reflect"
+
+	"github.com/golodash/godash/internal"
+)
 
 // Gets all but the last element of slice.
-func Initial(slice interface{}) ([]interface{}, error) {
-	s, err := internal.InterfaceToSlice(slice)
-	if err != nil {
+func Initial(slice interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
-	if len(s) > 0 {
-		return s[:len(s)-1], nil
-	} else {
-		return s, nil
+	sliceValue := reflect.ValueOf(slice)
+	if sliceValue.Len() == 0 {
+		return slice, nil
 	}
+
+	return sliceValue.Slice(0, sliceValue.Len()-1).Interface(), nil
 }
