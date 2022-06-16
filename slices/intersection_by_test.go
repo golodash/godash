@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TIntersectionBy struct {
 	name string
-	arr  []interface{}
-	want []interface{}
+	arr  interface{}
+	want interface{}
 }
 
 var tIntersectionByBenchs = []TIntersectionBy{
@@ -35,15 +37,16 @@ var tIntersectionByBenchs = []TIntersectionBy{
 	},
 }
 
-func removeIntersectionByTest(value1 interface{}, value2 interface{}) bool {
-	return value1 == value2
+func sameIntersectionByTest(value1, value2 interface{}) bool {
+	ok, _ := internal.Same(value1, value2)
+	return ok
 }
 
 func init() {
 	for j := 0; j < len(tIntersectionByBenchs); j++ {
 		length, _ := strconv.Atoi(tIntersectionByBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tIntersectionByBenchs[j].arr = append(tIntersectionByBenchs[j].arr, []interface{}{[]interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}}...)
+			tIntersectionByBenchs[j].arr = append(tIntersectionByBenchs[j].arr.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 		}
 	}
 }
@@ -67,19 +70,24 @@ func TestIntersectionBy(t *testing.T) {
 		},
 		{
 			name: "normal",
-			arr:  []interface{}{[]interface{}{0, 1, 2, 3, 4}, []interface{}{3, 4}, []interface{}{5, 6, 7, 8, 9}, []interface{}{9}},
-			want: []interface{}{3, 4, 9},
+			arr:  []interface{}{[]interface{}{0}, []interface{}{0}, []interface{}{5, 6, 7, 8, 9}, []interface{}{9}},
+			want: []interface{}{0},
 		},
 		{
-			name: "all",
-			arr:  []interface{}{[]interface{}{0, 1, 2, 3, 4}, []interface{}{0, 1, 2}, []interface{}{3, 4, 5, 6, 7, 8, 9}, []interface{}{5, 6, 7, 8, 9}},
-			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			name: "complex",
+			arr:  []interface{}{[]interface{}{0, 1, 2}, []interface{}{0, 1, 2}, []interface{}{3, 4, 5, 6, 7, 8, 9}, []interface{}{5, 6, 7, 8, 9}, 5, 8},
+			want: []interface{}{0, 1, 2},
+		},
+		{
+			name: "type based",
+			arr:  [][]int{{0, 1, 2}, {0, 1, 2}, {4}, {4}, {8, 9}},
+			want: []int{0, 1, 2, 4},
 		},
 	}
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			got, err := IntersectionBy(subject.arr, removeIntersectionByTest)
+			got, err := IntersectionBy(subject.arr, sameIntersectionByTest)
 
 			if err != nil {
 				if subject.want != nil {
@@ -88,16 +96,9 @@ func TestIntersectionBy(t *testing.T) {
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("IntersectionBy() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("IntersectionBy() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}
@@ -107,7 +108,7 @@ func BenchmarkIntersectionBy(b *testing.B) {
 	for j := 0; j < len(tIntersectionByBenchs); j++ {
 		b.Run(fmt.Sprintf("slice_size_%s", tIntersectionByBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				IntersectionBy(tIntersectionByBenchs[j].arr, removeIntersectionByTest)
+				IntersectionBy(tIntersectionByBenchs[j].arr, sameIntersectionByTest)
 			}
 		})
 	}

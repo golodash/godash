@@ -20,8 +20,18 @@ func Intersection(slices interface{}) (interface{}, error) {
 	}
 
 	sliceValue := reflect.ValueOf(slices)
+	length := 0
+	for i := 0; i < sliceValue.Len(); i++ {
+		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
+		if err := internal.SliceCheck(subSlice); err != nil {
+			continue
+		}
+
+		length += subSlice.Len()
+	}
+
 	seenMap := reflect.MakeMap(reflect.MapOf(sliceItemType, reflect.TypeOf(false)))
-	outputSlice := reflect.MakeSlice(reflect.SliceOf(sliceItemType), 0, sliceValue.Len())
+	outputSlice := reflect.MakeSlice(reflect.SliceOf(sliceItemType), 0, length)
 	for i := 0; i < sliceValue.Len(); i++ {
 		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
 		if err := internal.SliceCheck(subSlice.Interface()); err != nil {
