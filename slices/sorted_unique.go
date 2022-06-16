@@ -1,6 +1,8 @@
 package slices
 
 import (
+	"reflect"
+
 	"github.com/golodash/godash/internal"
 )
 
@@ -12,20 +14,18 @@ func SortedUnique(slice interface{}) (interface{}, error) {
 		return nil, err
 	}
 
-	n, err := internal.InterfaceToSlice(slice)
-	if err != nil {
-		return nil, err
-	}
+	sliceItemType := reflect.TypeOf(slice).Elem()
+	sliceValue := reflect.ValueOf(slice)
+	tempMap := reflect.MakeMap(reflect.MapOf(sliceItemType, reflect.TypeOf(true)))
+	output := reflect.MakeSlice(reflect.TypeOf(slice), 0, sliceValue.Len())
 
-	m := make(map[interface{}]bool)
-	var unique []interface{}
-
-	for _, value := range n {
-		if _, ok := m[value]; !ok {
-			m[value] = true
-			unique = append(unique, value)
+	for i := 0; i < sliceValue.Len(); i++ {
+		item := sliceValue.Index(i)
+		if exist := tempMap.MapIndex(item); !exist.IsValid() {
+			tempMap.SetMapIndex(item, reflect.ValueOf(true))
+			output = reflect.Append(output, item)
 		}
 	}
 
-	return unique, nil
+	return output.Interface(), nil
 }

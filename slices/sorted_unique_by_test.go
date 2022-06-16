@@ -41,7 +41,7 @@ func init() {
 	for i := 0; i < len(TSortedUniqueByBenchs); i++ {
 		k, _ := strconv.Atoi(TSortedUniqueByBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TSortedUniqueByBenchs[i].arg1 = append(TSortedUniqueByBenchs[i].arg1.([]interface{}), []interface{}{1 * j, 2 * j, 3 * j, 4 * j, 5 * j, 6 * j, 7 * j, 8 * j, 9 * j, 10 * j}...)
+			TSortedUniqueByBenchs[i].arg1 = append(TSortedUniqueByBenchs[i].arg1.([]interface{}), 1*j, 2*j, 3*j, 4*j, 5*j, 6*j, 7*j, 8*j, 9*j, 10*j)
 		}
 	}
 }
@@ -83,13 +83,13 @@ func TestSortedUniqueBy(t *testing.T) {
 			got, err := SortedUniqueBy(sample.arg1, compareValueForSortedUniqueBy)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
