@@ -8,37 +8,23 @@ import (
 )
 
 // Gets the index at which the first occurrence of value is found in slice
-// with equality comparisons. If fromIndex is negative, it's used as the offset
+// with equality comparisons. If 'from' is negative, it's used as the offset
 // from the end of slice.
-//
-// Note: In comparing fields of a struct, unexported fields
-// are ignored.
-func IndexOf(slice interface{}, value interface{}, from ...int) (int, error) {
-	sliceValue := reflect.ValueOf(slice)
-	fr := 0
-
-	if len(from) != 0 {
-		if from[0] >= 0 {
-			fr = from[0]
-		} else {
-			fr = (sliceValue.Len() - 1) + from[0]
-		}
-	}
-	if fr >= sliceValue.Len() {
-		return -1, errors.New("'from' index is out of range")
-	} else if fr <= -1 {
-		return -1, nil
-	}
-	return indexOf(slice, value, fr, true)
+func IndexOf(slice, value interface{}, from int) (int, error) {
+	return indexOf(slice, value, from, true)
 }
 
-func indexOf(slice interface{}, value interface{}, from int, ltr bool) (int, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
+func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
+	sliceValue := reflect.ValueOf(slice)
+	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
 	}
 
-	sliceValue := reflect.ValueOf(slice)
+	if from < 0 {
+		from = (sliceValue.Len() - 1) + from
+	} else if from >= sliceValue.Len() {
+		return -1, errors.New("'from' index is out of range")
+	}
 
 	var until int
 	var count int
@@ -47,10 +33,10 @@ func indexOf(slice interface{}, value interface{}, from int, ltr bool) (int, err
 		count = +1
 	} else {
 		until = -1
+		count = -1
 		if sliceValue.Len() == 0 {
 			until = 0
 		}
-		count = -1
 	}
 
 	compare := func(i, until int) bool {
@@ -62,12 +48,9 @@ func indexOf(slice interface{}, value interface{}, from int, ltr bool) (int, err
 	}
 
 	for i := from; compare(i, until); i += count {
-		res, err := internal.Same(sliceValue.Index(i).Interface(), value)
-		if err != nil {
-			return -1, err
-		}
-
-		if res {
+		if ok, err := internal.Same(sliceValue.Index(i).Interface(), value); !ok || err != nil {
+			continue
+		} else {
 			return i, nil
 		}
 	}

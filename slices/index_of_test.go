@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TIndexOf struct {
 	name  string
-	arr   []int
-	value int
-	want  int
+	arr   interface{}
+	value interface{}
+	want  interface{}
 }
 
 var tIndexOfBenchs = []TIndexOf{
@@ -40,9 +42,9 @@ func init() {
 	for j := 0; j < len(tIndexOfBenchs); j++ {
 		length, _ := strconv.Atoi(tIndexOfBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tIndexOfBenchs[j].arr = append(tIndexOfBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tIndexOfBenchs[j].arr = append(tIndexOfBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
-		tIndexOfBenchs[j].arr = append(tIndexOfBenchs[j].arr, 10)
+		tIndexOfBenchs[j].arr = append(tIndexOfBenchs[j].arr.([]int), 10)
 		tIndexOfBenchs[j].value = 10
 	}
 }
@@ -77,16 +79,16 @@ func TestIndexOf(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			got, err := IndexOf(subject.arr, subject.value)
+			got, err := IndexOf(subject.arr, subject.value, 0)
 			if err != nil {
 				if subject.want != -1 {
-					t.Errorf("IndexOf() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if got != subject.want {
-				t.Errorf("IndexOf() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
@@ -97,7 +99,7 @@ func BenchmarkIndexOf(b *testing.B) {
 	for j := 0; j < len(tIndexOfBenchs); j++ {
 		b.Run(fmt.Sprintf("slice_size_%s", tIndexOfBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				IndexOf(tIndexOfBenchs[j].arr, tIndexOfBenchs[j].value)
+				IndexOf(tIndexOfBenchs[j].arr, tIndexOfBenchs[j].value, 0)
 			}
 		})
 	}
