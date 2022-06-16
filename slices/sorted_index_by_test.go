@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TSortedIndexBy struct {
@@ -104,7 +106,7 @@ func TestSortedIndexBy(t *testing.T) {
 				return
 			}
 
-			if got != subject.want {
+			if ok, _ := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}

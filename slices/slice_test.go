@@ -112,6 +112,7 @@ func TestSlice(t *testing.T) {
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
