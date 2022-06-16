@@ -26,7 +26,7 @@ import (
 //    return same
 //  }
 //
-// Complexity: O(n.log(n))
+// Complexity: O(n*log(n))
 func IntersectionBy(slices interface{}, function func(interface{}, interface{}) bool) (interface{}, error) {
 	if err := internal.SliceCheck(slices); err != nil {
 		return nil, err

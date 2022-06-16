@@ -12,15 +12,22 @@ import (
 //
 // Note: Duplicate key numbers in 'remSlice' variable will get removed
 //
-// Complexity: O(n)
+// Worst-Case Complexity: O(n*log(n))
 //
-// n = length of 'remSlice'
+// This complexity is mainly because of sorting 'remSlice'.
+//
+// Keep it sorted to have a better complexity of:
+//
+// Best-Case Complexity: O(n)
 func PullAt(slice interface{}, remSlice []int) (interface{}, interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, nil, err
 	}
 
-	sort.Ints(remSlice)
+	if !sort.SliceIsSorted(remSlice, func(i, j int) bool { return remSlice[i] < remSlice[j] }) {
+		sort.Ints(remSlice)
+	}
+
 	remSlice = internal.UniqueInt(remSlice)
 	sliceValue := reflect.ValueOf(slice)
 	removed := reflect.MakeSlice(sliceValue.Type(), 0, sliceValue.Len())

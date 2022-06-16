@@ -7,25 +7,36 @@ import (
 )
 
 // Removes all given values from slice.
-func Pull(slice interface{}, values interface{}) ([]interface{}, error) {
-	s, err := internal.InterfaceToSlice(slice)
-	if err != nil {
+//
+// Complexity: O(n*m)
+//
+// n = length of 'slice'
+//
+// m = length of 'values'
+func Pull(slice, values interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 	if err := internal.SliceCheck(values); err != nil {
 		return nil, err
 	}
 
+	sliceValue := reflect.ValueOf(slice)
+	outputValue := reflect.MakeSlice(sliceValue.Type(), 0, sliceValue.Len())
 	valuesValue := reflect.ValueOf(values)
-	for i := 0; i < len(s); i++ {
+	for i := 0; i < sliceValue.Len(); i++ {
+		add := true
 		for j := 0; j < valuesValue.Len(); j++ {
-			if ok, _ := internal.Same(s[i], valuesValue.Index(j).Interface()); ok {
-				s = append(s[:i], s[i+1:]...)
-				i = i - 1
+			if ok, _ := internal.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()); ok {
+				add = false
 				break
 			}
 		}
+
+		if add {
+			outputValue = reflect.Append(outputValue, sliceValue.Index(i))
+		}
 	}
 
-	return s, nil
+	return outputValue.Interface(), nil
 }

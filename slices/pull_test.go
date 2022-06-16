@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TPull struct {
 	name string
-	arr  []int
-	rems []int
-	want []int
+	arr  interface{}
+	rems interface{}
+	want interface{}
 }
 
 var tPullBenchs = []TPull{
@@ -45,8 +47,8 @@ func init() {
 	for j := 0; j < len(tPullBenchs); j++ {
 		length, _ := strconv.Atoi(tPullBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tPullBenchs[j].arr = append(tPullBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
-			tPullBenchs[j].rems = append(tPullBenchs[j].rems, 0+(i*10), 1+(i*10), 2+(i*10), 3+(i*10), 4+(i*10), 5+(i*10))
+			tPullBenchs[j].arr = append(tPullBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tPullBenchs[j].rems = append(tPullBenchs[j].rems.([]int), (i+1)*10, 1+((i+1)*10), 2+((i+1)*10), 3+((i+1)*10), 4+((i+1)*10), 5+((i+1)*10))
 		}
 	}
 }
@@ -88,24 +90,16 @@ func TestPull(t *testing.T) {
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
 			got, err := Pull(subject.arr, subject.rems)
-
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Pull() got = %v, want = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Pull() got = %v, want = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i].(int) != subject.want[i] {
-					t.Errorf("Pull() got = %v, want = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}
