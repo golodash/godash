@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TIntersection struct {
 	name string
-	arr  []interface{}
-	want []interface{}
+	arr  interface{}
+	want interface{}
 }
 
 var tIntersectionBenchs = []TIntersection{
@@ -39,7 +41,7 @@ func init() {
 	for j := 0; j < len(tIntersectionBenchs); j++ {
 		length, _ := strconv.Atoi(tIntersectionBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tIntersectionBenchs[j].arr = append(tIntersectionBenchs[j].arr, []interface{}{[]interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}}...)
+			tIntersectionBenchs[j].arr = append(tIntersectionBenchs[j].arr.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 		}
 	}
 }
@@ -58,18 +60,23 @@ func TestIntersection(t *testing.T) {
 		},
 		{
 			name: "none",
-			arr:  []interface{}{[]interface{}{0, 1, 2, 3, 4}, []interface{}{5, 6, 7, 8, 9}},
+			arr:  []interface{}{[]interface{}{}, []interface{}{}, 77},
 			want: []interface{}{},
 		},
 		{
 			name: "normal",
 			arr:  []interface{}{[]interface{}{0, 1, 2, 3, 4}, []interface{}{3, 4}, []interface{}{5, 6, 7, 8, 9}, []interface{}{9}},
-			want: []interface{}{3, 4, 9},
+			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 		{
-			name: "all",
-			arr:  []interface{}{[]interface{}{0, 1, 2, 3, 4}, []interface{}{0, 1, 2}, []interface{}{3, 4, 5, 6, 7, 8, 9}, []interface{}{5, 6, 7, 8, 9}},
+			name: "more complex",
+			arr:  []interface{}{[]interface{}{0, 1, 2, 3, 4}, []interface{}{0, 1, 2}, []interface{}{3, 4, 5, 6, 7, 8, 9}, []interface{}{5, 6, 7, 8, 9}, 55, 66},
 			want: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+		},
+		{
+			name: "type based",
+			arr:  [][]int{{0, 1, 2, 3}, {1, 2, 3}, {4, 5, 6}, {7}, {8, 9}},
+			want: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 	}
 
@@ -78,21 +85,14 @@ func TestIntersection(t *testing.T) {
 			got, err := Intersection(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Intersection() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Intersection() got = %v, wanted = %v", got, subject.want)
+			if ok, _ := internal.Same(got, subject.want); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
-			}
-
-			for i := 0; i < len(got); i++ {
-				if got[i] != subject.want[i] {
-					t.Errorf("Intersection() got = %v, wanted = %v", got, subject.want)
-					return
-				}
 			}
 		})
 	}

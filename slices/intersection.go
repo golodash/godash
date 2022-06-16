@@ -9,52 +9,36 @@ import (
 // Creates a slice of unique values that are included in all given slices
 // for equality comparisons. The order and references of result values are
 // determined by the first slice.
-func Intersection(slice interface{}) ([]interface{}, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
+func Intersection(slices interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slices); err != nil {
 		return nil, err
 	}
 
-	sliceValue := reflect.ValueOf(slice)
-	values := []interface{}{}
-	doubleSeen := []interface{}{}
+	sliceItemType := reflect.TypeOf(slices)
+	if sliceItemType = sliceItemType.Elem(); sliceItemType.Kind() == reflect.Slice {
+		sliceItemType = sliceItemType.Elem()
+	}
+
+	sliceValue := reflect.ValueOf(slices)
+	seenMap := reflect.MakeMap(reflect.MapOf(sliceItemType, reflect.TypeOf(false)))
+	outputSlice := reflect.MakeSlice(reflect.SliceOf(sliceItemType), 0, sliceValue.Len())
 	for i := 0; i < sliceValue.Len(); i++ {
-		item, err := internal.InterfaceToSlice((sliceValue.Index(i).Interface()))
-		var ok = false
-		if err != nil {
-			item, ok = sliceValue.Index(i).Interface().([]interface{})
-			if !ok {
-				continue
-			}
+		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
+		if err := internal.SliceCheck(subSlice.Interface()); err != nil {
+			continue
 		}
 
-		for j := 0; j < len(item); j++ {
-			val := item[j]
-			seen := false
-			for k := 0; k < len(values); k++ {
-				res, err := internal.Same(val, values[k])
-				if err == nil && res {
-					seen = true
-					break
-				}
+		for j := 0; j < subSlice.Len(); j++ {
+			item := reflect.ValueOf(subSlice.Index(j).Interface())
+			var value reflect.Value = reflect.Value{}
+			if value = seenMap.MapIndex(item); value.IsValid() && !value.IsZero() {
+				continue
 			}
-			if !seen {
-				values = append(values, val)
-			} else {
-				seen = false
-				for k := 0; k < len(doubleSeen); k++ {
-					res, err := internal.Same(val, doubleSeen[k])
-					if err == nil && res {
-						seen = true
-						break
-					}
-				}
-				if !seen {
-					doubleSeen = append(doubleSeen, val)
-				}
-			}
+
+			outputSlice = reflect.Append(outputSlice, item)
+			seenMap.SetMapIndex(item, reflect.ValueOf(true))
 		}
 	}
 
-	return doubleSeen, nil
+	return outputSlice.Interface(), nil
 }
