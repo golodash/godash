@@ -10,27 +10,14 @@ import (
 // This method is like SortedIndex except that it accepts a function
 // which is invoked for value and each element of slice to compute
 // their sort ranking. The function is invoked with one argument: (value).
-func SortedIndexBy(slice, value, function interface{}) (int, error) {
+//
+// Complexity: O(log(n))
+func SortedIndexBy(slice, value interface{}, function func(interface{}) interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
 	}
 
-	functionType := reflect.TypeOf(function)
 	sType := reflect.TypeOf(slice)
-	if functionType.Kind() != reflect.Func {
-		return -1, errors.New("'function' has to be function type")
-	}
-	if functionType.NumIn() != 1 {
-		return -1, errors.New("'function' inputs has to have just 1 input")
-	}
-	if functionType.In(0).Kind() != sType.Elem().Kind() &&
-		functionType.In(0).Kind() != reflect.Interface {
-		return -1, errors.New("'function' inputs have to be the same type as 'slice' variable elements or have to be 'interface' type")
-	}
-	if functionType.NumOut() != 1 || functionType.Out(0).Kind() != sType.Elem().Kind() {
-		return -1, errors.New("'function' output has to be the same type as 'slice' variable elements and it has to have just 1 output")
-	}
-
 	val := reflect.ValueOf(value)
 	if val.Type().Kind() != sType.Elem().Kind() && sType.Elem().Kind() != reflect.Interface {
 		return -1, errors.New("'value' is not compatible with 'slice' elements")
@@ -42,6 +29,8 @@ func SortedIndexBy(slice, value, function interface{}) (int, error) {
 // Based on binary search, searchs on where to put the
 // sent value in the passed slice based on isLowerEqualFunction
 // result and get the comparators by getComparatorParam function
+//
+// Complexity: O(log(n))
 func whereToPutInSliceLowerEqualBy(slice, value, isLowerEqualFunction, comparableParamFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	comparableParamFunctionValue := reflect.ValueOf(comparableParamFunction)
