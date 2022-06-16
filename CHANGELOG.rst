@@ -57,8 +57,8 @@ UNRELEASED
 * ✅ test(slices-reverse): reverse function's test cases and benchmarks added
 * 🐛 fix(slices-reverse): reverse function's bug fixed
 * 🎉 feat(slices-reverse): reverse function added
-* ✅ test(slices-remove): 'remove' function's test cases and benchmarks added
-* 🎉 feat(slices-remove): 'remove' function added
+* ✅ test(slices-remove_by): 'remove_by' function's test cases and benchmarks added
+* 🎉 feat(slices-remove_by): 'remove_by' function added
 * ✅ test(slices-sorted_unique_by): sorted_unique_by test cases and benchmarks added
 * 🐛 fix(slices-sorted_unique_by): sorted_unique_by approach changed
 * 🎉 feat(slices-sorted_unique_by): 'SortedUniqueBy' function added
