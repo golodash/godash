@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TJoin struct {
 	name     string
-	arg1     []string
+	arg1     interface{}
 	arg2     string
 	expected string
 }
@@ -40,7 +42,7 @@ func init() {
 	for i := 0; i < len(TJoinBenchs); i++ {
 		k, _ := strconv.Atoi(TJoinBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TJoinBenchs[i].arg1 = append(TJoinBenchs[i].arg1, []string{"Hello", "Are", "You", "A", "Fucking", "Mother", "Fucker", "?", "Huh", ":)"}...)
+			TJoinBenchs[i].arg1 = append(TJoinBenchs[i].arg1.([]string), []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}...)
 		}
 
 	}
@@ -61,29 +63,31 @@ func TestJoin(t *testing.T) {
 			expected: "",
 		},
 		{
-			name:     "default",
-			arg1:     []string{"Hello", "Mother", "Fucker", ":)"},
+			name:     "normal",
+			arg1:     []string{"A", "B", "C", "D"},
 			arg2:     "-",
-			expected: "Hello-Mother-Fucker-:)",
+			expected: "A-B-C-D",
 		},
 		{
-			name:     "default1",
-			arg1:     []string{"A", "B", "C", "D", "E", "F", "U"},
-			arg2:     "<<",
-			expected: "A<<B<<C<<D<<E<<F<<U",
+			name:     "type based",
+			arg1:     []int{1, 2, 3, 4, 5, 6},
+			arg2:     ", ",
+			expected: "1, 2, 3, 4, 5, 6",
 		},
 	}
-	for _, sample := range tests {
-		t.Run(sample.name, func(t *testing.T) {
-			got, err := Join(sample.arg1, sample.arg2)
+	for _, subject := range tests {
+		t.Run(subject.name, func(t *testing.T) {
+			got, err := Join(subject.arg1, subject.arg2)
 			if err != nil {
-				if sample.expected != "" {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+				if subject.expected != "" {
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.expected, err)
 				}
 				return
 			}
-			if got != sample.expected {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+
+			if ok, _ := internal.Same(got, subject.expected); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.expected, err)
+				return
 			}
 		})
 	}
@@ -97,5 +101,4 @@ func BenchmarkJoin(b *testing.B) {
 			}
 		})
 	}
-
 }
