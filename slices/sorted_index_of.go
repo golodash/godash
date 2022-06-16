@@ -8,6 +8,8 @@ import (
 )
 
 // This method is like IndexOf except that it performs a binary search on a sorted slice.
+//
+// Complexity: O(log(n))
 func SortedIndexOf(slice interface{}, value interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
@@ -69,15 +71,15 @@ func sortedIndexOf(slice, value, isLowerEqualFunction, isEqualFunction interface
 	if len == 0 {
 		return -1, errors.New("item not found")
 	} else if len == 1 {
-		item := sliceValue.Index(0)
+		item := reflect.ValueOf(sliceValue.Index(0).Interface())
 		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
 			return 0, nil
 		} else {
 			return -1, errors.New("item not found")
 		}
 	} else if len == 2 {
-		item0 := sliceValue.Index(0)
-		item1 := sliceValue.Index(1)
+		item0 := reflect.ValueOf(sliceValue.Index(0).Interface())
+		item1 := reflect.ValueOf(sliceValue.Index(1).Interface())
 		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item0, reflect.ValueOf(value)}); res[0].Bool() {
 			return 0, nil
 		} else if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item1, reflect.ValueOf(value)}); res[0].Bool() {

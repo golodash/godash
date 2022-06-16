@@ -45,7 +45,7 @@ func init() {
 	for j := 0; j < len(tSortedIndexOfBenchs); j++ {
 		length, _ := strconv.Atoi(tSortedIndexOfBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tSortedIndexOfBenchs[j].arr = append(tSortedIndexOfBenchs[j].arr, []int{0 + (i * 10), 1 + (i * 10), 2 + (i * 10), 3 + (i * 10), 4 + (i * 10), 5 + (i * 10), 6 + (i * 10), 7 + (i * 10), 8 + (i * 10), 9 + (i * 10)}...)
+			tSortedIndexOfBenchs[j].arr = append(tSortedIndexOfBenchs[j].arr, 0+(i*10), 1+(i*10), 2+(i*10), 3+(i*10), 4+(i*10), 5+(i*10), 6+(i*10), 7+(i*10), 8+(i*10), 9+(i*10))
 		}
 	}
 }
@@ -89,13 +89,13 @@ func TestSortedIndexOf(t *testing.T) {
 			got, err := SortedIndexOf(subject.arr, subject.value)
 			if err != nil {
 				if subject.want != -1 {
-					t.Errorf("SortedIndexOf() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
 			if got != subject.want {
-				t.Errorf("SortedIndexOf() got = %v, wanted = %v", got, subject.want)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
