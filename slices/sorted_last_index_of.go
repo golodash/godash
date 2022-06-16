@@ -9,6 +9,8 @@ import (
 
 // This method is like LastIndexOf except that it performs a
 // binary search on a sorted slice.
+//
+// Complexity: O(log(n))
 func SortedLastIndexOf(slice, value interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return -1, err
@@ -23,6 +25,7 @@ func SortedLastIndexOf(slice, value interface{}) (int, error) {
 	return sortedLastIndexOf(slice, value, compareHigherEqual, compareIsEqual)
 }
 
+// Complexity: O(log(n))
 func sortedLastIndexOf(slice, value, isHigherEqualFunction, isEqualFunction interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	len := sliceValue.Len()

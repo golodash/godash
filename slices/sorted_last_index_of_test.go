@@ -8,31 +8,36 @@ import (
 
 type TSortedLastIndexOf struct {
 	name  string
-	arr   []int
-	value int
+	arr   interface{}
+	value interface{}
 	want  int
 }
 
 var tSortedLastIndexOfBenchs = []TSortedLastIndexOf{
 	{
-		name: "10",
-		arr:  []int{},
+		name:  "10",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "100",
-		arr:  []int{},
+		name:  "100",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "1000",
-		arr:  []int{},
+		name:  "1000",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "10000",
-		arr:  []int{},
+		name:  "10000",
+		arr:   []int{},
+		value: 10,
 	},
 	{
-		name: "100000",
-		arr:  []int{},
+		name:  "100000",
+		arr:   []int{},
+		value: 10,
 	},
 }
 
@@ -40,10 +45,9 @@ func init() {
 	for j := 0; j < len(tSortedLastIndexOfBenchs); j++ {
 		length, _ := strconv.Atoi(tSortedLastIndexOfBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tSortedLastIndexOfBenchs[j].arr = append(tSortedLastIndexOfBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tSortedLastIndexOfBenchs[j].arr = append(tSortedLastIndexOfBenchs[j].arr.([]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
-		tSortedLastIndexOfBenchs[j].arr = append(tSortedLastIndexOfBenchs[j].arr, 10)
-		tSortedLastIndexOfBenchs[j].value = 10
+		tSortedLastIndexOfBenchs[j].arr = append(tSortedLastIndexOfBenchs[j].arr.([]int), 10)
 	}
 }
 
@@ -98,13 +102,13 @@ func TestSortedLastIndexOf(t *testing.T) {
 			got, err := SortedLastIndexOf(subject.arr, subject.value)
 			if err != nil {
 				if subject.want != -1 {
-					t.Errorf("SortedLastIndexOf() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
 			if got != subject.want {
-				t.Errorf("SortedLastIndexOf() got = %v, wanted = %v", got, subject.want)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
