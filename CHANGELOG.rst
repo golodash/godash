@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-find_index_by): find_index_by function added
 * ✅ test(slices-take_while): 'take_while' test cases and benchmarks added
 * 🎉 feat(slices-take_while): take_while function added
 * ✅ test(slices-take_right_while): 'take_right_while' test cases and benchmarks added
