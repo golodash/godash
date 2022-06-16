@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TPullAt struct {
 	name      string
-	arr       []int
+	arr       interface{}
 	rems      []int
-	wantSlice []int
-	wantRems  []int
+	wantSlice interface{}
+	wantRems  interface{}
 }
 
 var tPullAtBenchs = []TPullAt{
@@ -46,7 +48,7 @@ func init() {
 	for j := 0; j < len(tPullAtBenchs); j++ {
 		length, _ := strconv.Atoi(tPullAtBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tPullAtBenchs[j].arr = append(tPullAtBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tPullAtBenchs[j].arr = append(tPullAtBenchs[j].arr.([]int), 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 			tPullAtBenchs[j].rems = append(tPullAtBenchs[j].rems, 0+(i*10), 1+(i*10), 2+(i*10), 3+(i*10), 4+(i*10), 5+(i*10))
 		}
 	}
@@ -94,31 +96,21 @@ func TestPullAt(t *testing.T) {
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
 			gotSlice, gotRems, err := PullAt(subject.arr, subject.rems)
-
 			if err != nil {
-				if subject.wantSlice != nil || subject.wantRems != nil {
-					t.Errorf("PullAt() gotSlice = %v, gotRems = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems)
+				if subject.wantSlice != nil && subject.wantRems != nil {
+					t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)
 				}
 				return
 			}
 
-			if len(gotSlice) != len(subject.wantSlice) || len(gotRems) != len(subject.wantRems) {
-				t.Errorf("PullAt() gotSlice = %v, gotRems = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems)
+			if ok, _ := internal.Same(gotSlice, subject.wantSlice); !ok {
+				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)
 				return
 			}
 
-			for i := 0; i < len(gotSlice); i++ {
-				if gotSlice[i].(int) != subject.wantSlice[i] {
-					t.Errorf("PullAt() gotSlice = %v, gotRems = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems)
-					return
-				}
-			}
-
-			for i := 0; i < len(gotRems); i++ {
-				if gotRems[i].(int) != subject.wantRems[i] {
-					t.Errorf("PullAt() gotSlice = %v, gotRems = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems)
-					return
-				}
+			if ok, _ := internal.Same(gotRems, subject.wantRems); !ok {
+				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)
+				return
 			}
 		})
 	}
