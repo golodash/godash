@@ -4,41 +4,17 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TNth struct {
 	name     string
-	arg1     []interface{}
+	arg1     interface{}
 	arg2     int
 	expected interface{}
 }
 
-var tests = []TNth{
-	{
-		name:     "nil",
-		arg1:     nil,
-		arg2:     4,
-		expected: nil,
-	},
-	{
-		name:     "empty",
-		arg1:     []interface{}{},
-		arg2:     -1,
-		expected: nil,
-	},
-	{
-		name:     "default",
-		arg1:     []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
-		arg2:     5,
-		expected: 6,
-	},
-	{
-		name:     "default1",
-		arg1:     []interface{}{"a", "b", "c", "d", "e", "f", "u"},
-		arg2:     -2,
-		expected: "f",
-	},
-}
 var TNthBenchs = []TNth{
 	{
 		name: "10",
@@ -66,31 +42,55 @@ func init() {
 	for i := 0; i < len(TNthBenchs); i++ {
 		k, _ := strconv.Atoi(TNthBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TNthBenchs[i].arg1 = append(TNthBenchs[i].arg1, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			TNthBenchs[i].arg1 = append(TNthBenchs[i].arg1.([]interface{}), []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
 		}
-
 	}
 }
 
 func TestNth(t *testing.T) {
+	tests := []TNth{
+		{
+			name:     "nil",
+			arg1:     nil,
+			arg2:     4,
+			expected: nil,
+		},
+		{
+			name:     "empty",
+			arg1:     []interface{}{},
+			arg2:     -1,
+			expected: nil,
+		},
+		{
+			name:     "default",
+			arg1:     []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+			arg2:     5,
+			expected: 6,
+		},
+		{
+			name:     "default1",
+			arg1:     []interface{}{"a", "b", "c", "d", "e", "f", "u"},
+			arg2:     -2,
+			expected: "f",
+		},
+	}
 
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
 			got, err := Nth(sample.arg1, sample.arg2)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
-			if got != sample.expected {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+
+			if ok, _ := internal.Same(got, sample.expected); !ok {
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
-
 	}
-
 }
 
 func BenchmarkNth(b *testing.B) {
