@@ -39,23 +39,6 @@ func GetFunctionName(temp interface{}) string {
 	return strs[len(strs)-1]
 }
 
-// Converts interface{} to []interface{}
-func InterfaceToSlice(slice interface{}) ([]interface{}, error) {
-	err := SliceCheck(slice)
-	if err != nil {
-		return nil, err
-	}
-
-	s := reflect.ValueOf(slice)
-	result := make([]interface{}, s.Len())
-
-	for i := 0; i < s.Len(); i++ {
-		result[i] = s.Index(i).Interface()
-	}
-
-	return result, nil
-}
-
 // Checks if 'slice' interface variable is slice type and
 // if 'slice' is nil
 func SliceCheck(slice interface{}) error {
