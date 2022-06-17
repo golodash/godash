@@ -9,6 +9,8 @@ import (
 // This function creates a duplicate-free version of an slice.
 //
 // This method is designed and optimized for sorted slices.
+//
+// Complexity: O(n)
 func SortedUnique(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err

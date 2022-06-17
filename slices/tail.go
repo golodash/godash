@@ -6,20 +6,18 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-func Tail(slice interface{}) ([]interface{}, error) {
+// Returns all but the first element of slice.
+//
+// Complexity: O(1)
+func Tail(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
 
 	sliceValue := reflect.ValueOf(slice)
 	if sliceValue.Len() == 0 {
-		return []interface{}{}, nil
+		return slice, nil
 	}
 
-	output, err := internal.InterfaceToSlice(sliceValue.Slice(1, sliceValue.Len()).Interface())
-	if err != nil {
-		return nil, err
-	}
-
-	return output, nil
+	return sliceValue.Slice(1, sliceValue.Len()).Interface(), nil
 }

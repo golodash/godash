@@ -10,8 +10,8 @@ import (
 
 type TTail struct {
 	name string
-	arr  []int
-	want []int
+	arr  interface{}
+	want interface{}
 }
 
 var tTailBenchs = []TTail{
@@ -41,7 +41,7 @@ func init() {
 	for j := 0; j < len(tTailBenchs); j++ {
 		length, _ := strconv.Atoi(tTailBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tTailBenchs[j].arr = append(tTailBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}...)
+			tTailBenchs[j].arr = append(tTailBenchs[j].arr.([]int), 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 		}
 	}
 }
@@ -73,6 +73,11 @@ func TestTail(t *testing.T) {
 			arr:  []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
 			want: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
 		},
+		{
+			name: "new type",
+			arr:  []string{"a", "b", "c"},
+			want: []string{"b", "c"},
+		},
 	}
 
 	for _, subject := range tests {
@@ -80,18 +85,13 @@ func TestTail(t *testing.T) {
 			got, err := Tail(subject.arr)
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("Tail() got = %v, wanted = %v", got, subject.want)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
-			if len(got) != len(subject.want) {
-				t.Errorf("Tail() got = %v, wanted = %v", got, subject.want)
-				return
-			}
-
 			if ok, _ := internal.Same(got, subject.want); !ok {
-				t.Errorf("Tail() got = %v, wanted = %v", got, subject.want)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}
 		})
