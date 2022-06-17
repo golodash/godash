@@ -2,7 +2,6 @@ package slices
 
 import (
 	"fmt"
-	"reflect"
 	"strconv"
 	"testing"
 
@@ -11,30 +10,36 @@ import (
 
 type TXorBy struct {
 	name     string
-	arg      []interface{}
+	arg1     interface{}
+	arg2     interface{}
 	expected interface{}
 }
 
 var TXorByBenchs = []TXorBy{
 	{
 		name: "10",
-		arg:  []interface{}{},
+		arg1: []interface{}{},
+		arg2: []interface{}{},
 	},
 	{
 		name: "100",
-		arg:  []interface{}{},
+		arg1: []interface{}{},
+		arg2: []interface{}{},
 	},
 	{
 		name: "1000",
-		arg:  []interface{}{},
+		arg1: []interface{}{},
+		arg2: []interface{}{},
 	},
 	{
 		name: "10000",
-		arg:  []interface{}{},
+		arg1: []interface{}{},
+		arg2: []interface{}{},
 	},
 	{
 		name: "100000",
-		arg:  []interface{}{},
+		arg1: []interface{}{},
+		arg2: []interface{}{},
 	},
 }
 
@@ -42,47 +47,48 @@ func init() {
 	for i := 0; i < len(TXorByBenchs); i++ {
 		k, _ := strconv.Atoi(TXorByBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TXorByBenchs[i].arg = append(TXorByBenchs[i].arg, []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+			TXorByBenchs[i].arg1 = append(TXorByBenchs[i].arg1.([]interface{}), 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+			TXorByBenchs[i].arg2 = append(TXorByBenchs[i].arg2.([]interface{}), 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 		}
 	}
 }
 
-func compareXorByTest(value1, value2 interface{}) bool {
-	v1 := reflect.ValueOf(value1).Int()
-	v2 := reflect.ValueOf(value2).Int()
-
-	return v1 == v2
+func compareXorByTest(value1 interface{}) interface{} {
+	return value1
 }
 
 func TestXorBy(t *testing.T) {
 	var tests = []TXorBy{
 		{
 			name:     "nil",
-			arg:      nil,
-			expected: []interface{}{},
+			arg1:     nil,
+			arg2:     nil,
+			expected: nil,
 		},
 		{
 			name:     "empty",
-			arg:      []interface{}{},
+			arg1:     []interface{}{},
+			arg2:     []interface{}{},
 			expected: []interface{}{},
 		},
 		{
 			name:     "normal",
-			arg:      []interface{}{[]int{1, 2}, []int{3, 4}, []int{5, 1, 2, 0}},
-			expected: []int{3, 4, 5, 0},
+			arg1:     []int{1, 2},
+			arg2:     []int{3, 4, 1},
+			expected: []int{2, 3, 4},
 		},
 	}
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
-			got, err := XorBy(compareXorByTest, sample.arg...)
+			got, err := XorBy(sample.arg1, sample.arg2, compareXorByTest)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
@@ -93,7 +99,7 @@ func BenchmarkXorBy(b *testing.B) {
 	for _, sample := range TXorByBenchs {
 		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				XorBy(compareXorByTest, sample.arg...)
+				XorBy(sample.arg1, sample.arg2, compareXorByTest)
 			}
 		})
 	}
