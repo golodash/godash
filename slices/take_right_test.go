@@ -10,9 +10,9 @@ import (
 
 type TTakeRight struct {
 	name     string
-	arg1     []int
+	arg1     interface{}
 	arg2     int
-	expected []int
+	expected interface{}
 }
 
 var TTakeRightBenchs = []TTakeRight{
@@ -42,7 +42,7 @@ func init() {
 	for i := 0; i < len(TTakeRightBenchs); i++ {
 		k, _ := strconv.Atoi(TTakeRightBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TTakeRightBenchs[i].arg1 = append(TTakeRightBenchs[i].arg1, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TTakeRightBenchs[i].arg1 = append(TTakeRightBenchs[i].arg1.([]int), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
 		}
 	}
 }
@@ -86,12 +86,13 @@ func TestTakeRight(t *testing.T) {
 			got, err := TakeRight(sample.arg1, sample.arg2)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
