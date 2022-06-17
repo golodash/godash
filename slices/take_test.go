@@ -10,31 +10,36 @@ import (
 
 type TTake struct {
 	name     string
-	arg1     []int
+	arg1     interface{}
 	arg2     int
-	expected []int
+	expected interface{}
 }
 
 var TTakeBenchs = []TTake{
 	{
 		name: "10",
 		arg1: []int{},
+		arg2: 10,
 	},
 	{
 		name: "100",
 		arg1: []int{},
+		arg2: 100,
 	},
 	{
 		name: "1000",
 		arg1: []int{},
+		arg2: 1000,
 	},
 	{
 		name: "10000",
 		arg1: []int{},
+		arg2: 10000,
 	},
 	{
 		name: "100000",
 		arg1: []int{},
+		arg2: 100000,
 	},
 }
 
@@ -42,7 +47,7 @@ func init() {
 	for i := 0; i < len(TTakeBenchs); i++ {
 		k, _ := strconv.Atoi(TTakeBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TTakeBenchs[i].arg1 = append(TTakeBenchs[i].arg1, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TTakeBenchs[i].arg1 = append(TTakeBenchs[i].arg1.([]int), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
 		}
 	}
 }
@@ -79,6 +84,12 @@ func TestTake(t *testing.T) {
 			arg2:     7,
 			expected: []int{1, 2, 3, 4, 5, 6, 7},
 		},
+		{
+			name:     "new type",
+			arg1:     []string{"a", "b", "c"},
+			arg2:     1,
+			expected: []string{"a"},
+		},
 	}
 
 	for _, sample := range tests {
@@ -86,12 +97,13 @@ func TestTake(t *testing.T) {
 			got, err := Take(sample.arg1, sample.arg2)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v,%v but expected : %v", got, err, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})

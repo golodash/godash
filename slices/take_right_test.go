@@ -19,22 +19,27 @@ var TTakeRightBenchs = []TTakeRight{
 	{
 		name: "10",
 		arg1: []int{},
+		arg2: 10,
 	},
 	{
 		name: "100",
 		arg1: []int{},
+		arg2: 100,
 	},
 	{
 		name: "1000",
 		arg1: []int{},
+		arg2: 1000,
 	},
 	{
 		name: "10000",
 		arg1: []int{},
+		arg2: 10000,
 	},
 	{
 		name: "100000",
 		arg1: []int{},
+		arg2: 100000,
 	},
 }
 

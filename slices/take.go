@@ -7,17 +7,21 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-//Creates a sub slice of a given slice with (n) elements taken from the beginning.
+// Creates a sub slice of a given slice with (n) elements taken from the beginning.
+//
+// Complexity: O(1)
 func Take(slice interface{}, number int) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
 	}
+
 	values := reflect.ValueOf(slice)
-	if (number > values.Len() && values.Len() != 0) || (number < 0 && values.Len() != 0) {
-		return nil, errors.New("'number' should be in range of slice's length")
-	}
 	if values.Len() == 0 {
 		return slice, nil
 	}
+	if number > values.Len() || number < 0 {
+		return nil, errors.New("'number' should be in range of slice's length")
+	}
+
 	return values.Slice(0, number).Interface(), nil
 }
