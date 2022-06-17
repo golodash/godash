@@ -10,30 +10,30 @@ import (
 
 type TUnique struct {
 	name     string
-	arg      []interface{}
-	expected []interface{}
+	arg      interface{}
+	expected interface{}
 }
 
 var TUniqueBenchs = []TUnique{
 	{
 		name: "10",
-		arg:  []interface{}{},
+		arg:  []int{},
 	},
 	{
 		name: "100",
-		arg:  []interface{}{},
+		arg:  []int{},
 	},
 	{
 		name: "1000",
-		arg:  []interface{}{},
+		arg:  []int{},
 	},
 	{
 		name: "10000",
-		arg:  []interface{}{},
+		arg:  []int{},
 	},
 	{
 		name: "100000",
-		arg:  []interface{}{},
+		arg:  []int{},
 	},
 }
 
@@ -41,7 +41,7 @@ func init() {
 	for i := 0; i < len(TUniqueBenchs); i++ {
 		k, _ := strconv.Atoi(TUniqueBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TUniqueBenchs[i].arg = append(TUniqueBenchs[i].arg, []interface{}{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}...)
+			TUniqueBenchs[i].arg = append(TUniqueBenchs[i].arg.([]int), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 		}
 	}
 }
@@ -55,18 +55,18 @@ func TestUnique(t *testing.T) {
 		},
 		{
 			name:     "empty",
-			arg:      []interface{}{},
-			expected: []interface{}{},
+			arg:      []int{},
+			expected: []int{},
 		},
 		{
 			name:     "normal",
-			arg:      []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
-			expected: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			arg:      []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			expected: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 		{
 			name:     "duplicate",
-			arg:      []interface{}{0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9},
-			expected: []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			arg:      []int{0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9},
+			expected: []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 		},
 	}
 	for _, sample := range tests {
@@ -74,12 +74,13 @@ func TestUnique(t *testing.T) {
 			got, err := Unique(sample.arg)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})

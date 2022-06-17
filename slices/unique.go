@@ -11,6 +11,10 @@ import (
 //
 // The order of result values is determined by the order
 // they occur in the slice.
+//
+// Complexity: O(n)
+//
+// n = length of passed slice
 func Unique(slice interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
