@@ -48,8 +48,8 @@ func init() {
 	for i := 0; i < len(TUnionByBenchs); i++ {
 		k, _ := strconv.Atoi(TUnionByBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TUnionByBenchs[i].arg1 = append(TUnionByBenchs[i].arg1.([]int), []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
-			TUnionByBenchs[i].arg2 = append(TUnionByBenchs[i].arg2.([]int), []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TUnionByBenchs[i].arg1 = append(TUnionByBenchs[i].arg1.([]int), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+			TUnionByBenchs[i].arg2 = append(TUnionByBenchs[i].arg2.([]int), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
 		}
 	}
 }
@@ -102,12 +102,12 @@ func TestUnionBy(t *testing.T) {
 			got, err := UnionBy(sample.arg1, sample.arg2, compareUnionByByTest)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})

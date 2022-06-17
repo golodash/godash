@@ -7,6 +7,10 @@ import (
 )
 
 // Returns a slice of unique values, in order, from combine of all given slices.
+//
+// Complexity: O(n)
+//
+// n = length of both slices combined
 func UnionBy(slice, slice2 interface{}, function func(interface{}) interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
