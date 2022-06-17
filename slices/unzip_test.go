@@ -10,8 +10,8 @@ import (
 
 type TUnzip struct {
 	name     string
-	arg      [][]interface{}
-	expected []interface{}
+	arg      interface{}
+	expected interface{}
 }
 
 var TUnzipBenchs = []TUnzip{
@@ -41,7 +41,7 @@ func init() {
 	for i := 0; i < len(TUnzipBenchs); i++ {
 		k, _ := strconv.Atoi(TUnzipBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TUnzipBenchs[i].arg = append(TUnzipBenchs[i].arg, []interface{}{"0", 1, true, 'e', false, 5, "name", 7, false, 9})
+			TUnzipBenchs[i].arg = append(TUnzipBenchs[i].arg.([][]interface{}), []interface{}{"0", 1, true, 'e', false, 5, "name", 7, false, 9})
 		}
 	}
 }
@@ -56,7 +56,7 @@ func TestUnzip(t *testing.T) {
 		{
 			name:     "empty",
 			arg:      [][]interface{}{},
-			expected: []interface{}{},
+			expected: [][]interface{}{},
 		},
 		{
 			name:     "error-1",
@@ -64,14 +64,19 @@ func TestUnzip(t *testing.T) {
 			expected: nil,
 		},
 		{
-			name:     "error-2",
-			arg:      [][]interface{}{{"a", 1, false, 15}, {"e", 1, 5, 15}},
-			expected: nil,
+			name:     "one different slice",
+			arg:      [][]interface{}{{"a", 1, false, 15}, {"e", 2, 5, 16}},
+			expected: [][]interface{}{{"a", "e"}, {1, 2}, {false, 5}, {15, 16}},
 		},
 		{
 			name:     "normal",
 			arg:      [][]interface{}{{"a", 1, false, 15}, {"e", 2, true, 6}},
-			expected: []interface{}{[]string{"a", "e"}, []int{1, 2}, []bool{false, true}, []int{15, 6}},
+			expected: [][]interface{}{{"a", "e"}, {1, 2}, {false, true}, {15, 6}},
+		},
+		{
+			name:     "type based",
+			arg:      [][]int{{0, 1, 2, 3}, {4, 5, 6, 7}},
+			expected: [][]int{{0, 4}, {1, 5}, {2, 6}, {3, 7}},
 		},
 	}
 
@@ -80,12 +85,12 @@ func TestUnzip(t *testing.T) {
 			got, err := Unzip(sample.arg)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})

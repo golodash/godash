@@ -13,8 +13,6 @@ import (
 // they occur in the slice.
 //
 // Complexity: O(n)
-//
-// n = length of passed slice
 func UniqueBy(slice interface{}, function func(interface{}) interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
