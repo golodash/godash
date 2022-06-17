@@ -59,7 +59,7 @@ func TestUnzip(t *testing.T) {
 			expected: [][]interface{}{},
 		},
 		{
-			name:     "error-1",
+			name:     "error",
 			arg:      [][]interface{}{{"a", 1, false, 15}, {"e"}},
 			expected: nil,
 		},
@@ -89,6 +89,7 @@ func TestUnzip(t *testing.T) {
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return

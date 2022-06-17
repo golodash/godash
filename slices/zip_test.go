@@ -10,8 +10,8 @@ import (
 
 type TZip struct {
 	name     string
-	arg      [][]interface{}
-	expected []interface{}
+	arg      interface{}
+	expected interface{}
 }
 
 var TZipBenchs = []TZip{
@@ -41,7 +41,7 @@ func init() {
 	for i := 0; i < len(TZipBenchs); i++ {
 		k, _ := strconv.Atoi(TZipBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TZipBenchs[i].arg = append(TZipBenchs[i].arg, []interface{}{"0", 1, true, 'e', false, 5, "name", 7, false, 9})
+			TZipBenchs[i].arg = append(TZipBenchs[i].arg.([][]interface{}), []interface{}{"0", 1, true, 'e', false, 5, "name", 7, false, 9})
 		}
 	}
 }
@@ -56,7 +56,7 @@ func TestZip(t *testing.T) {
 		{
 			name:     "empty",
 			arg:      [][]interface{}{},
-			expected: []interface{}{},
+			expected: [][]interface{}{},
 		},
 		{
 			name:     "error",
@@ -64,9 +64,19 @@ func TestZip(t *testing.T) {
 			expected: nil,
 		},
 		{
+			name:     "one different slice",
+			arg:      [][]interface{}{{"a", "e"}, {1, 2}, {false, 5}, {15, 16}},
+			expected: [][]interface{}{{"a", 1, false, 15}, {"e", 2, 5, 16}},
+		},
+		{
 			name:     "normal",
 			arg:      [][]interface{}{{"a", "e"}, {1, 2}, {true, false}, {'b', 't'}},
-			expected: []interface{}{[]interface{}{"a", 1, true, 'b'}, []interface{}{"e", 2, false, 't'}},
+			expected: [][]interface{}{{"a", 1, true, 'b'}, {"e", 2, false, 't'}},
+		},
+		{
+			name:     "type based",
+			arg:      [][]int{{1, 2}, {3, 4}, {5, 6}, {7, 8}},
+			expected: [][]int{{1, 3, 5, 7}, {2, 4, 6, 8}},
 		},
 	}
 
@@ -75,12 +85,13 @@ func TestZip(t *testing.T) {
 			got, err := Zip(sample.arg)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})

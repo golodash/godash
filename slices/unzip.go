@@ -11,31 +11,31 @@ import (
 // and creates a slice regrouping the elements to their pre-zip configuration.
 //
 // Complexity: O(n)
-func Unzip(slice interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
+func Unzip(slices interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slices); err != nil {
 		return nil, err
 	}
 
 	var output = reflect.Value{}
-	sliceItemType := reflect.TypeOf(slice)
-	sliceValue := reflect.ValueOf(slice)
+	sliceItemType := reflect.TypeOf(slices)
+	slicesValue := reflect.ValueOf(slices)
 	itItInterface := false
 	for sliceItemType.Kind() == reflect.Slice {
 		sliceItemType = sliceItemType.Elem()
 	}
 	if sliceItemType.Kind() != reflect.Interface {
-		output = reflect.MakeSlice(reflect.TypeOf(slice), 0, sliceValue.Len()*2)
+		output = reflect.MakeSlice(reflect.TypeOf(slices), 0, slicesValue.Len()*2)
 	} else {
-		output = reflect.MakeSlice(reflect.TypeOf([][]interface{}{}), 0, sliceValue.Len()*2)
+		output = reflect.MakeSlice(reflect.TypeOf([][]interface{}{}), 0, slicesValue.Len()*2)
 		itItInterface = true
 	}
 
 	// Check length of all slices
 	length := -1
-	if sliceValue.Len() != 0 {
-		for i := 0; i < sliceValue.Len(); i++ {
-			itemValue := reflect.ValueOf(sliceValue.Index(i).Interface())
-			if err := internal.SliceCheck(sliceValue.Index(i).Interface()); err != nil {
+	if slicesValue.Len() != 0 {
+		for i := 0; i < slicesValue.Len(); i++ {
+			itemValue := reflect.ValueOf(slicesValue.Index(i).Interface())
+			if err := internal.SliceCheck(slicesValue.Index(i).Interface()); err != nil {
 				return nil, err
 			}
 			if length == -1 {
@@ -53,8 +53,8 @@ func Unzip(slice interface{}) (interface{}, error) {
 	tempMap := map[string]interface{}{}
 	for j := 0; j < length; j++ {
 		indexMap := fmt.Sprint(j)
-		for i := 0; i < sliceValue.Len(); i++ {
-			innerSliceValue := reflect.ValueOf(sliceValue.Index(i).Interface())
+		for i := 0; i < slicesValue.Len(); i++ {
+			innerSliceValue := reflect.ValueOf(slicesValue.Index(i).Interface())
 			itemValue := reflect.ValueOf(innerSliceValue.Index(j).Interface())
 
 			if _, ok := tempMap[indexMap]; !ok {
