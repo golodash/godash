@@ -10,6 +10,8 @@ import (
 )
 
 // This method is like ZipMap except that it supports property paths.
+//
+// Complexity: O(n)
 func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(values); err != nil {
 		return nil, err

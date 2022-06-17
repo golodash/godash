@@ -11,7 +11,7 @@ import (
 type TZipMapDeep struct {
 	name     string
 	keys     []string
-	values   []string
+	values   interface{}
 	expected interface{}
 }
 
@@ -47,8 +47,8 @@ func init() {
 	for i := 0; i < len(TZipMapDeepBenchs); i++ {
 		k, _ := strconv.Atoi(TZipMapDeepBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TZipMapDeepBenchs[i].keys = append(TZipMapDeepBenchs[i].keys, []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}...)
-			TZipMapDeepBenchs[i].values = append(TZipMapDeepBenchs[i].values, []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}...)
+			TZipMapDeepBenchs[i].keys = append(TZipMapDeepBenchs[i].keys, "1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+			TZipMapDeepBenchs[i].values = append(TZipMapDeepBenchs[i].values.([]string), "1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 		}
 	}
 }
@@ -110,12 +110,12 @@ func TestZipMapDeep(t *testing.T) {
 			got, err := ZipMapDeep(sample.keys, sample.values)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v, %v", got, sample.expected, err)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
