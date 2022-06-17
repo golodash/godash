@@ -6,33 +6,62 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-func Xor(slices ...interface{}) (interface{}, error) {
-	var length int = 0
-	for i := 0; i < len(slices); i++ {
-		if err := internal.SliceCheck(slices[i]); err != nil {
-			return nil, err
-		}
-		length += reflect.ValueOf(slices[i]).Len()
+// Returns a slice of unique values that is the symmetric difference of the given slices.
+//
+// Complexity: O(n)
+//
+// n = number of all elements in both 'slice1' and 'slice2'
+func Xor(slice1, slice2 interface{}) (interface{}, error) {
+	if err := internal.SliceCheck(slice1); err != nil {
+		return nil, err
+	}
+	if err := internal.SliceCheck(slice2); err != nil {
+		return nil, err
 	}
 
-	unSeenItems := make([]interface{}, 0, length)
-	var sCheck bool
-	for i := 0; i < len(slices); i++ {
-		item := reflect.ValueOf(slices[i])
-		for j := 0; j < item.Len(); j++ {
-			sCheck = true
-			for sIndex, s := range unSeenItems {
-				if ok, _ := internal.Same(item.Index(j).Interface(), s); ok {
-					unSeenItems = append(unSeenItems[:sIndex], unSeenItems[sIndex+1:]...)
-					sCheck = false
-					break
-				}
-			}
-			if sCheck {
-				unSeenItems = append(unSeenItems, item.Index(j).Interface())
-			}
+	slice1Value := reflect.ValueOf(slice1)
+	slice2Value := reflect.ValueOf(slice2)
+	length := slice1Value.Len() + slice2Value.Len()
+	var oneTimeSeenItems = reflect.Value{}
+	if slice1Value.Type().String() == slice2Value.Type().String() {
+		oneTimeSeenItems = reflect.MakeSlice(slice1Value.Type(), 0, length)
+	} else {
+		oneTimeSeenItems = reflect.MakeSlice(reflect.TypeOf([]interface{}{}), 0, length)
+	}
+
+	// find which items repeated more than once
+	seenMap := map[interface{}]bool{}
+	RepeatMap := map[interface{}]bool{}
+	for i := 0; i < slice1Value.Len(); i++ {
+		item := slice1Value.Index(i).Interface()
+		if _, ok := seenMap[item]; !ok {
+			seenMap[item] = true
+		} else {
+			RepeatMap[item] = true
+		}
+	}
+	for i := 0; i < slice2Value.Len(); i++ {
+		item := slice2Value.Index(i).Interface()
+		if _, ok := seenMap[item]; !ok {
+			seenMap[item] = true
+		} else {
+			RepeatMap[item] = true
 		}
 	}
 
-	return unSeenItems, nil
+	// add all items except items which appeared more than once
+	for i := 0; i < slice1Value.Len(); i++ {
+		item := slice1Value.Index(i).Interface()
+		if _, ok := RepeatMap[item]; !ok {
+			oneTimeSeenItems = reflect.Append(oneTimeSeenItems, reflect.ValueOf(item))
+		}
+	}
+	for i := 0; i < slice2Value.Len(); i++ {
+		item := slice2Value.Index(i).Interface()
+		if _, ok := RepeatMap[item]; !ok {
+			oneTimeSeenItems = reflect.Append(oneTimeSeenItems, reflect.ValueOf(item))
+		}
+	}
+
+	return oneTimeSeenItems.Interface(), nil
 }
