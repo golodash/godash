@@ -10,6 +10,12 @@ import (
 // Uses a binary search to determine the Highest index at which value should be
 // inserted into slice in order to maintain its sort order.
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(log(n))
 func SortedLastIndexBy(slice, value interface{}, function func(interface{}) interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {

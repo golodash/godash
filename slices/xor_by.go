@@ -9,6 +9,12 @@ import (
 // This method is like Xor except that it accepts a function which is
 // invoked for each element of each slices for comparing them.
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(n)
 //
 // n = number of all elements in both 'slice1' and 'slice2'

@@ -9,6 +9,12 @@ import (
 // This method is like Zip except that it accepts a function to specify
 // how grouped values should be combined.
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(n)
 func ZipBy(slices interface{}, function func(interface{}) interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slices); err != nil {

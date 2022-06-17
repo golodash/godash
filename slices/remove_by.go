@@ -10,6 +10,12 @@ import (
 // and returns a slice of remaining elements and a slice of removed elements.
 // The passed function will invoke with one argument.
 //
+// example for 'function':
+//
+//  func isOdd(n interface{}) bool {
+//    return n.(int)%2 != 0
+//  }
+//
 // Complexity: O(n)
 func RemoveBy(slice interface{}, function func(interface{}) bool) (interface{}, interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {

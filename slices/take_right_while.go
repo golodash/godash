@@ -9,6 +9,12 @@ import (
 // Creates a sub slice of a slice with elements taken from the end.
 // Elements are taken until passed function returns false.
 //
+// example for 'function':
+//
+//  func isEven(input interface{}) bool {
+//    return input.(int) % 2 == 0
+//  }
+//
 // Complexity: O(n)
 //
 // n = number of elements that passed function returns true on them

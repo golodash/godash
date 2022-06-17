@@ -8,6 +8,12 @@ import (
 
 // Returns a slice of unique values, in order, from combine of all given slices.
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(n)
 //
 // n = length of both slices combined

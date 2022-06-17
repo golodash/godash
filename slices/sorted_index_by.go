@@ -11,6 +11,12 @@ import (
 // which is invoked for value and each element of slice to compute
 // their sort ranking. The function is invoked with one argument: (value).
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(log(n))
 func SortedIndexBy(slice, value interface{}, function func(interface{}) interface{}) (int, error) {
 	if err := internal.SliceCheck(slice); err != nil {

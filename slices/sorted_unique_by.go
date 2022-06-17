@@ -12,6 +12,12 @@ import (
 // It accepts a function which is invoked for each element in slice to
 // generate the criterion by which uniqueness is computed.
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(n)
 func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) (interface{}, error) {
 	err := internal.SliceCheck(slice)

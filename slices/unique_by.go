@@ -12,6 +12,12 @@ import (
 // The order of result values is determined by the order
 // they occur in the slice.
 //
+// example for 'function':
+//
+//  func makeInt(input interface{}) interface{} {
+//    return int(input.(float64))
+//  }
+//
 // Complexity: O(n)
 func UniqueBy(slice interface{}, function func(interface{}) interface{}) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
