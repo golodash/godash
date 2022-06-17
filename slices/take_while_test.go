@@ -10,8 +10,8 @@ import (
 
 type TTakeWhile struct {
 	name     string
-	arg1     []int
-	expected []int
+	arg1     interface{}
+	expected interface{}
 }
 
 var TTakeWhileBenchs = []TTakeWhile{
@@ -41,7 +41,7 @@ func init() {
 	for i := 0; i < len(TTakeWhileBenchs); i++ {
 		k, _ := strconv.Atoi(TTakeWhileBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TTakeWhileBenchs[i].arg1 = append(TTakeWhileBenchs[i].arg1, []int{0, -1, -2, -3, -4, -5, -6, -7, -8, -9}...)
+			TTakeWhileBenchs[i].arg1 = append(TTakeWhileBenchs[i].arg1.([]int), []int{0, -1, -2, -3, -4, -5, -6, -7, -8, -9}...)
 		}
 	}
 }
@@ -73,12 +73,13 @@ func TestTakeWhile(t *testing.T) {
 			got, err := TakeWhile(sample.arg1, compareTakeWhileTest)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v", got, sample.expected)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
+
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})

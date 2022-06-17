@@ -6,6 +6,12 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Creates a sub slice of a slice with elements taken from the beginning.
+// Elements are taken until passed function returns false.
+//
+// Complexity: O(n)
+//
+// n = number of elements that passed function returns true on them
 func TakeWhile(slice interface{}, function func(interface{}) bool) (interface{}, error) {
 	if err := internal.SliceCheck(slice); err != nil {
 		return nil, err
