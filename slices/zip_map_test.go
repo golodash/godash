@@ -10,8 +10,8 @@ import (
 
 type TZipMap struct {
 	name     string
-	keys     []interface{}
-	values   []interface{}
+	keys     interface{}
+	values   interface{}
 	expected interface{}
 }
 
@@ -47,8 +47,8 @@ func init() {
 	for i := 0; i < len(TZipMapBenchs); i++ {
 		k, _ := strconv.Atoi(TZipMapBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TZipMapBenchs[i].keys = append(TZipMapBenchs[i].keys, []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
-			TZipMapBenchs[i].values = append(TZipMapBenchs[i].values, []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}...)
+			TZipMapBenchs[i].keys = append(TZipMapBenchs[i].keys.([]interface{}), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+			TZipMapBenchs[i].values = append(TZipMapBenchs[i].values.([]interface{}), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
 		}
 	}
 }
@@ -73,10 +73,16 @@ func TestZipMap(t *testing.T) {
 			expected: nil,
 		},
 		{
-			name:     "default1",
-			keys:     []interface{}{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
-			values:   []interface{}{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"},
-			expected: map[interface{}]interface{}{0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H", 8: "I", 9: "J"},
+			name:     "normal",
+			keys:     []int{0, 1, 2, 3},
+			values:   []int{0, 11, 22, 33},
+			expected: map[int]int{0: 0, 1: 11, 2: 22, 3: 33},
+		},
+		{
+			name:     "type based",
+			keys:     []int{0, 1, 2, 3},
+			values:   []string{"A", "B", "C", "D"},
+			expected: map[int]string{0: "A", 1: "B", 2: "C", 3: "D"},
 		},
 	}
 
@@ -85,12 +91,12 @@ func TestZipMap(t *testing.T) {
 			got, err := ZipMap(sample.keys, sample.values)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v, %v", got, sample.expected, err)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v", got, sample.expected)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
