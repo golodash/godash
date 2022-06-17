@@ -10,8 +10,8 @@ import (
 
 type TZipBy struct {
 	name string
-	arr  [][]int
-	want []int
+	arr  interface{}
+	want interface{}
 }
 
 var tZipByBenchs = []TZipBy{
@@ -41,15 +41,16 @@ func init() {
 	for j := 0; j < len(tZipByBenchs); j++ {
 		length, _ := strconv.Atoi(tZipByBenchs[j].name)
 		for i := 0; i < length/10; i++ {
-			tZipByBenchs[j].arr = append(tZipByBenchs[j].arr, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+			tZipByBenchs[j].arr = append(tZipByBenchs[j].arr.([][]int), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 		}
 	}
 }
 
-func returnZipByTest(inputs ...interface{}) int {
+func returnZipByTest(inputs interface{}) interface{} {
 	output := 0
-	for i := 0; i < len(inputs); i++ {
-		output += inputs[i].(int)
+	literalInputs := inputs.([]int)
+	for i := 0; i < len(literalInputs); i++ {
+		output += literalInputs[i]
 	}
 
 	return output
@@ -86,23 +87,18 @@ func TestZipBy(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			inputs := []interface{}{}
-			for i := 0; i < len(subject.arr); i++ {
-				var temp interface{} = subject.arr[i]
-				inputs = append(inputs, temp)
-			}
-			got, err := ZipBy(returnZipByTest, inputs...)
+			got, err := ZipBy(subject.arr, returnZipByTest)
 
 			if err != nil {
 				if subject.want != nil {
-					t.Errorf("ZipBy() got = %v, wanted = %v, error = %v", got, subject.want, err)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				}
 				return
 			}
 
 			if _, err := internal.Same(got, subject.want); err != nil {
-				t.Errorf("ZipBy() got = %v, wanted = %v, error = %v", got, subject.want, err)
-
+				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
+				return
 			}
 		})
 	}
@@ -110,14 +106,9 @@ func TestZipBy(t *testing.T) {
 
 func BenchmarkZipBy(b *testing.B) {
 	for j := 0; j < len(tZipByBenchs); j++ {
-		inputs := []interface{}{}
-		for i := 0; i < len(tZipByBenchs[j].arr); i++ {
-			var temp interface{} = tZipByBenchs[j].arr[i]
-			inputs = append(inputs, temp)
-		}
 		b.Run(fmt.Sprintf("slice_size_%s", tZipByBenchs[j].name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				ZipBy(returnZipByTest, inputs...)
+				ZipBy(tZipByBenchs[j].arr, returnZipByTest)
 			}
 		})
 	}
