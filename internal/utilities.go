@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"runtime"
-	"strings"
 )
 
 var NumberTypes = []reflect.Kind{
@@ -22,21 +20,6 @@ var NumberTypes = []reflect.Kind{
 	reflect.Float32,
 	reflect.Float64,
 	reflect.Uintptr,
-}
-
-// Send a function as input param to this function and
-// get the package name of that function as string
-func GetPackageName(temp interface{}) string {
-	strs := strings.Split((runtime.FuncForPC(reflect.ValueOf(temp).Pointer()).Name()), ".")
-	strs = strings.Split(strs[len(strs)-2], "/")
-	return strs[len(strs)-1]
-}
-
-// Send a function as input param to this function and
-// get the function name as string
-func GetFunctionName(temp interface{}) string {
-	strs := strings.Split((runtime.FuncForPC(reflect.ValueOf(temp).Pointer()).Name()), ".")
-	return strs[len(strs)-1]
 }
 
 // Checks if 'slice' interface variable is slice type and
@@ -78,6 +61,7 @@ func AreComparable(var1 interface{}, var2 interface{}) error {
 	return nil
 }
 
+// Returns a unique list of integers
 func UniqueInt(s []int) []int {
 	inResult := make(map[int]bool)
 	var result []int
@@ -90,12 +74,14 @@ func UniqueInt(s []int) []int {
 	return result
 }
 
+// Returns true if passed variable is a number
 func IsNumber(input interface{}) bool {
 	v := reflect.ValueOf(input)
 
 	return IsNumberType(v.Kind())
 }
 
+// Returns true if passed kind is a number
 func IsNumberType(input reflect.Kind) bool {
 	for _, value := range NumberTypes {
 		if value == input {
@@ -106,34 +92,7 @@ func IsNumberType(input reflect.Kind) bool {
 	return false
 }
 
-func DuplicateSlice(slice interface{}) (interface{}, error) {
-	if err := SliceCheck(slice); err != nil {
-		return nil, err
-	}
-
-	sliceValue := reflect.ValueOf(slice)
-	newSlice := reflect.MakeSlice(reflect.TypeOf(slice), sliceValue.Len(), sliceValue.Len())
-	reflect.Copy(newSlice, sliceValue)
-
-	return newSlice.Interface(), nil
-}
-
-func GenerateNil() reflect.Value {
-	typeOfEmptyInterface := reflect.TypeOf((*interface{})(nil)).Elem()
-	valueOfZeroEmptyInterface := reflect.Zero(typeOfEmptyInterface)
-	return valueOfZeroEmptyInterface
-}
-
-func keyIsInHereToo(key reflect.Value, keys []reflect.Value) bool {
-	for i := range keys {
-		if key.Interface() == keys[i].Interface() {
-			return true
-		}
-	}
-
-	return false
-}
-
+// Determines if passed variables are exactly the same
 func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 	condition, err = true, nil
 	v1 := reflect.ValueOf(value1)
@@ -186,16 +145,25 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 			return
 		}
 
-		keys1 := v1.MapKeys()
-		keys2 := v2.MapKeys()
-		if len(keys1) != len(keys2) {
+		if len(v1.MapKeys()) != len(v2.MapKeys()) {
 			condition, err = false, nil
 			return
 		}
 
-		for i := 0; i < len(keys1); i = i + 1 {
-			condition, err = Same(v1.MapIndex(keys1[i]).Interface(), v2.MapIndex(keys1[i]).Interface())
-			if err != nil || !condition || !keyIsInHereToo(keys1[i], keys2) {
+		keys := v1.MapKeys()
+		for i := 0; i < len(v1.MapKeys()); i = i + 1 {
+			value1 := v1.MapIndex(keys[i])
+			value2 := v2.MapIndex(keys[i])
+			if !value1.IsValid() {
+				condition, err = false, nil
+				return
+			}
+			if !value2.IsValid() {
+				condition, err = false, nil
+				return
+			}
+
+			if condition, err = Same(value1.Interface(), value2.Interface()); err != nil || !condition {
 				condition, err = false, nil
 				return
 			}
