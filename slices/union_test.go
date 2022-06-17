@@ -92,12 +92,12 @@ func TestUnion(t *testing.T) {
 			got, err := Union(sample.arg1, sample.arg2)
 			if err != nil {
 				if sample.expected != nil {
-					t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
+					t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				}
 				return
 			}
 			if ok, _ := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got : %v but expected : %v, err = %v", got, sample.expected, err)
+				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
 		})
