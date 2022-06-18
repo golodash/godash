@@ -67,11 +67,11 @@ func whereToPutInSliceBiggerEqualBy(slice, value, isBiggerEqualFunction, compara
 
 	item := sliceValue.Index(len / 2).Interface()
 
-	var err error = nil
-	if err = internal.AreComparable(item, value); err != nil {
+	if ok := internal.AreComparable(item, value); !ok {
 		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
 	}
 
+	var err error = nil
 	var result int
 	firstItem := comparableParamFunctionValue.Call([]reflect.Value{reflect.ValueOf(item)})[0]
 	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{firstItem, secondItem}); res[0].Bool() {

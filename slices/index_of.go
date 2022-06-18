@@ -54,7 +54,7 @@ func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
 	}
 
 	for i := from; compare(i, until); i += count {
-		if ok, err := internal.Same(sliceValue.Index(i).Interface(), value); !ok || err != nil {
+		if ok, _ := internal.Same(sliceValue.Index(i).Interface(), value); !ok {
 			continue
 		} else {
 			return i, nil

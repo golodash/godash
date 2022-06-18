@@ -50,15 +50,15 @@ func CheckSameType(var1 interface{}, var2 interface{}) error {
 }
 
 // Checks if two given variables are comarable or not
-func AreComparable(var1 interface{}, var2 interface{}) error {
+func AreComparable(var1 interface{}, var2 interface{}) bool {
 	if err := CheckSameType(var1, var2); err != nil {
-		return err
+		return false
 	}
 	if !reflect.TypeOf(var1).Comparable() {
-		return errors.New("two variables are not comparable")
+		return false
 	}
 
-	return nil
+	return true
 }
 
 // Returns a unique list of integers

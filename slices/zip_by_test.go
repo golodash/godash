@@ -96,7 +96,7 @@ func TestZipBy(t *testing.T) {
 				return
 			}
 
-			if _, err := internal.Same(got, subject.want); err != nil {
+			if ok, _ := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}

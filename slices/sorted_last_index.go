@@ -98,11 +98,11 @@ func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{
 
 	item := sliceValue.Index(len / 2).Interface()
 
-	var err error = nil
-	if err = internal.AreComparable(item, value); err != nil {
+	if ok := internal.AreComparable(item, value); !ok {
 		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
 	}
 
+	var err error = nil
 	var result int
 	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
 		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(len/2, len).Interface(), value, isBiggerEqualFunction); err != nil {

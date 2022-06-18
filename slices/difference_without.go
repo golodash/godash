@@ -30,11 +30,7 @@ func Difference(slice, notIncluded interface{}) (interface{}, error) {
 		}
 	firstLoop:
 		for j := 0; j < notInValue.Len(); j++ {
-			res, err := internal.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface())
-			if err != nil {
-				return nil, err
-			}
-			if res {
+			if ok, _ := internal.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface()); ok {
 				sliceValue = reflect.AppendSlice(sliceValue.Slice(0, i), sliceValue.Slice(i+1, sliceValue.Len()))
 				i++
 				break firstLoop
