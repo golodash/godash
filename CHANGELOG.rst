@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(internal-defer_test_cases): function added and test cases stablized
 * 🐛 fix(slices-sorted_index): fixing benchmark
 * 🐛 fix(slices-slice): fixing a bug found on a test-case
 * ✅ test(slices-find_index_by): find_index_by function added

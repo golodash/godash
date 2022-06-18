@@ -12,7 +12,7 @@ type TLastIndexOf struct {
 	name  string
 	arr   interface{}
 	value interface{}
-	want  int
+	want  interface{}
 }
 
 var tLastIndexOfBenchs = []TLastIndexOf{
@@ -59,7 +59,7 @@ func TestLastIndexOf(t *testing.T) {
 			name:  "nil",
 			arr:   nil,
 			value: -1,
-			want:  -1,
+			want:  nil,
 		},
 		{
 			name:  "empty",
@@ -83,13 +83,8 @@ func TestLastIndexOf(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
+			defer internal.DeferTestCases(t, subject.want)
 			got, err := LastIndexOf(subject.arr, subject.value, -1)
-			if err != nil {
-				if subject.want != -1 {
-					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
-				}
-				return
-			}
 
 			if ok, _ := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)

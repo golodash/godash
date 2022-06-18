@@ -12,7 +12,7 @@ type TJoin struct {
 	name     string
 	arg1     interface{}
 	arg2     string
-	expected string
+	expected interface{}
 }
 
 var TJoinBenchs = []TJoin{
@@ -54,7 +54,7 @@ func TestJoin(t *testing.T) {
 			name:     "nil",
 			arg1:     nil,
 			arg2:     "-",
-			expected: "",
+			expected: nil,
 		},
 		{
 			name:     "empty",
@@ -77,13 +77,8 @@ func TestJoin(t *testing.T) {
 	}
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
+			defer internal.DeferTestCases(t, subject.expected)
 			got, err := Join(subject.arg1, subject.arg2)
-			if err != nil {
-				if subject.expected != "" {
-					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.expected, err)
-				}
-				return
-			}
 
 			if ok, _ := internal.Same(got, subject.expected); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.expected, err)

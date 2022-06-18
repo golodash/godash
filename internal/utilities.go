@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"reflect"
+	"testing"
 )
 
 var NumberTypes = []reflect.Kind{
@@ -153,4 +154,12 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 	}
 
 	return
+}
+
+func DeferTestCases(t *testing.T, expected interface{}) {
+	err := recover()
+
+	if err != nil && expected != nil {
+		t.Errorf("wanted = %v, err = %s", expected, err)
+	}
 }

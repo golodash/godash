@@ -95,13 +95,14 @@ func TestPullAt(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
-			gotSlice, gotRems, err := PullAt(subject.arr, subject.rems)
-			if err != nil {
-				if subject.wantSlice != nil && subject.wantRems != nil {
-					t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)
+			defer func(t *testing.T, wantSlice, wantRems interface{}) {
+				err := recover()
+
+				if err != nil && wantSlice != nil && wantRems != nil {
+					t.Errorf("wantSlice = %v, wantRems = %v, err = %s", wantSlice, wantRems, err)
 				}
-				return
-			}
+			}(t, subject.wantSlice, subject.wantRems)
+			gotSlice, gotRems, err := PullAt(subject.arr, subject.rems)
 
 			if ok, _ := internal.Same(gotSlice, subject.wantSlice); !ok {
 				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)

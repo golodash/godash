@@ -81,13 +81,14 @@ func TestRemoveBy(t *testing.T) {
 
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
-			gotSlice, gotRems, err := RemoveBy(sample.arg1, removeByFunctionTest)
-			if err != nil {
-				if sample.wantSlice != nil && sample.wantRems != nil {
-					t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, sample.wantSlice, sample.wantRems, err)
+			defer func(t *testing.T, wantSlice, wantRems interface{}) {
+				err := recover()
+
+				if err != nil && wantSlice != nil && wantRems != nil {
+					t.Errorf("wantSlice = %v, wantRems = %v, err = %s", wantSlice, wantRems, err)
 				}
-				return
-			}
+			}(t, sample.wantSlice, sample.wantRems)
+			gotSlice, gotRems, err := RemoveBy(sample.arg1, removeByFunctionTest)
 
 			if ok, _ := internal.Same(gotSlice, sample.wantSlice); !ok {
 				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, sample.wantSlice, sample.wantRems, err)

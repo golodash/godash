@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/golodash/godash/internal"
 )
 
 type TSortedLastIndex struct {
@@ -56,7 +58,7 @@ func TestSortedLastIndex(t *testing.T) {
 			name:  "nil",
 			arr:   nil,
 			value: 0,
-			want:  -1,
+			want:  nil,
 		},
 		{
 			name:  "empty",
@@ -86,13 +88,8 @@ func TestSortedLastIndex(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
+			defer internal.DeferTestCases(t, subject.want)
 			got, err := SortedLastIndex(subject.arr, subject.value)
-			if err != nil {
-				if subject.want != -1 {
-					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
-				}
-				return
-			}
 
 			if got != subject.want {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)

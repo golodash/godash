@@ -62,7 +62,7 @@ func TestSortedIndexBy(t *testing.T) {
 			name:  "nil",
 			arr:   nil,
 			value: 0,
-			want:  -1,
+			want:  nil,
 		},
 		{
 			name:  "empty",
@@ -98,13 +98,8 @@ func TestSortedIndexBy(t *testing.T) {
 
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
+			defer internal.DeferTestCases(t, subject.want)
 			got, err := SortedIndexBy(subject.arr, subject.value, compareSortedIndexByTest)
-			if err != nil {
-				if subject.want != -1 {
-					t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
-				}
-				return
-			}
 
 			if ok, _ := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
