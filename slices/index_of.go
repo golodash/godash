@@ -17,11 +17,11 @@ func IndexOf(slice, value interface{}, from int) (int, error) {
 }
 
 func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
-	sliceValue := reflect.ValueOf(slice)
-	if err := internal.SliceCheck(slice); err != nil {
-		return -1, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
+	sliceValue := reflect.ValueOf(slice)
 	if from < 0 {
 		from = sliceValue.Len() + from
 	} else if from >= sliceValue.Len() {

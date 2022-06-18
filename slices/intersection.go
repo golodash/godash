@@ -14,8 +14,8 @@ import (
 //
 // n = number of all elements in slices of 'slices'
 func Intersection(slices interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slices); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slices); !ok {
+		panic("passed 'slices' variable is not slice type")
 	}
 
 	sliceItemType := reflect.TypeOf(slices)
@@ -27,7 +27,7 @@ func Intersection(slices interface{}) (interface{}, error) {
 	length := 0
 	for i := 0; i < sliceValue.Len(); i++ {
 		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
-		if err := internal.SliceCheck(subSlice); err != nil {
+		if ok := internal.SliceCheck(subSlice); !ok {
 			continue
 		}
 
@@ -38,7 +38,7 @@ func Intersection(slices interface{}) (interface{}, error) {
 	outputSlice := reflect.MakeSlice(reflect.SliceOf(sliceItemType), 0, length)
 	for i := 0; i < sliceValue.Len(); i++ {
 		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
-		if err := internal.SliceCheck(subSlice.Interface()); err != nil {
+		if ok := internal.SliceCheck(subSlice.Interface()); !ok {
 			continue
 		}
 

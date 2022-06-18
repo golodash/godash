@@ -17,16 +17,16 @@ import (
 // Complexity: O(n)
 //
 // n = length of both slices combined
-func UnionBy(slice, slice2 interface{}, function func(interface{}) interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+func UnionBy(slice1, slice2 interface{}, function func(interface{}) interface{}) (interface{}, error) {
+	if ok := internal.SliceCheck(slice1); !ok {
+		panic("passed 'slice1' variable is not slice type")
 	}
-	if err := internal.SliceCheck(slice2); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice2); !ok {
+		panic("passed 'slice2' variable is not slice type")
 	}
 
 	sameType := false
-	values := reflect.ValueOf(slice)
+	values := reflect.ValueOf(slice1)
 	values2 := reflect.ValueOf(slice2)
 	if values.Type().String() == values2.Type().String() {
 		sameType = true

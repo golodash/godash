@@ -14,11 +14,11 @@ import (
 //
 // m = length of 'values'
 func Pull(slice, values interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
-	if err := internal.SliceCheck(values); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(values); !ok {
+		panic("passed 'values' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)

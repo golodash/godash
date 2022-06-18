@@ -11,8 +11,8 @@ import (
 //
 // Complexity: O(log(n))
 func SortedIndexOf(slice interface{}, value interface{}) (int, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return -1, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	if res := internal.IsNumber(value); !res {

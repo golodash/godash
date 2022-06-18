@@ -11,8 +11,8 @@ import (
 //
 // Complexity: O(n)
 func Join(slice interface{}, separator string) (string, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return "", err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)

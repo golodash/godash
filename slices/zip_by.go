@@ -1,6 +1,7 @@
 package slices
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -17,8 +18,8 @@ import (
 //
 // Complexity: O(n)
 func ZipBy(slices interface{}, function func(interface{}) interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slices); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slices); !ok {
+		panic("passed 'slices' variable is not slice type")
 	}
 
 	// Calculating output type
@@ -40,8 +41,8 @@ func ZipBy(slices interface{}, function func(interface{}) interface{}) (interfac
 	for i := 0; i < slicesValue.Len(); i++ {
 		item := slicesValue.Index(i).Interface()
 		itemValue := reflect.ValueOf(item)
-		if err := internal.SliceCheck(item); err != nil {
-			return nil, err
+		if ok := internal.SliceCheck(item); !ok {
+			panic(fmt.Sprintf("item in %d index is not a slice", i))
 		}
 		if maxLength < itemValue.Len() {
 			maxLength = itemValue.Len()

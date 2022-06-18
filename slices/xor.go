@@ -12,11 +12,11 @@ import (
 //
 // n = number of all elements in both 'slice1' and 'slice2'
 func Xor(slice1, slice2 interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice1); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice1); !ok {
+		panic("passed 'slice1' variable is not slice type")
 	}
-	if err := internal.SliceCheck(slice2); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice2); !ok {
+		panic("passed 'slice2' variable is not slice type")
 	}
 
 	slice1Value := reflect.ValueOf(slice1)

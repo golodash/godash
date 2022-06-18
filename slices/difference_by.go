@@ -19,11 +19,11 @@ import (
 //
 // Complexity: O(n)
 func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, interface{}) bool) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
-	if err := internal.SliceCheck(notIncluded); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(notIncluded); !ok {
+		panic("passed 'notIncluded' variable is not slice type")
 	}
 
 	notInValue := reflect.ValueOf(notIncluded)

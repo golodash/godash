@@ -15,11 +15,11 @@ import (
 //
 // m = length of 'notIncluded'
 func Difference(slice, notIncluded interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
-	if err := internal.SliceCheck(notIncluded); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(notIncluded); !ok {
+		panic("passed 'notIncluded' variable is not slice type")
 	}
 
 	notInValue := reflect.ValueOf(notIncluded)

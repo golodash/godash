@@ -19,8 +19,8 @@ import (
 //
 // n = number of elements that passed function returns true on them
 func TakeRightWhile(slice interface{}, function func(interface{}) bool) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)

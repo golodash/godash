@@ -12,11 +12,11 @@ import (
 //
 // Complexity: O(n)
 func ZipMap(keys, values interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(keys); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(keys); !ok {
+		panic("passed 'keys' variable is not slice type")
 	}
-	if err := internal.SliceCheck(values); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(values); !ok {
+		panic("passed 'values' variable is not slice type")
 	}
 
 	keysValue := reflect.ValueOf(keys)

@@ -12,8 +12,8 @@ import (
 //
 // Complexity: O(n)
 func Unzip(slices interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slices); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slices); !ok {
+		panic("passed 'slices' variable is not slice type")
 	}
 
 	var output = reflect.Value{}
@@ -35,8 +35,8 @@ func Unzip(slices interface{}) (interface{}, error) {
 	if slicesValue.Len() != 0 {
 		for i := 0; i < slicesValue.Len(); i++ {
 			itemValue := reflect.ValueOf(slicesValue.Index(i).Interface())
-			if err := internal.SliceCheck(slicesValue.Index(i).Interface()); err != nil {
-				return nil, err
+			if ok := internal.SliceCheck(slicesValue.Index(i).Interface()); !ok {
+				panic(fmt.Sprintf("item in %d index is not a slice", i))
 			}
 			if length == -1 {
 				length = itemValue.Len()

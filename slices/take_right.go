@@ -11,8 +11,8 @@ import (
 //
 // Complexity: O(1)
 func TakeRight(slice interface{}, number int) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	values := reflect.ValueOf(slice)

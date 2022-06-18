@@ -20,9 +20,8 @@ import (
 //
 // Complexity: O(n)
 func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) (interface{}, error) {
-	err := internal.SliceCheck(slice)
-	if err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceType := reflect.TypeOf(slice)

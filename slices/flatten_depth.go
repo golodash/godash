@@ -12,8 +12,8 @@ import (
 //
 // n = count of all elements at 'depth' level of 'slice'
 func FlattenDepth(slice interface{}, depth int) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	if depth == 0 {

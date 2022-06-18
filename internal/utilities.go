@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
 )
@@ -22,43 +21,20 @@ var NumberTypes = []reflect.Kind{
 	reflect.Uintptr,
 }
 
-// Checks if 'slice' interface variable is slice type and
-// if 'slice' is nil
-func SliceCheck(slice interface{}) error {
+// Checks if 'slice' interface variable is slice type and if 'slice' is nil
+func SliceCheck(slice interface{}) bool {
 	s := reflect.ValueOf(slice)
-	if s.Kind() != reflect.Slice {
-		return errors.New("not a slice")
-	}
-
-	if s.IsNil() {
-		return errors.New("slice is nil")
-	}
-
-	return nil
+	return s.IsValid() && s.Kind() == reflect.Slice && !s.IsNil()
 }
 
 // Checks if two variables are the same or not
-func CheckSameType(var1 interface{}, var2 interface{}) error {
-	if !reflect.ValueOf(var1).IsValid() || !reflect.ValueOf(var2).IsValid() {
-		return errors.New("invalid values are not allowed")
-	}
-	if reflect.TypeOf(var1).String() != reflect.TypeOf(var2).String() {
-		return errors.New("two variables are not same type")
-	}
-
-	return nil
+func CheckSameType(var1 interface{}, var2 interface{}) bool {
+	return (reflect.ValueOf(var1).IsValid() && reflect.ValueOf(var2).IsValid()) && reflect.TypeOf(var1).String() == reflect.TypeOf(var2).String()
 }
 
 // Checks if two given variables are comarable or not
 func AreComparable(var1 interface{}, var2 interface{}) bool {
-	if err := CheckSameType(var1, var2); err != nil {
-		return false
-	}
-	if !reflect.TypeOf(var1).Comparable() {
-		return false
-	}
-
-	return true
+	return reflect.TypeOf(var1).Comparable() && CheckSameType(var1, var2)
 }
 
 // Returns a unique list of integers
@@ -76,9 +52,7 @@ func UniqueInt(s []int) []int {
 
 // Returns true if passed variable is a number
 func IsNumber(input interface{}) bool {
-	v := reflect.ValueOf(input)
-
-	return IsNumberType(v.Kind())
+	return IsNumberType(reflect.ValueOf(input).Kind())
 }
 
 // Returns true if passed kind is a number

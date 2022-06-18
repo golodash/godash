@@ -20,8 +20,8 @@ import (
 //
 // Best-Case Complexity: O(n)
 func PullAt(slice interface{}, remSlice []int) (interface{}, interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	if !sort.SliceIsSorted(remSlice, func(i, j int) bool { return remSlice[i] < remSlice[j] }) {

@@ -12,8 +12,8 @@ import (
 //
 // n = number of 'values' length
 func Concat(slice, values interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	valuesValue := reflect.ValueOf(values)

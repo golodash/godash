@@ -13,8 +13,8 @@ import (
 //
 // Complexity: O(n)
 func Compact(slice, excepts interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	exceptsValue := reflect.ValueOf(excepts)

@@ -11,8 +11,8 @@ import (
 //
 // Complexity: O(1)
 func Head(slice interface{}) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)

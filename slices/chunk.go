@@ -12,8 +12,8 @@ import (
 //
 // Complexity: O(n)
 func Chunk(slice interface{}, size int) (interface{}, error) {
-	if err := internal.SliceCheck(slice); err != nil {
-		return nil, err
+	if ok := internal.SliceCheck(slice); !ok {
+		panic("passed 'slice' variable is not slice type")
 	}
 
 	if size <= 0 {
