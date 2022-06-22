@@ -104,12 +104,12 @@ func TestPullAt(t *testing.T) {
 			}(t, subject.wantSlice, subject.wantRems)
 			gotSlice, gotRems, err := PullAt(subject.arr, subject.rems)
 
-			if ok, _ := internal.Same(gotSlice, subject.wantSlice); !ok {
+			if ok := internal.Same(gotSlice, subject.wantSlice); !ok {
 				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)
 				return
 			}
 
-			if ok, _ := internal.Same(gotRems, subject.wantRems); !ok {
+			if ok := internal.Same(gotRems, subject.wantRems); !ok {
 				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems, err)
 				return
 			}

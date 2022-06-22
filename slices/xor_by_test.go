@@ -83,7 +83,7 @@ func TestXorBy(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got, err := XorBy(sample.arg1, sample.arg2, compareXorByTest)
 
-			if ok, _ := internal.Same(got, sample.expected); !ok {
+			if ok := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}

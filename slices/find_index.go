@@ -17,7 +17,7 @@ func FindIndex(slice, value interface{}) (int, error) {
 
 	sliceValue := reflect.ValueOf(slice)
 	for i := 0; i < sliceValue.Len(); i++ {
-		if ok, _ := internal.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value); ok {
+		if ok := internal.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value); ok {
 			return i, nil
 		}
 	}

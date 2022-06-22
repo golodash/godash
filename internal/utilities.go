@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -68,14 +67,14 @@ func IsNumberType(input reflect.Kind) bool {
 }
 
 // Determines if passed variables are exactly the same
-func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
-	condition, err = true, nil
+func Same(value1 interface{}, value2 interface{}) (condition bool) {
+	condition = true
 	v1 := reflect.ValueOf(value1)
 	v2 := reflect.ValueOf(value2)
 
 	// Check for nil and "" and other zero values
 	if (!v1.IsValid() && !v2.IsValid()) && (v1.Kind() == v2.Kind()) {
-		return true, nil
+		return
 	}
 
 	if v1.Kind() != v2.Kind() {
@@ -91,37 +90,37 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 		if v1.Kind() == v2.Kind() && v1.Interface() == v2.Interface() {
 			return
 		}
-		condition, err = false, nil
+		condition = false
 		return
 	}
 
 	defer func() {
 		if r := recover(); r != nil {
-			condition, err = false, fmt.Errorf("%s", r)
+			condition = false
 		}
 	}()
 
 	switch v1.Kind() {
 	case reflect.Array, reflect.Slice:
 		if v1.Len() != v2.Len() {
-			condition, err = false, nil
+			condition = false
 			return
 		}
 		for i := 0; i < v1.Len(); i++ {
-			condition, err = Same(v1.Index(i).Interface(), v2.Index(i).Interface())
-			if err != nil || !condition {
-				condition, err = false, nil
+			condition = Same(v1.Index(i).Interface(), v2.Index(i).Interface())
+			if !condition {
+				condition = false
 				return
 			}
 		}
 	case reflect.Map:
 		if v1.Len() != v2.Len() {
-			condition, err = false, nil
+			condition = false
 			return
 		}
 
 		if len(v1.MapKeys()) != len(v2.MapKeys()) {
-			condition, err = false, nil
+			condition = false
 			return
 		}
 
@@ -130,26 +129,26 @@ func Same(value1 interface{}, value2 interface{}) (condition bool, err error) {
 			value1 := v1.MapIndex(keys[i])
 			value2 := v2.MapIndex(keys[i])
 			if !value1.IsValid() {
-				condition, err = false, nil
+				condition = false
 				return
 			}
 			if !value2.IsValid() {
-				condition, err = false, nil
+				condition = false
 				return
 			}
 
-			if condition, err = Same(value1.Interface(), value2.Interface()); err != nil || !condition {
-				condition, err = false, nil
+			if condition = Same(value1.Interface(), value2.Interface()); !condition {
+				condition = false
 				return
 			}
 		}
 	case reflect.Struct:
-		condition, err = value1 == value2, nil
+		condition = value1 == value2
 	case reflect.Ptr:
-		condition, err = Same(v1.Elem().Interface(), v2.Elem().Interface())
+		condition = Same(v1.Elem().Interface(), v2.Elem().Interface())
 	default:
 		if v1.Interface() != v2.Interface() {
-			condition, err = false, nil
+			condition = false
 		}
 	}
 

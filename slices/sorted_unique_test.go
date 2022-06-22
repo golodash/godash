@@ -75,7 +75,7 @@ func TestSortedUnique(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got, err := SortedUnique(sample.arg1)
 
-			if ok, _ := internal.Same(got, sample.expected); !ok {
+			if ok := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}

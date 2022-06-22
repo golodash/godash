@@ -27,7 +27,7 @@ func Pull(slice, values interface{}) (interface{}, error) {
 	for i := 0; i < sliceValue.Len(); i++ {
 		add := true
 		for j := 0; j < valuesValue.Len(); j++ {
-			if ok, _ := internal.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()); ok {
+			if ok := internal.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()); ok {
 				add = false
 				break
 			}

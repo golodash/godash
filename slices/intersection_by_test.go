@@ -38,7 +38,7 @@ var tIntersectionByBenchs = []TIntersectionBy{
 }
 
 func sameIntersectionByTest(value1, value2 interface{}) bool {
-	ok, _ := internal.Same(value1, value2)
+	ok := internal.Same(value1, value2)
 	return ok
 }
 
@@ -90,7 +90,7 @@ func TestIntersectionBy(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got, err := IntersectionBy(subject.arr, sameIntersectionByTest)
 
-			if ok, _ := internal.Same(got, subject.want); !ok {
+			if ok := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}

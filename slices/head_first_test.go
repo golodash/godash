@@ -70,7 +70,7 @@ func TestHead(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got, err := Head(subject.arr)
 
-			if ok, _ := internal.Same(got, subject.want); !ok {
+			if ok := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}

@@ -101,7 +101,7 @@ func TestSortedIndexBy(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got, err := SortedIndexBy(subject.arr, subject.value, compareSortedIndexByTest)
 
-			if ok, _ := internal.Same(got, subject.want); !ok {
+			if ok := internal.Same(got, subject.want); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
 				return
 			}

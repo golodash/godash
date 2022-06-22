@@ -108,7 +108,7 @@ func TestSlice(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got, err := Slice(sample.arg1, sample.arg2, sample.arg3)
 
-			if ok, _ := internal.Same(got, sample.expected); !ok {
+			if ok := internal.Same(got, sample.expected); !ok {
 				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
 				return
 			}
