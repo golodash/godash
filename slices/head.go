@@ -21,8 +21,3 @@ func Head(slice interface{}) interface{} {
 
 	return sliceValue.Index(0).Interface()
 }
-
-// Gets the first element of slice.
-func First(slice interface{}) interface{} {
-	return Head(slice)
-}
