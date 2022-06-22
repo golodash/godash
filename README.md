@@ -7,26 +7,22 @@
 Godash is inspired by [lodash](https://github.com/lodash/lodash) nodejs utility library delivering modularity.
 
 Basically we are going to use their documentation and recreate what they did in nodejs, inside golang and of course if anyone wants to add more tools than lodash documentation, please feel free to create an issue, fork and contribute.
-## Our Goals
 
-This is a repository driven by golang community, 
+## How to install
 
-If you love to contribute, please do, we appreciate it.
-
-And ofcourse don't forget to read [CONTRIBUTING](/CONTRIBUTING.md) documentation to know about how to contribute in this project.
-
-## Tests and Benchmarks
-
-Just a reminder on how to run test cases and benchmarks.
-
-#### Test Cases
-
+Simply write:
 ```bash
-go test -run=. ./<your desired package>
+go get github.com/golodash/godash
 ```
 
-#### Benchmarks
+## Progress
 
-```bash
-go test -bench=. -benchtime=2s ./<your desired package>
-```
+- [X] Currently added 55 functions in `slices` package.
+- [X] Added different test cases and benchmarks for every function. (not for alias functions)
+- [X] Library added to pkg.go.dev.
+
+## Documentation
+
+Whole documentation can be accessed in [godash.maktoobgar.ir](https://godash.maktoobgar.ir) web address.
+
+**Note**: If documentation is not ready for your desired function, use function's documentation which is a comment on top of the function until all documents get ready.
