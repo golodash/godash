@@ -9,15 +9,15 @@ import (
 // Gets all but the last element of slice.
 //
 // Complexity: O(1)
-func Initial(slice interface{}) (interface{}, error) {
+func Initial(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)
 	if sliceValue.Len() == 0 {
-		return slice, nil
+		return slice
 	}
 
-	return sliceValue.Slice(0, sliceValue.Len()-1).Interface(), nil
+	return sliceValue.Slice(0, sliceValue.Len()-1).Interface()
 }

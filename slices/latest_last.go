@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -10,22 +9,22 @@ import (
 // Gets the last element of slice.
 //
 // Complexity: O(1)
-func Latest(slice interface{}) (interface{}, error) {
+func Latest(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	s := reflect.ValueOf(slice)
 	if s.Len() == 0 {
-		return nil, errors.New("slice is empty")
+		panic("slice is empty")
 	}
 
-	return s.Index(s.Len() - 1).Interface(), nil
+	return s.Index(s.Len() - 1).Interface()
 }
 
 // Gets the last element of slice.
 //
 // Complexity: O(1)
-func Last(slice interface{}) (interface{}, error) {
+func Last(slice interface{}) interface{} {
 	return Latest(slice)
 }

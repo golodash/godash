@@ -12,20 +12,20 @@ import (
 // This method is like ZipMap except that it supports property paths.
 //
 // Complexity: O(n)
-func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
+func ZipMapDeep(keys []string, values interface{}) interface{} {
 	if ok := internal.SliceCheck(values); !ok {
 		panic("passed 'values' variable is not slice type")
 	}
 
 	valuesValue := reflect.ValueOf(values)
 	if len(keys) != valuesValue.Len() || len(keys) == 0 || valuesValue.Len() == 0 {
-		return nil, errors.New("length of both 'keys' and 'values' slices has to be same and not empty")
+		panic("length of both 'keys' and 'values' slices has to be same and not empty")
 	}
 
 	keysValue := reflect.ValueOf(keys)
 	outType, err := GetPropertyPathType(keysValue.Index(0).String(), valuesValue.Type().Elem())
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 	var output interface{}
 	if outType.Kind() == reflect.Map {
@@ -45,7 +45,7 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 			outSlice, outKey, nextSlice, nextMap, remaining, err := nextProperty(propertyKey)
 			propertyKey = remaining
 			if err != nil {
-				return nil, errors.New(err.Error() + fmt.Sprintf(". index = %d", i))
+				panic(err.Error() + fmt.Sprintf(". index = %d", i))
 			} else if outSlice != -1 {
 				if ok := internal.SliceCheck(tempValue.Interface()); !ok {
 					panic(fmt.Sprintf("key formats are wrong. index = %d", i))
@@ -54,7 +54,7 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 				if tempValue.Len() <= outSlice {
 					for j := tempValue.Len() - 1; j < outSlice; j++ {
 						if outType, err := GetPropertyPathType(propertyKey, valuesValue.Type().Elem()); err != nil {
-							return nil, err
+							panic(err)
 						} else {
 							if outType.Kind() == reflect.Ptr {
 								value := reflect.New(outType.Elem())
@@ -73,10 +73,10 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 
 				if nextSlice {
 					if outType, err := GetPropertyPathType(propertyKey, valuesValue.Type().Elem()); err != nil {
-						return nil, err
+						panic(err)
 					} else {
 						if tempValue.Index(outSlice).Type() != outType {
-							return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))
+							panic("key formats are wrong" + fmt.Sprintf(". index = %d", i))
 						}
 						if tempValue.Index(outSlice).Interface() == nil {
 							value := reflect.New(outType.Elem())
@@ -89,10 +89,10 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 					}
 				} else if nextMap {
 					if outType, err := GetPropertyPathType(propertyKey, valuesValue.Type().Elem()); err != nil {
-						return nil, err
+						panic(err)
 					} else {
 						if tempValue.Index(outSlice).Type() != outType {
-							return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))
+							panic("key formats are wrong" + fmt.Sprintf(". index = %d", i))
 						}
 						if tempValue.Index(outSlice).Interface() == nil {
 							value := reflect.MakeMap(outType)
@@ -105,17 +105,17 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 				} else if !nextSlice && !nextMap && propertyKey == "" {
 					tempValue.Index(outSlice).Set(valuesValue.Index(i))
 				} else {
-					return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))
+					panic("key formats are wrong" + fmt.Sprintf(". index = %d", i))
 				}
 			} else if outKey != "" {
 				if nextSlice {
 					if outType, err := GetPropertyPathType(propertyKey, valuesValue.Type().Elem()); err != nil {
-						return nil, err
+						panic(err)
 					} else {
 						mapIndexType := tempValue.Type().Elem()
 						mapIndex := tempValue.MapIndex(reflect.ValueOf(outKey))
 						if mapIndexType != outType {
-							return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))
+							panic("key formats are wrong" + fmt.Sprintf(". index = %d", i))
 						}
 						if !mapIndex.IsValid() || mapIndex.Interface() == nil {
 							value := reflect.New(outType.Elem())
@@ -128,12 +128,12 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 					}
 				} else if nextMap {
 					if outType, err := GetPropertyPathType(propertyKey, valuesValue.Type().Elem()); err != nil {
-						return nil, err
+						panic(err)
 					} else {
 						mapIndexType := tempValue.Type().Elem()
 						mapIndex := tempValue.MapIndex(reflect.ValueOf(outKey))
 						if mapIndexType != outType {
-							return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))
+							panic(errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i)))
 						}
 						if !mapIndex.IsValid() || mapIndex.Interface() == nil {
 							value := reflect.MakeMap(outType)
@@ -146,13 +146,13 @@ func ZipMapDeep(keys []string, values interface{}) (interface{}, error) {
 				} else if !nextSlice && !nextMap && propertyKey == "" {
 					tempValue.SetMapIndex(reflect.ValueOf(outKey), valuesValue.Index(i))
 				} else {
-					return nil, errors.New("key formats are wrong" + fmt.Sprintf(". index = %d", i))
+					panic("key formats are wrong" + fmt.Sprintf(". index = %d", i))
 				}
 			}
 		}
 	}
 
-	return output, nil
+	return output
 }
 
 func GetPropertyPathType(key string, elementType reflect.Type) (reflect.Type, error) {

@@ -18,7 +18,7 @@ import (
 // 	}
 //
 // Complexity: O(n)
-func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, interface{}) bool) (interface{}, error) {
+func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, interface{}) bool) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -42,5 +42,5 @@ func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, int
 		}
 	}
 
-	return sliceValue.Interface(), nil
+	return sliceValue.Interface()
 }

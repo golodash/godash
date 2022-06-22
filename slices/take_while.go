@@ -12,7 +12,7 @@ import (
 // Complexity: O(n)
 //
 // n = number of elements that passed function returns true on them
-func TakeWhile(slice interface{}, function func(interface{}) bool) (interface{}, error) {
+func TakeWhile(slice interface{}, function func(interface{}) bool) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -26,5 +26,5 @@ func TakeWhile(slice interface{}, function func(interface{}) bool) (interface{},
 		}
 	}
 
-	return sliceValue.Slice(i, sliceValue.Len()).Interface(), nil
+	return sliceValue.Slice(i, sliceValue.Len()).Interface()
 }

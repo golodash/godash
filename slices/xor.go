@@ -11,7 +11,7 @@ import (
 // Complexity: O(n)
 //
 // n = number of all elements in both 'slice1' and 'slice2'
-func Xor(slice1, slice2 interface{}) (interface{}, error) {
+func Xor(slice1, slice2 interface{}) interface{} {
 	if ok := internal.SliceCheck(slice1); !ok {
 		panic("passed 'slice1' variable is not slice type")
 	}
@@ -63,5 +63,5 @@ func Xor(slice1, slice2 interface{}) (interface{}, error) {
 		}
 	}
 
-	return oneTimeSeenItems.Interface(), nil
+	return oneTimeSeenItems.Interface()
 }

@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -11,7 +10,7 @@ import (
 // element from the end is returned.
 //
 // Complexity: O(1)
-func Nth(slice interface{}, index int) (interface{}, error) {
+func Nth(slice interface{}, index int) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -22,12 +21,12 @@ func Nth(slice interface{}, index int) (interface{}, error) {
 	}
 
 	if index >= values.Len() {
-		return nil, errors.New("index out of range")
+		panic("index out of range")
 	}
 
 	if values.Len() == 0 {
-		return nil, nil
+		return nil
 	}
 
-	return values.Index(index).Interface(), nil
+	return values.Index(index).Interface()
 }

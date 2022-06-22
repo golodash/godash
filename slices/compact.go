@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -12,14 +11,14 @@ import (
 // Falsey items are {"", nil, 0, false}
 //
 // Complexity: O(n)
-func Compact(slice, excepts interface{}) (interface{}, error) {
+func Compact(slice, excepts interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	exceptsValue := reflect.ValueOf(excepts)
 	if exceptsValue.Kind() != reflect.Slice && excepts != nil {
-		return nil, errors.New("just slice accepted as 'excepts' value")
+		panic("just slice accepted as 'excepts' value")
 	}
 	if !exceptsValue.IsValid() {
 		exceptsValue = reflect.MakeSlice(reflect.TypeOf([]interface{}{}), 0, 0)
@@ -60,5 +59,5 @@ func Compact(slice, excepts interface{}) (interface{}, error) {
 		result = reflect.AppendSlice(result, sliceValue.Slice(j, length))
 	}
 
-	return result.Interface(), nil
+	return result.Interface()
 }

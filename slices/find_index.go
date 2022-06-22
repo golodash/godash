@@ -10,7 +10,7 @@ import (
 // function on that element, returns true.
 //
 // Complexity: O(n)
-func FindIndex(slice, value interface{}) (int, error) {
+func FindIndex(slice, value interface{}) int {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -18,9 +18,9 @@ func FindIndex(slice, value interface{}) (int, error) {
 	sliceValue := reflect.ValueOf(slice)
 	for i := 0; i < sliceValue.Len(); i++ {
 		if ok := internal.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value); ok {
-			return i, nil
+			return i
 		}
 	}
 
-	return -1, nil
+	return -1
 }

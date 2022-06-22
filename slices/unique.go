@@ -13,7 +13,7 @@ import (
 // they occur in the slice.
 //
 // Complexity: O(n)
-func Unique(slice interface{}) (interface{}, error) {
+func Unique(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -29,5 +29,5 @@ func Unique(slice interface{}) (interface{}, error) {
 		}
 	}
 
-	return outputValue.Interface(), nil
+	return outputValue.Interface()
 }

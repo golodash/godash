@@ -11,7 +11,7 @@ import (
 // This method is designed and optimized for sorted slices.
 //
 // Complexity: O(n)
-func SortedUnique(slice interface{}) (interface{}, error) {
+func SortedUnique(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -29,5 +29,5 @@ func SortedUnique(slice interface{}) (interface{}, error) {
 		}
 	}
 
-	return output.Interface(), nil
+	return output.Interface()
 }

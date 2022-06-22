@@ -19,7 +19,7 @@ import (
 // Keep it sorted to have a better complexity of:
 //
 // Best-Case Complexity: O(n)
-func PullAt(slice interface{}, remSlice []int) (interface{}, interface{}, error) {
+func PullAt(slice interface{}, remSlice []int) (interface{}, interface{}) {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -39,5 +39,5 @@ func PullAt(slice interface{}, remSlice []int) (interface{}, interface{}, error)
 		sliceValue = reflect.AppendSlice(sliceValue.Slice(0, remSlice[i]-i), sliceValue.Slice(remSlice[i]+1-i, sliceValue.Len()))
 	}
 
-	return sliceValue.Interface(), removed.Interface(), nil
+	return sliceValue.Interface(), removed.Interface()
 }

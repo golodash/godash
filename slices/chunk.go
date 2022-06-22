@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -11,13 +10,13 @@ import (
 // into pieces in length of the size.
 //
 // Complexity: O(n)
-func Chunk(slice interface{}, size int) (interface{}, error) {
+func Chunk(slice interface{}, size int) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	if size <= 0 {
-		return nil, errors.New("size must be greater than zero")
+		panic("size must be greater than zero")
 	}
 
 	var sliceValue = reflect.ValueOf(slice)
@@ -41,5 +40,5 @@ func Chunk(slice interface{}, size int) (interface{}, error) {
 		chunks = reflect.Append(chunks, sliceValue.Slice(i-size, length))
 	}
 
-	return chunks.Interface(), nil
+	return chunks.Interface()
 }

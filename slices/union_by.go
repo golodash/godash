@@ -17,7 +17,7 @@ import (
 // Complexity: O(n)
 //
 // n = length of both slices combined
-func UnionBy(slice1, slice2 interface{}, function func(interface{}) interface{}) (interface{}, error) {
+func UnionBy(slice1, slice2 interface{}, function func(interface{}) interface{}) interface{} {
 	if ok := internal.SliceCheck(slice1); !ok {
 		panic("passed 'slice1' variable is not slice type")
 	}
@@ -55,5 +55,5 @@ func UnionBy(slice1, slice2 interface{}, function func(interface{}) interface{})
 		}
 	}
 
-	return union.Interface(), nil
+	return union.Interface()
 }

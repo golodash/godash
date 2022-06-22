@@ -17,7 +17,7 @@ import (
 //  }
 //
 // Complexity: O(n)
-func RemoveBy(slice interface{}, function func(interface{}) bool) (interface{}, interface{}, error) {
+func RemoveBy(slice interface{}, function func(interface{}) bool) (interface{}, interface{}) {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -32,5 +32,5 @@ func RemoveBy(slice interface{}, function func(interface{}) bool) (interface{}, 
 		}
 	}
 
-	return sliceValue.Interface(), removed.Interface(), nil
+	return sliceValue.Interface(), removed.Interface()
 }

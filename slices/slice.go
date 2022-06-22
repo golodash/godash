@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -10,7 +9,7 @@ import (
 // Creates a slice from a slice from 'start' up to 'to', but not including, end.
 //
 // Complexity: O(1)
-func Slice(slice interface{}, from, to int) (interface{}, error) {
+func Slice(slice interface{}, from, to int) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -24,19 +23,19 @@ func Slice(slice interface{}, from, to int) (interface{}, error) {
 	}
 
 	if from > to {
-		return nil, errors.New("'from' is bigger than 'to'")
+		panic("'from' is bigger than 'to'")
 	}
 
 	if from >= sliceValue.Len() && from != 0 {
-		return nil, errors.New("'from' should be in range of 'slice'")
+		panic("'from' should be in range of 'slice'")
 	}
 	if to > sliceValue.Len() {
-		return nil, errors.New("'to' should be in range of 'slice'")
+		panic("'to' should be in range of 'slice'")
 	}
 
 	if sliceValue.Len() == 0 {
-		return slice, nil
+		return slice
 	}
 
-	return sliceValue.Slice(from, to).Interface(), nil
+	return sliceValue.Slice(from, to).Interface()
 }

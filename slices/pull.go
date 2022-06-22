@@ -13,7 +13,7 @@ import (
 // n = length of 'slice'
 //
 // m = length of 'values'
-func Pull(slice, values interface{}) (interface{}, error) {
+func Pull(slice, values interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -38,5 +38,5 @@ func Pull(slice, values interface{}) (interface{}, error) {
 		}
 	}
 
-	return outputValue.Interface(), nil
+	return outputValue.Interface()
 }

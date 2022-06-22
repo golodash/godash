@@ -11,7 +11,7 @@ import (
 // Complexity: O(n)
 //
 // n = count of all non-slice type elements of 'slice'
-func FlattenDeep(slice interface{}) (interface{}, error) {
+func FlattenDeep(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -21,7 +21,7 @@ func FlattenDeep(slice interface{}) (interface{}, error) {
 		sliceItemType = sliceItemType.Elem()
 	}
 
-	return recursiveFlattenDeep(slice, sliceItemType).Interface(), nil
+	return recursiveFlattenDeep(slice, sliceItemType).Interface()
 }
 
 func recursiveFlattenDeep(slice interface{}, itemType reflect.Type) reflect.Value {

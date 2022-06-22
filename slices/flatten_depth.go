@@ -11,17 +11,17 @@ import (
 // Complexity: O(n)
 //
 // n = count of all elements at 'depth' level of 'slice'
-func FlattenDepth(slice interface{}, depth int) (interface{}, error) {
+func FlattenDepth(slice interface{}, depth int) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	if depth == 0 {
-		return slice, nil
+		return slice
 	} else if depth < 0 {
-		return negativeFlatten(slice, -depth), nil
+		return negativeFlatten(slice, -depth)
 	} else {
-		return recursiveFlattenDepth(slice, depth, getTypeInGivenDepth(slice, depth)).Interface(), nil
+		return recursiveFlattenDepth(slice, depth, getTypeInGivenDepth(slice, depth)).Interface()
 	}
 }
 

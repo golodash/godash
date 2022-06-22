@@ -5,6 +5,6 @@ package slices
 // from the end of slice.
 //
 // Complexity: O(n)
-func LastIndexOf(slice, value interface{}, from int) (int, error) {
+func LastIndexOf(slice, value interface{}, from int) int {
 	return indexOf(slice, value, from, false)
 }

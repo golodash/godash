@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -11,19 +10,19 @@ import (
 // inserted into slice in order to maintain its sort order.
 //
 // Complexity: O(log(n))
-func SortedLastIndex(slice, value interface{}) (int, error) {
+func SortedLastIndex(slice, value interface{}) int {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	if res := internal.IsNumber(value); !res {
-		return -1, errors.New("'value' is not a number")
+		panic("'value' is not a number")
 	}
 
 	val := reflect.ValueOf(value)
 	sType := reflect.TypeOf(slice)
 	if !sType.Elem().ConvertibleTo(val.Type()) {
-		return -1, errors.New("'value' is not comparable with 'slice'")
+		panic("'value' is not comparable with 'slice'")
 	}
 
 	return whereToPutInSliceBiggerEqual(slice, value, compareHigherEqual)
@@ -69,52 +68,50 @@ func compareHigherEqual(midValue, value interface{}) bool {
 // passed slice based on isBiggerEqualFunction result
 //
 // Complexity: O(log(n))
-func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{}) (int, error) {
+func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{}) int {
 	sliceValue := reflect.ValueOf(slice)
 	len := sliceValue.Len()
 
 	if len == 0 {
-		return 0, nil
+		return 0
 	} else if len == 1 {
 		item := sliceValue.Index(0)
 		if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
-			return 1, nil
+			return 1
 		} else {
-			return 0, nil
+			return 0
 		}
 	} else if len == 2 {
 		item := sliceValue.Index(1)
 		if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
-			return 2, nil
+			return 2
 		} else {
 			var result int
-			var err error
-			if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, 1).Interface(), value, isBiggerEqualFunction); err != nil {
-				return -1, err
+			if result = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, 1).Interface(), value, isBiggerEqualFunction); result == -1 {
+				return -1
 			}
-			return result, nil
+			return result
 		}
 	}
 
 	item := sliceValue.Index(len / 2).Interface()
 
 	if ok := internal.AreComparable(item, value); !ok {
-		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
+		panic("couldn't compare 'value' with all items in passed slice")
 	}
 
-	var err error = nil
 	var result int
 	if res := reflect.ValueOf(isBiggerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(len/2, len).Interface(), value, isBiggerEqualFunction); err != nil {
-			return -1, err
+		if result = whereToPutInSliceBiggerEqual(sliceValue.Slice(len/2, len).Interface(), value, isBiggerEqualFunction); result == -1 {
+			return -1
 		}
 
-		return result + (len / 2), nil
+		return result + (len / 2)
 	} else {
-		if result, err = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, (len/2)+1).Interface(), value, isBiggerEqualFunction); err != nil {
-			return -1, err
+		if result = whereToPutInSliceBiggerEqual(sliceValue.Slice(0, (len/2)+1).Interface(), value, isBiggerEqualFunction); result == -1 {
+			return -1
 		}
 
-		return result, nil
+		return result
 	}
 }

@@ -9,7 +9,7 @@ import (
 // Flattens slice a single level deep.
 //
 // Complexity: O(n)
-func Flatten(slice interface{}) (interface{}, error) {
+func Flatten(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -21,7 +21,7 @@ func Flatten(slice interface{}) (interface{}, error) {
 	} else if sliceValue.Type().Elem().Kind() == reflect.Slice {
 		output = reflect.MakeSlice(sliceValue.Type().Elem(), 0, sliceValue.Len())
 	} else {
-		return slice, nil
+		return slice
 	}
 
 	for i := 0; i < sliceValue.Len(); i++ {
@@ -35,5 +35,5 @@ func Flatten(slice interface{}) (interface{}, error) {
 		}
 	}
 
-	return output.Interface(), nil
+	return output.Interface()
 }

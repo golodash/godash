@@ -81,10 +81,10 @@ func TestSortedUniqueBy(t *testing.T) {
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
-			got, err := SortedUniqueBy(sample.arg1, compareValueForSortedUniqueBy)
+			got := SortedUniqueBy(sample.arg1, compareValueForSortedUniqueBy)
 
 			if ok := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
+				t.Errorf("got = %v, wanted = %v", got, sample.expected)
 				return
 			}
 		})

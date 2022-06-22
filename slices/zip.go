@@ -13,7 +13,7 @@ import (
 // the given slices, and so on.
 //
 // Complexity: O(n)
-func Zip(slices interface{}) (interface{}, error) {
+func Zip(slices interface{}) interface{} {
 	if ok := internal.SliceCheck(slices); !ok {
 		panic("passed 'slices' variable is not slice type")
 	}
@@ -44,11 +44,11 @@ func Zip(slices interface{}) (interface{}, error) {
 				length = itemValue.Len()
 			}
 			if itemValue.Len() != length {
-				return nil, fmt.Errorf("item in %d index is not the same length with its previous item", i)
+				panic(fmt.Sprintf("item in %d index is not the same length with its previous item", i))
 			}
 		}
 	} else {
-		return output.Interface(), nil
+		return output.Interface()
 	}
 
 	// Actual zip
@@ -76,5 +76,5 @@ func Zip(slices interface{}) (interface{}, error) {
 		output = reflect.Append(output, reflect.ValueOf(tempMap[fmt.Sprint(i)]))
 	}
 
-	return output.Interface(), nil
+	return output.Interface()
 }

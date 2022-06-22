@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -12,24 +11,24 @@ import (
 // from the end of slice.
 //
 // Complexity: O(n)
-func IndexOf(slice, value interface{}, from int) (int, error) {
+func IndexOf(slice, value interface{}, from int) int {
 	return indexOf(slice, value, from, true)
 }
 
-func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
+func indexOf(slice, value interface{}, from int, ltr bool) int {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)
+	if sliceValue.Len() == 0 {
+		return -1
+	}
+
 	if from < 0 {
 		from = sliceValue.Len() + from
 	} else if from >= sliceValue.Len() {
-		return -1, errors.New("'from' index is out of range")
-	}
-
-	if sliceValue.Len() == 0 {
-		return -1, nil
+		panic("'from' index is out of range")
 	}
 
 	var until int
@@ -57,9 +56,9 @@ func indexOf(slice, value interface{}, from int, ltr bool) (int, error) {
 		if ok := internal.Same(sliceValue.Index(i).Interface(), value); !ok {
 			continue
 		} else {
-			return i, nil
+			return i
 		}
 	}
 
-	return -1, nil
+	return -1
 }

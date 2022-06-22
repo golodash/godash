@@ -10,7 +10,7 @@ import (
 // the second element becomes the second to last, and so on.
 //
 // Complexity: O(n)
-func Reverse(slice interface{}) (interface{}, error) {
+func Reverse(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -23,5 +23,5 @@ func Reverse(slice interface{}) (interface{}, error) {
 		swap(i, j)
 	}
 
-	return swapper, nil
+	return swapper
 }

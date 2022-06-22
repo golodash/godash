@@ -10,7 +10,7 @@ import (
 // Converts all elements in slice into a string separated by 'separator'.
 //
 // Complexity: O(n)
-func Join(slice interface{}, separator string) (string, error) {
+func Join(slice interface{}, separator string) string {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -24,7 +24,7 @@ func Join(slice interface{}, separator string) (string, error) {
 			result += separator + toString(sliceValue.Index(i).Interface())
 		}
 	}
-	return result, nil
+	return result
 }
 
 func toString(input interface{}) string {

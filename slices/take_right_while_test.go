@@ -71,10 +71,10 @@ func TestTakeRightWhile(t *testing.T) {
 	for _, sample := range tests {
 		t.Run(sample.name, func(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
-			got, err := TakeRightWhile(sample.arg1, compareTakeRightWhileTest)
+			got := TakeRightWhile(sample.arg1, compareTakeRightWhileTest)
 
 			if ok := internal.Same(got, sample.expected); !ok {
-				t.Errorf("got = %v, wanted = %v, err = %v", got, sample.expected, err)
+				t.Errorf("got = %v, wanted = %v", got, sample.expected)
 				return
 			}
 		})

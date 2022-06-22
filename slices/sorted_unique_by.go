@@ -19,7 +19,7 @@ import (
 //  }
 //
 // Complexity: O(n)
-func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) (interface{}, error) {
+func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -39,5 +39,5 @@ func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) (
 		}
 	}
 
-	return output.Interface(), nil
+	return output.Interface()
 }

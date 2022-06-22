@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -10,19 +9,19 @@ import (
 // This method is like IndexOf except that it performs a binary search on a sorted slice.
 //
 // Complexity: O(log(n))
-func SortedIndexOf(slice interface{}, value interface{}) (int, error) {
+func SortedIndexOf(slice interface{}, value interface{}) int {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	if res := internal.IsNumber(value); !res {
-		return -1, errors.New("'value' is not a number")
+		panic("'value' is not a number")
 	}
 
 	val := reflect.ValueOf(value)
 	sType := reflect.TypeOf(slice)
 	if !sType.Elem().ConvertibleTo(val.Type()) {
-		return -1, errors.New("'value' is not comparable with 'slice'")
+		panic("'value' is not comparable with 'slice'")
 	}
 
 	return sortedIndexOf(slice, value, compareLowerEqual, compareIsEqual)
@@ -64,50 +63,49 @@ func compareIsEqual(midValue, value interface{}) bool {
 	return false
 }
 
-func sortedIndexOf(slice, value, isLowerEqualFunction, isEqualFunction interface{}) (int, error) {
+func sortedIndexOf(slice, value, isLowerEqualFunction, isEqualFunction interface{}) int {
 	sliceValue := reflect.ValueOf(slice)
 	len := sliceValue.Len()
 
 	if len == 0 {
-		return -1, errors.New("item not found")
+		return -1
 	} else if len == 1 {
 		item := reflect.ValueOf(sliceValue.Index(0).Interface())
 		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item, reflect.ValueOf(value)}); res[0].Bool() {
-			return 0, nil
+			return 0
 		} else {
-			return -1, errors.New("item not found")
+			return -1
 		}
 	} else if len == 2 {
 		item0 := reflect.ValueOf(sliceValue.Index(0).Interface())
 		item1 := reflect.ValueOf(sliceValue.Index(1).Interface())
 		if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item0, reflect.ValueOf(value)}); res[0].Bool() {
-			return 0, nil
+			return 0
 		} else if res := reflect.ValueOf(isEqualFunction).Call([]reflect.Value{item1, reflect.ValueOf(value)}); res[0].Bool() {
-			return 1, nil
+			return 1
 		} else {
-			return -1, errors.New("item not found")
+			return -1
 		}
 	}
 
 	item := sliceValue.Index(len / 2).Interface()
 
 	if ok := internal.AreComparable(item, value); !ok {
-		return -1, errors.New("couldn't compare 'value' with all items in passed slice")
+		panic("couldn't compare 'value' with all items in passed slice")
 	}
 
-	var err error = nil
 	var result int
 	if res := reflect.ValueOf(isLowerEqualFunction).Call([]reflect.Value{reflect.ValueOf(item), reflect.ValueOf(value)}); res[0].Bool() {
-		if result, err = sortedIndexOf(sliceValue.Slice(0, (len/2)+1).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
-			return -1, err
+		if result = sortedIndexOf(sliceValue.Slice(0, (len/2)+1).Interface(), value, isLowerEqualFunction, isEqualFunction); result == -1 {
+			return -1
 		}
 
-		return result, nil
+		return result
 	} else {
-		if result, err = sortedIndexOf(sliceValue.Slice(len/2, len).Interface(), value, isLowerEqualFunction, isEqualFunction); err != nil {
-			return -1, err
+		if result = sortedIndexOf(sliceValue.Slice(len/2, len).Interface(), value, isLowerEqualFunction, isEqualFunction); result == -1 {
+			return -1
 		}
 
-		return result + (len / 2), nil
+		return result + (len / 2)
 	}
 }

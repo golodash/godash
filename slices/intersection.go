@@ -13,7 +13,7 @@ import (
 // Complexity: O(n)
 //
 // n = number of all elements in slices of 'slices'
-func Intersection(slices interface{}) (interface{}, error) {
+func Intersection(slices interface{}) interface{} {
 	if ok := internal.SliceCheck(slices); !ok {
 		panic("passed 'slices' variable is not slice type")
 	}
@@ -54,5 +54,5 @@ func Intersection(slices interface{}) (interface{}, error) {
 		}
 	}
 
-	return outputSlice.Interface(), nil
+	return outputSlice.Interface()
 }

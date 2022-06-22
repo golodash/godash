@@ -78,10 +78,10 @@ func TestJoin(t *testing.T) {
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.expected)
-			got, err := Join(subject.arg1, subject.arg2)
+			got := Join(subject.arg1, subject.arg2)
 
 			if ok := internal.Same(got, subject.expected); !ok {
-				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.expected, err)
+				t.Errorf("got = %v, wanted = %v", got, subject.expected)
 				return
 			}
 		})

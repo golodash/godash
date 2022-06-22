@@ -10,7 +10,7 @@ import (
 // This method returns an object composed from key-value pairs.
 //
 // Complexity: O(n)
-func FromPairs(slice interface{}) (interface{}, error) {
+func FromPairs(slice interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -41,5 +41,5 @@ func FromPairs(slice interface{}) (interface{}, error) {
 		}
 	}
 
-	return output.Interface(), nil
+	return output.Interface()
 }

@@ -27,7 +27,7 @@ import (
 //  }
 //
 // Complexity: O(n*log(n))
-func IntersectionBy(slices interface{}, function func(interface{}, interface{}) bool) (interface{}, error) {
+func IntersectionBy(slices interface{}, function func(interface{}, interface{}) bool) interface{} {
 	if ok := internal.SliceCheck(slices); !ok {
 		panic("passed 'slices' variable is not slice type")
 	}
@@ -64,5 +64,5 @@ func IntersectionBy(slices interface{}, function func(interface{}, interface{}) 
 		}
 	}
 
-	return outputSlice.Interface(), nil
+	return outputSlice.Interface()
 }

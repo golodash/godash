@@ -16,7 +16,7 @@ import (
 //  }
 //
 // Complexity: O(n)
-func DropBy(slice interface{}, function func(interface{}) bool) (interface{}, error) {
+func DropBy(slice interface{}, function func(interface{}) bool) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -29,5 +29,5 @@ func DropBy(slice interface{}, function func(interface{}) bool) (interface{}, er
 		}
 	}
 
-	return sliceValue.Interface(), nil
+	return sliceValue.Interface()
 }

@@ -83,10 +83,10 @@ func TestTail(t *testing.T) {
 	for _, subject := range tests {
 		t.Run(subject.name, func(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
-			got, err := Tail(subject.arr)
+			got := Tail(subject.arr)
 
 			if ok := internal.Same(got, subject.want); !ok {
-				t.Errorf("got = %v, wanted = %v, err = %v", got, subject.want, err)
+				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}
 		})

@@ -17,7 +17,7 @@ import (
 //  }
 //
 // Complexity: O(n)
-func ZipBy(slices interface{}, function func(interface{}) interface{}) (interface{}, error) {
+func ZipBy(slices interface{}, function func(interface{}) interface{}) interface{} {
 	if ok := internal.SliceCheck(slices); !ok {
 		panic("passed 'slices' variable is not slice type")
 	}
@@ -65,5 +65,5 @@ func ZipBy(slices interface{}, function func(interface{}) interface{}) (interfac
 		functionInput = reflect.Zero(functionInput.Type())
 	}
 
-	return output.Interface(), nil
+	return output.Interface()
 }

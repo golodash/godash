@@ -16,7 +16,7 @@ import (
 //  }
 //
 // Complexity: O(n)
-func FindIndexBy(slice interface{}, function func(interface{}) bool) (int, error) {
+func FindIndexBy(slice interface{}, function func(interface{}) bool) int {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -24,9 +24,9 @@ func FindIndexBy(slice interface{}, function func(interface{}) bool) (int, error
 	sliceValue := reflect.ValueOf(slice)
 	for i := 0; i < sliceValue.Len(); i++ {
 		if function(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface()) {
-			return i, nil
+			return i
 		}
 	}
 
-	return -1, nil
+	return -1
 }

@@ -1,7 +1,6 @@
 package slices
 
 import (
-	"errors"
 	"reflect"
 
 	"github.com/golodash/godash/internal"
@@ -12,7 +11,7 @@ import (
 // Complexity: O(n)
 //
 // n = end - start
-func Fill(slice, value interface{}, start, end int) (interface{}, error) {
+func Fill(slice, value interface{}, start, end int) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -23,15 +22,15 @@ func Fill(slice, value interface{}, start, end int) (interface{}, error) {
 	reflect.Copy(outputValue, sliceValue)
 
 	if end < 0 {
-		return nil, errors.New("negative values for 'end' variable is not accepted")
+		panic("negative values for 'end' variable is not accepted")
 	} else if end > length {
-		return nil, errors.New("'end' variable is bigger that slice length")
+		panic("'end' variable is bigger that slice length")
 	}
 
 	if start < 0 {
-		return nil, errors.New("negative values for 'start' variable is not accepted")
+		panic("negative values for 'start' variable is not accepted")
 	} else if start > end {
-		return nil, errors.New("'start' variable is bigger than 'end' variable")
+		panic("'start' variable is bigger than 'end' variable")
 	}
 
 	valueValue := reflect.ValueOf(value)
@@ -39,5 +38,5 @@ func Fill(slice, value interface{}, start, end int) (interface{}, error) {
 		outputValue.Index(i).Set(valueValue)
 	}
 
-	return outputValue.Interface(), nil
+	return outputValue.Interface()
 }

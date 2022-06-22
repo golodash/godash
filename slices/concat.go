@@ -11,7 +11,7 @@ import (
 // Complexity: O(n)
 //
 // n = number of 'values' length
-func Concat(slice, values interface{}) (interface{}, error) {
+func Concat(slice, values interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -43,5 +43,5 @@ func Concat(slice, values interface{}) (interface{}, error) {
 		}
 	}
 
-	return sliceValue.Interface(), nil
+	return sliceValue.Interface()
 }

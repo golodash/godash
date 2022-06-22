@@ -14,7 +14,7 @@ import (
 // n = length of 'slice'
 //
 // m = length of 'notIncluded'
-func Difference(slice, notIncluded interface{}) (interface{}, error) {
+func Difference(slice, notIncluded interface{}) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")
 	}
@@ -38,7 +38,7 @@ func Difference(slice, notIncluded interface{}) (interface{}, error) {
 		}
 	}
 
-	return sliceValue.Interface(), nil
+	return sliceValue.Interface()
 }
 
 // Returns a slice of 'slice' elements that are not included in the
@@ -49,6 +49,6 @@ func Difference(slice, notIncluded interface{}) (interface{}, error) {
 // n = length of 'slice'
 //
 // m = length of 'notIncluded'
-func Without(slice, notIncluded interface{}) (interface{}, error) {
+func Without(slice, notIncluded interface{}) interface{} {
 	return Difference(slice, notIncluded)
 }

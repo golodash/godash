@@ -88,15 +88,15 @@ func TestRemoveBy(t *testing.T) {
 					t.Errorf("wantSlice = %v, wantRems = %v, err = %s", wantSlice, wantRems, err)
 				}
 			}(t, sample.wantSlice, sample.wantRems)
-			gotSlice, gotRems, err := RemoveBy(sample.arg1, removeByFunctionTest)
+			gotSlice, gotRems := RemoveBy(sample.arg1, removeByFunctionTest)
 
 			if ok := internal.Same(gotSlice, sample.wantSlice); !ok {
-				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, sample.wantSlice, sample.wantRems, err)
+				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, sample.wantSlice, sample.wantRems)
 				return
 			}
 
 			if ok := internal.Same(gotRems, sample.wantRems); !ok {
-				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v, err = %v", gotSlice, gotRems, sample.wantSlice, sample.wantRems, err)
+				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, sample.wantSlice, sample.wantRems)
 				return
 			}
 		})
