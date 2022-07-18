@@ -88,7 +88,7 @@ func TestUniqueBy(t *testing.T) {
 
 func BenchmarkUniqueBy(b *testing.B) {
 	for _, sample := range TUniqueByBenchs {
-		b.Run(fmt.Sprintf("input_size_UniqueBy_%s", sample.name), func(b *testing.B) {
+		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				UniqueBy(sample.arg, compareItemUniqueByTest)
 			}

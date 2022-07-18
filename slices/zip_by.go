@@ -12,8 +12,13 @@ import (
 //
 // example for 'function':
 //
-//  func makeInt(input interface{}) interface{} {
-//    return int(input.(float64))
+//  func returnZipByTest(inputs interface{}) interface{} {
+//    output := 0
+//    literalInputs := inputs.([]int)
+//    for i := 0; i < len(literalInputs); i++ {
+//      output += literalInputs[i]
+//    }
+//    return output
 //  }
 //
 // Complexity: O(n)

@@ -53,7 +53,7 @@ func init() {
 	for i := 0; i < len(TSliceBenchs); i++ {
 		k, _ := strconv.Atoi(TSliceBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TSliceBenchs[i].arg1 = append(TSliceBenchs[i].arg1.([]interface{}), []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 0})
+			TSliceBenchs[i].arg1 = append(TSliceBenchs[i].arg1.([]interface{}), 1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
 		}
 	}
 }

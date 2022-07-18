@@ -7,7 +7,7 @@ import (
 )
 
 // This method finds first index of the given slice which the given
-// function on that element, returns true.
+// value equals on that element's value.
 //
 // Complexity: O(n)
 func FindIndex(slice, value interface{}) int {

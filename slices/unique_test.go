@@ -84,7 +84,7 @@ func TestUnique(t *testing.T) {
 
 func BenchmarkUnique(b *testing.B) {
 	for _, sample := range TUniqueBenchs {
-		b.Run(fmt.Sprintf("input_size_unique_%s", sample.name), func(b *testing.B) {
+		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				Unique(sample.arg)
 			}

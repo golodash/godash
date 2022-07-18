@@ -7,7 +7,7 @@ import (
 )
 
 // Returns a slice of 'slice' elements that are not included in the
-// other given slice using equality comparisons.
+// other given slice using comparisons.
 //
 // Complexity: O(n*m)
 //

@@ -17,7 +17,11 @@ import (
 // 		return value1.(int) == value2.(int)
 // 	}
 //
-// Complexity: O(n)
+// Complexity: O(n*m)
+//
+// n = length of 'slice'
+//
+// m = length of 'notIncluded'
 func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, interface{}) bool) interface{} {
 	if ok := internal.SliceCheck(slice); !ok {
 		panic("passed 'slice' variable is not slice type")

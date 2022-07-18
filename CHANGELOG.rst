@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(slices): bug on test cases, documentations and some functions resolved
 
 1.0.0 (2022-06-22)
 ------------------
