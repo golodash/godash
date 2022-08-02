@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(math-power): power function added
 
 1.0.1 (2022-07-19)
 ------------------
