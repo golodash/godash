@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(math-ceil): ceil testcases and benchmarks added
 * 🎉 feat(math-ceil): ceil function added
 * ✅ test(math-power): power testcases and benchmarks added
 * 🎉 feat(math-power): power function added
