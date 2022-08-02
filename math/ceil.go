@@ -18,10 +18,10 @@ func Ceil(input interface{}, precision int) interface{} {
 	inputType := inputValue.Type()
 
 	isNegative := false
-	if inputValue.CanInt() && inputValue.Int() < 0 {
+	if internal.CanInt(input) && inputValue.Int() < 0 {
 		isNegative = true
 		inputValue = reflect.ValueOf(-inputValue.Int())
-	} else if inputValue.CanFloat() && inputValue.Float() < 0 {
+	} else if internal.CanFloat(input) && inputValue.Float() < 0 {
 		isNegative = true
 		inputValue = reflect.ValueOf(-inputValue.Float())
 	}

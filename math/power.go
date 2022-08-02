@@ -42,20 +42,10 @@ func Power(input interface{}, number int) interface{} {
 	}
 	if isNegativeNumber {
 		output = 1.0 / output
-		if isFloat(output) {
+		if internal.CanFloat(output) {
 			return output
 		}
 	}
 
 	return reflect.ValueOf(output).Convert(inputType).Interface()
-}
-
-func isFloat(number interface{}) bool {
-	switch reflect.TypeOf(number).Kind() {
-	case reflect.Float32:
-		return true
-	case reflect.Float64:
-		return true
-	}
-	return false
 }

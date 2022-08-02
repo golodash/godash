@@ -162,3 +162,41 @@ func DeferTestCases(t *testing.T, expected interface{}) {
 		t.Errorf("wanted = %v, err = %s", expected, err)
 	}
 }
+
+func CanInt(number interface{}) bool {
+	switch reflect.TypeOf(number).Kind() {
+	case reflect.Int:
+		return true
+	case reflect.Int8:
+		return true
+	case reflect.Int16:
+		return true
+	case reflect.Int32:
+		return true
+	case reflect.Int64:
+		return true
+	case reflect.Uint:
+		return true
+	case reflect.Uint8:
+		return true
+	case reflect.Uint16:
+		return true
+	case reflect.Uint32:
+		return true
+	case reflect.Uint64:
+		return true
+	case reflect.Uintptr:
+		return true
+	}
+	return false
+}
+
+func CanFloat(number interface{}) bool {
+	switch reflect.TypeOf(number).Kind() {
+	case reflect.Float32:
+		return true
+	case reflect.Float64:
+		return true
+	}
+	return false
+}

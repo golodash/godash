@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(math): CanInt and CanFloat added to internal package to fix go 1.17 not having those functions inside reflect package
 * ✅ test(math-ceil): ceil testcases and benchmarks added
 * 🎉 feat(math-ceil): ceil function added
 * ✅ test(math-power): power testcases and benchmarks added
