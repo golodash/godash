@@ -29,8 +29,3 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
-
-- [ ] I take care of this bug by myself.
-
-<!-- Put an 'X' character inside the box if you want to debug this one by yourself -->
-<!-- Read CONTRIBUTING.md file to understand how to contribute -->
