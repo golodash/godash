@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(math-divide): divide testcases and benchmarks added
 * 🎉 feat(math-divide): divide function added
 * ✅ test(math-add): Add testcases and benchmarks added
 * 🎉 feat(math-add): Add function added
