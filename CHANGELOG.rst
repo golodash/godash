@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-max): Max testcases and benchmarks added
 * 🎉 feat(slices-max): Max function added
 * 🎉 feat(internal): added CompareNumbers and GetNumberTypeRank and GetOutputNumberType functions
 * ✅ test(maths-floor): Floor benchmarks and test cases added
