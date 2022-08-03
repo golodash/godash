@@ -6,7 +6,7 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Computes the maximum value of slice.
+// Computes the minimum value of slice.
 //
 // Complexity: O(n)
 func Min(slice interface{}) interface{} {

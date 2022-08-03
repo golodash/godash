@@ -6,7 +6,14 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
-// Computes the maximum value of slice.
+// This method is like Min except that it accepts a function which
+// is invoked for each element in slice to return a number for comparison.
+//
+// example for 'function':
+//
+//	func returnRank(value1 interface{}) interface{} {
+//		return value1.rank
+//	}
 //
 // Complexity: O(n)
 func MinBy(slice interface{}, function func(interface{}) interface{}) interface{} {
