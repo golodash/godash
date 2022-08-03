@@ -10,7 +10,7 @@ import (
 //
 // Complexity: O(n)
 func Flatten(slice interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

@@ -12,7 +12,7 @@ import (
 //
 // n = count of all non-slice type elements of 'slice'
 func FlattenDeep(slice interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

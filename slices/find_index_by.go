@@ -11,13 +11,13 @@ import (
 //
 // example for function:
 //
-//  func isEqual(value interface{}) bool {
-//    return value.(int) == 5
-//  }
+//	func isEqual(value interface{}) bool {
+//	  return value.(int) == 5
+//	}
 //
 // Complexity: O(n)
 func FindIndexBy(slice interface{}, function func(interface{}) bool) int {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

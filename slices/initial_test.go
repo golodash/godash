@@ -85,7 +85,7 @@ func TestInitial(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := Initial(subject.arr)
 
-			if ok := internal.Same(got, subject.want); !ok {
+			if !internal.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

@@ -14,13 +14,13 @@ import (
 //
 // example for 'function':
 //
-//  func makeInt(input interface{}) interface{} {
-//    return int(input.(float64))
-//  }
+//	func makeInt(input interface{}) interface{} {
+//	  return int(input.(float64))
+//	}
 //
 // Complexity: O(n)
 func SortedUniqueBy(slice interface{}, function func(interface{}) interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

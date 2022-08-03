@@ -73,7 +73,7 @@ func TestTakeRightWhile(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got := TakeRightWhile(sample.arg1, compareTakeRightWhileTest)
 
-			if ok := internal.Same(got, sample.expected); !ok {
+			if !internal.Same(got, sample.expected) {
 				t.Errorf("got = %v, wanted = %v", got, sample.expected)
 				return
 			}

@@ -11,7 +11,7 @@ import (
 //
 // Complexity: O(log(n))
 func SortedLastIndexOf(slice, value interface{}) int {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
@@ -52,7 +52,7 @@ func sortedLastIndexOf(slice, value, isHigherEqualFunction, isEqualFunction inte
 
 	item := sliceValue.Index(len / 2).Interface()
 
-	if ok := internal.AreComparable(item, value); !ok {
+	if !internal.AreComparable(item, value) {
 		panic("couldn't compare 'value' with all items in passed slice")
 	}
 

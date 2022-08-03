@@ -11,7 +11,7 @@ import (
 //
 // Complexity: O(n)
 func FromPairs(slice interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
@@ -26,7 +26,7 @@ func FromPairs(slice interface{}) interface{} {
 	output := reflect.MakeMap(reflect.MapOf(sliceItemType, sliceItemType))
 	for i := 0; i < sliceValue.Len(); i++ {
 		item := reflect.ValueOf(sliceValue.Index(i).Interface())
-		if ok := internal.SliceCheck(item.Interface()); !ok {
+		if !internal.SliceCheck(item.Interface()) {
 			panic(fmt.Sprintf("item in index %d is not even a slice", i))
 		}
 

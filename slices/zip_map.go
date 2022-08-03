@@ -11,10 +11,10 @@ import (
 //
 // Complexity: O(n)
 func ZipMap(keys, values interface{}) interface{} {
-	if ok := internal.SliceCheck(keys); !ok {
+	if !internal.SliceCheck(keys) {
 		panic("passed 'keys' variable is not slice type")
 	}
-	if ok := internal.SliceCheck(values); !ok {
+	if !internal.SliceCheck(values) {
 		panic("passed 'values' variable is not slice type")
 	}
 

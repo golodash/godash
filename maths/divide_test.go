@@ -69,7 +69,7 @@ func TestDivide(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := Divide(subject.number1, subject.number2)
 
-			if ok := internal.Same(got, subject.want); !ok {
+			if !internal.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

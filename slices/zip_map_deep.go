@@ -13,7 +13,7 @@ import (
 //
 // Complexity: O(n)
 func ZipMapDeep(keys []string, values interface{}) interface{} {
-	if ok := internal.SliceCheck(values); !ok {
+	if !internal.SliceCheck(values) {
 		panic("passed 'values' variable is not slice type")
 	}
 
@@ -47,7 +47,7 @@ func ZipMapDeep(keys []string, values interface{}) interface{} {
 			if err != nil {
 				panic(err.Error() + fmt.Sprintf(". index = %d", i))
 			} else if outSlice != -1 {
-				if ok := internal.SliceCheck(tempValue.Interface()); !ok {
+				if !internal.SliceCheck(tempValue.Interface()) {
 					panic(fmt.Sprintf("key formats are wrong. index = %d", i))
 				}
 

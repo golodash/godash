@@ -85,7 +85,7 @@ func TestZip(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got := Zip(sample.arg)
 
-			if ok := internal.Same(got, sample.expected); !ok {
+			if !internal.Same(got, sample.expected) {
 				t.Errorf("got = %v, wanted = %v", got, sample.expected)
 				return
 			}

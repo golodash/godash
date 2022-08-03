@@ -12,13 +12,13 @@ import (
 //
 // example for 'function':
 //
-//  func makeInt(input interface{}) interface{} {
-//    return int(input.(float64))
-//  }
+//	func makeInt(input interface{}) interface{} {
+//	  return int(input.(float64))
+//	}
 //
 // Complexity: O(log(n))
 func SortedIndexBy(slice, value interface{}, function func(interface{}) interface{}) int {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
@@ -65,7 +65,7 @@ func whereToPutInSliceLowerEqualBy(slice, value, isLowerEqualFunction, comparabl
 
 	item := sliceValue.Index(len / 2).Interface()
 
-	if ok := internal.AreComparable(item, value); !ok {
+	if !internal.AreComparable(item, value) {
 		panic("couldn't compare 'value' with all items in passed slice")
 	}
 

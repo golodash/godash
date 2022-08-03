@@ -13,22 +13,22 @@ import (
 //
 // example for function:
 //
-//  func isEqual(value1, value2 interface{}) bool {
-//    v1 := value1.([]int)
-//    v2 := value2.([]int)
-//    same := true
-//    for i := 0; i < v1.len(); i ++ {
-//      if v1[i] != v2[i] {
-//        same = false
-//        break
-//      }
-//    }
-//    return same
-//  }
+//	func isEqual(value1, value2 interface{}) bool {
+//	  v1 := value1.([]int)
+//	  v2 := value2.([]int)
+//	  same := true
+//	  for i := 0; i < v1.len(); i ++ {
+//	    if v1[i] != v2[i] {
+//	      same = false
+//	      break
+//	    }
+//	  }
+//	  return same
+//	}
 //
 // Complexity: O(n*log(n))
 func IntersectionBy(slices interface{}, function func(interface{}, interface{}) bool) interface{} {
-	if ok := internal.SliceCheck(slices); !ok {
+	if !internal.SliceCheck(slices) {
 		panic("passed 'slices' variable is not slice type")
 	}
 
@@ -41,7 +41,7 @@ func IntersectionBy(slices interface{}, function func(interface{}, interface{}) 
 	length := 0
 	for i := 0; i < sliceValue.Len(); i++ {
 		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
-		if ok := internal.SliceCheck(subSlice); !ok {
+		if !internal.SliceCheck(subSlice) {
 			continue
 		}
 
@@ -51,7 +51,7 @@ func IntersectionBy(slices interface{}, function func(interface{}, interface{}) 
 	outputSlice := reflect.MakeSlice(reflect.SliceOf(sliceItemType), 0, length)
 	for i := 0; i < sliceValue.Len(); i++ {
 		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
-		if ok := internal.SliceCheck(subSlice.Interface()); !ok {
+		if !internal.SliceCheck(subSlice.Interface()) {
 			continue
 		}
 

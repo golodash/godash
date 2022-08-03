@@ -110,7 +110,7 @@ func TestZipMapDeep(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got := ZipMapDeep(sample.keys, sample.values)
 
-			if ok := internal.Same(got, sample.expected); !ok {
+			if !internal.Same(got, sample.expected) {
 				t.Errorf("got = %v, wanted = %v", got, sample.expected)
 				return
 			}

@@ -11,13 +11,13 @@ import (
 //
 // Complexity: O(n)
 func FindIndex(slice, value interface{}) int {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)
 	for i := 0; i < sliceValue.Len(); i++ {
-		if ok := internal.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value); ok {
+		if internal.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value) {
 			return i
 		}
 	}

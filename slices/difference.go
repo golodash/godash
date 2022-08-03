@@ -15,10 +15,10 @@ import (
 //
 // m = length of 'notIncluded'
 func Difference(slice, notIncluded interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
-	if ok := internal.SliceCheck(notIncluded); !ok {
+	if !internal.SliceCheck(notIncluded) {
 		panic("passed 'notIncluded' variable is not slice type")
 	}
 
@@ -30,7 +30,7 @@ func Difference(slice, notIncluded interface{}) interface{} {
 		}
 	firstLoop:
 		for j := 0; j < notInValue.Len(); j++ {
-			if ok := internal.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface()); ok {
+			if internal.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface()) {
 				sliceValue = reflect.AppendSlice(sliceValue.Slice(0, i), sliceValue.Slice(i+1, sliceValue.Len()))
 				i++
 				break firstLoop

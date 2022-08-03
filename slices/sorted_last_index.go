@@ -11,11 +11,11 @@ import (
 //
 // Complexity: O(log(n))
 func SortedLastIndex(slice, value interface{}) int {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
-	if res := internal.IsNumber(value); !res {
+	if !internal.IsNumber(value) {
 		panic("'value' is not a number")
 	}
 
@@ -96,7 +96,7 @@ func whereToPutInSliceBiggerEqual(slice, value, isBiggerEqualFunction interface{
 
 	item := sliceValue.Index(len / 2).Interface()
 
-	if ok := internal.AreComparable(item, value); !ok {
+	if !internal.AreComparable(item, value) {
 		panic("couldn't compare 'value' with all items in passed slice")
 	}
 

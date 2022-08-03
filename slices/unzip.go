@@ -12,7 +12,7 @@ import (
 //
 // Complexity: O(n)
 func Unzip(slices interface{}) interface{} {
-	if ok := internal.SliceCheck(slices); !ok {
+	if !internal.SliceCheck(slices) {
 		panic("passed 'slices' variable is not slice type")
 	}
 
@@ -35,7 +35,7 @@ func Unzip(slices interface{}) interface{} {
 	if slicesValue.Len() != 0 {
 		for i := 0; i < slicesValue.Len(); i++ {
 			itemValue := reflect.ValueOf(slicesValue.Index(i).Interface())
-			if ok := internal.SliceCheck(slicesValue.Index(i).Interface()); !ok {
+			if !internal.SliceCheck(slicesValue.Index(i).Interface()) {
 				panic(fmt.Sprintf("item in %d index is not a slice", i))
 			}
 			if length == -1 {

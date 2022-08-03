@@ -12,7 +12,7 @@ import (
 //
 // n = end - start
 func Fill(slice, value interface{}, start, end int) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

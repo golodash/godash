@@ -12,13 +12,13 @@ import (
 //
 // example for 'function':
 //
-//  func isOdd(n interface{}) bool {
-//    return n.(int)%2 != 0
-//  }
+//	func isOdd(n interface{}) bool {
+//	  return n.(int)%2 != 0
+//	}
 //
 // Complexity: O(n)
 func RemoveBy(slice interface{}, function func(interface{}) bool) (interface{}, interface{}) {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
@@ -26,7 +26,7 @@ func RemoveBy(slice interface{}, function func(interface{}) bool) (interface{}, 
 	removed := reflect.MakeSlice(reflect.TypeOf(slice), 0, sliceValue.Len())
 	for i := sliceValue.Len() - 1; i >= 0; i-- {
 		item := sliceValue.Index(i)
-		if res := function(item.Interface()); res {
+		if function(item.Interface()) {
 			removed = reflect.Append(removed, item)
 			sliceValue = reflect.AppendSlice(sliceValue.Slice(0, i), sliceValue.Slice(i+1, sliceValue.Len()))
 		}

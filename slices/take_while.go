@@ -13,7 +13,7 @@ import (
 //
 // n = number of elements that passed function returns true on them
 func TakeWhile(slice interface{}, function func(interface{}) bool) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

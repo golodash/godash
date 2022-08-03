@@ -14,7 +14,7 @@ import (
 //
 // Complexity: O(n)
 func Zip(slices interface{}) interface{} {
-	if ok := internal.SliceCheck(slices); !ok {
+	if !internal.SliceCheck(slices) {
 		panic("passed 'slices' variable is not slice type")
 	}
 
@@ -37,7 +37,7 @@ func Zip(slices interface{}) interface{} {
 	if slicesValue.Len() != 0 {
 		for i := 0; i < slicesValue.Len(); i++ {
 			itemValue := reflect.ValueOf(slicesValue.Index(i).Interface())
-			if ok := internal.SliceCheck(slicesValue.Index(i).Interface()); !ok {
+			if !internal.SliceCheck(slicesValue.Index(i).Interface()) {
 				panic(fmt.Sprintf("index in %d index is not a slice", i))
 			}
 			if length == -1 {

@@ -16,7 +16,7 @@ func IndexOf(slice, value interface{}, from int) int {
 }
 
 func indexOf(slice, value interface{}, from int, ltr bool) int {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
@@ -53,7 +53,7 @@ func indexOf(slice, value interface{}, from int, ltr bool) int {
 	}
 
 	for i := from; compare(i, until); i += count {
-		if ok := internal.Same(sliceValue.Index(i).Interface(), value); !ok {
+		if !internal.Same(sliceValue.Index(i).Interface(), value) {
 			continue
 		} else {
 			return i

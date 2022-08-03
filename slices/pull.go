@@ -14,10 +14,10 @@ import (
 //
 // m = length of 'values'
 func Pull(slice, values interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
-	if ok := internal.SliceCheck(values); !ok {
+	if !internal.SliceCheck(values) {
 		panic("passed 'values' variable is not slice type")
 	}
 
@@ -27,7 +27,7 @@ func Pull(slice, values interface{}) interface{} {
 	for i := 0; i < sliceValue.Len(); i++ {
 		add := true
 		for j := 0; j < valuesValue.Len(); j++ {
-			if ok := internal.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()); ok {
+			if internal.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()) {
 				add = false
 				break
 			}

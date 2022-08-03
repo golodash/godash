@@ -10,18 +10,18 @@ import (
 //
 // example for 'function':
 //
-//  func makeInt(input interface{}) interface{} {
-//    return int(input.(float64))
-//  }
+//	func makeInt(input interface{}) interface{} {
+//	  return int(input.(float64))
+//	}
 //
 // Complexity: O(n)
 //
 // n = length of both slices combined
 func UnionBy(slice1, slice2 interface{}, function func(interface{}) interface{}) interface{} {
-	if ok := internal.SliceCheck(slice1); !ok {
+	if !internal.SliceCheck(slice1) {
 		panic("passed 'slice1' variable is not slice type")
 	}
-	if ok := internal.SliceCheck(slice2); !ok {
+	if !internal.SliceCheck(slice2) {
 		panic("passed 'slice2' variable is not slice type")
 	}
 

@@ -20,7 +20,7 @@ import (
 //
 // Best-Case Complexity: O(n)
 func PullAt(slice interface{}, remSlice []int) (interface{}, interface{}) {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

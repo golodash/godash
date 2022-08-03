@@ -12,18 +12,18 @@ import (
 //
 // example for 'function':
 //
-//  func returnZipByTest(inputs interface{}) interface{} {
-//    output := 0
-//    literalInputs := inputs.([]int)
-//    for i := 0; i < len(literalInputs); i++ {
-//      output += literalInputs[i]
-//    }
-//    return output
-//  }
+//	func returnZipByTest(inputs interface{}) interface{} {
+//	  output := 0
+//	  literalInputs := inputs.([]int)
+//	  for i := 0; i < len(literalInputs); i++ {
+//	    output += literalInputs[i]
+//	  }
+//	  return output
+//	}
 //
 // Complexity: O(n)
 func ZipBy(slices interface{}, function func(interface{}) interface{}) interface{} {
-	if ok := internal.SliceCheck(slices); !ok {
+	if !internal.SliceCheck(slices) {
 		panic("passed 'slices' variable is not slice type")
 	}
 
@@ -46,7 +46,7 @@ func ZipBy(slices interface{}, function func(interface{}) interface{}) interface
 	for i := 0; i < slicesValue.Len(); i++ {
 		item := slicesValue.Index(i).Interface()
 		itemValue := reflect.ValueOf(item)
-		if ok := internal.SliceCheck(item); !ok {
+		if !internal.SliceCheck(item) {
 			panic(fmt.Sprintf("item in %d index is not a slice", i))
 		}
 		if maxLength < itemValue.Len() {

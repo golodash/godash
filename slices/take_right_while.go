@@ -11,15 +11,15 @@ import (
 //
 // example for 'function':
 //
-//  func isEven(input interface{}) bool {
-//    return input.(int) % 2 == 0
-//  }
+//	func isEven(input interface{}) bool {
+//	  return input.(int) % 2 == 0
+//	}
 //
 // Complexity: O(n)
 //
 // n = number of elements that passed function returns true on them
 func TakeRightWhile(slice interface{}, function func(interface{}) bool) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

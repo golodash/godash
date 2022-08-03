@@ -109,7 +109,7 @@ func TestDrop(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := Drop(subject.arr, subject.num)
 
-			if ok := internal.Same(got, subject.want); !ok {
+			if !internal.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

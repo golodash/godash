@@ -12,7 +12,7 @@ import (
 //
 // Complexity: O(n)
 func Compact(slice, excepts interface{}) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 
@@ -44,7 +44,7 @@ func Compact(slice, excepts interface{}) interface{} {
 	j := 0
 	for i := 0; i < length; i++ {
 		for k := 0; k < len(falsey); k++ {
-			if ok := internal.Same(sliceValue.Index(i).Interface(), falsey[k]); ok {
+			if internal.Same(sliceValue.Index(i).Interface(), falsey[k]) {
 				if i == j {
 					j = i + 1
 					continue

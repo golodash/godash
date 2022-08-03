@@ -11,7 +11,7 @@ import (
 //
 // Complexity: O(n)
 func Join(slice interface{}, separator string) string {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
 

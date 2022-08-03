@@ -13,9 +13,9 @@ import (
 //
 // example for 'function':
 //
-// 	func isEqual(value1, value2 interface{}) bool {
-// 		return value1.(int) == value2.(int)
-// 	}
+//	func isEqual(value1, value2 interface{}) bool {
+//		return value1.(int) == value2.(int)
+//	}
 //
 // Complexity: O(n*m)
 //
@@ -23,10 +23,10 @@ import (
 //
 // m = length of 'notIncluded'
 func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, interface{}) bool) interface{} {
-	if ok := internal.SliceCheck(slice); !ok {
+	if !internal.SliceCheck(slice) {
 		panic("passed 'slice' variable is not slice type")
 	}
-	if ok := internal.SliceCheck(notIncluded); !ok {
+	if !internal.SliceCheck(notIncluded) {
 		panic("passed 'notIncluded' variable is not slice type")
 	}
 
@@ -38,7 +38,7 @@ func DifferenceBy(slice, notIncluded interface{}, function func(interface{}, int
 		}
 	firstLoop:
 		for j := 0; j < notInValue.Len(); j++ {
-			if ok := function(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), reflect.ValueOf(notInValue.Index(j).Interface()).Interface()); ok {
+			if function(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), reflect.ValueOf(notInValue.Index(j).Interface()).Interface()) {
 				sliceValue = reflect.AppendSlice(sliceValue.Slice(0, i), sliceValue.Slice(i+1, sliceValue.Len()))
 				i++
 				break firstLoop
