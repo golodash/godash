@@ -7,6 +7,8 @@ import (
 )
 
 // Computes number rounded to precision.
+//
+// Complexity: O(1)
 func Round(number interface{}, precision int) interface{} {
 	if !internal.IsNumber(number) {
 		panic("'number' is not a number")
