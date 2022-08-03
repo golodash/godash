@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(maths-round): Round function added
 * ✅ test(maths): added two test cases for Floor and Ceil functions
 * 🐛 fix(maths-power): fixed returning float if output was float
 * ✅ test(maths-subtract): subtract testcases and benchmarks added
