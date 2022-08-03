@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(maths-multiply): Multiply function added
 * ✅ test(maths-round): Round testcases and benchmarks added
 * 🎉 feat(maths-round): Round function added
 * ✅ test(maths): added two test cases for Floor and Ceil functions
