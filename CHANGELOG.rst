@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(maths-subtract): subtract testcases and benchmarks added
 * 🎉 feat(maths-subtract): subtract function added
 * ✅ test(slices-min_by): MinBy testcases and benchmarks added
 * 🎉 feat(slices-min_by): MinBy function added
