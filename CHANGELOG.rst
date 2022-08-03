@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(math-divide): divide function added
 * ✅ test(math-add): Add testcases and benchmarks added
 * 🎉 feat(math-add): Add function added
 * 🐛 fix(math): CanInt and CanFloat added to internal package to fix go 1.17 not having those functions inside reflect package
