@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-min): Min testcases and benchmarks added
 * 🎉 feat(slices-min): Min function added
 * ✅ test(slices-max_by): MaxBy testcases and benchmarks added
 * 🎉 feat(slices-max_by): MaxBy function added
