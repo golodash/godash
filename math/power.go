@@ -8,7 +8,7 @@ import (
 
 // Returns input to the power of number.
 //
-// O(number)
+// Complexity: O(number)
 func Power(input interface{}, number int) interface{} {
 	if !internal.IsNumber(input) {
 		panic("'input' is not a number")

@@ -8,7 +8,7 @@ import (
 
 // Computes number rounded up to precision.
 //
-// O(1)
+// Complexity: O(1)
 func Ceil(input interface{}, precision int) interface{} {
 	if !internal.IsNumber(input) {
 		panic("'input' is not a number")
