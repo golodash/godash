@@ -42,7 +42,7 @@ func Power(input interface{}, number int) interface{} {
 	}
 	if isNegativeNumber {
 		output = 1.0 / output
-		if internal.CanFloat(output) {
+		if output != float64(int(output)) {
 			return output
 		}
 	}

@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(maths-power): fixed returning float if output was float
 * ✅ test(maths-subtract): subtract testcases and benchmarks added
 * 🎉 feat(maths-subtract): subtract function added
 * ✅ test(slices-min_by): MinBy testcases and benchmarks added
