@@ -68,6 +68,12 @@ func TestCeil(t *testing.T) {
 			precision: 0,
 			want:      -1533.0,
 		},
+		{
+			name:      "normal-float32 type",
+			input:     float32(-1532.321),
+			precision: 2,
+			want:      float32(-1532.33),
+		},
 	}
 
 	for _, subject := range tests {

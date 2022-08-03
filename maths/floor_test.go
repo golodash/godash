@@ -68,6 +68,12 @@ func TestFloor(t *testing.T) {
 			precision: 0,
 			want:      -1532.0,
 		},
+		{
+			name:      "normal-float32 type",
+			input:     float32(-1532.321),
+			precision: 2,
+			want:      float32(-1532.32),
+		},
 	}
 
 	for _, subject := range tests {
