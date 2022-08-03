@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-max_by): MaxBy function added
 * ✅ test(slices-max): Max testcases and benchmarks added
 * 🎉 feat(slices-max): Max function added
 * 🎉 feat(internal): added CompareNumbers and GetNumberTypeRank and GetOutputNumberType functions
