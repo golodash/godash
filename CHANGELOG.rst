@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(maths-floor): Floor benchmarks and test cases added
 * 🎉 feat(maths-floor): Floor function added
 * ✅ test(math-divide): divide testcases and benchmarks added
 * 🎉 feat(math-divide): divide function added
