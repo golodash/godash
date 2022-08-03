@@ -20,7 +20,7 @@ func Divide(number1 interface{}, number2 interface{}) interface{} {
 		panic("'number2' can not be 0")
 	}
 
-	outputType := getOutputNumberType(number1, number2)
+	outputType := internal.GetOutputNumberType(number1, number2)
 
 	number1Value := reflect.ValueOf(number1)
 	number2Value := reflect.ValueOf(number2)
