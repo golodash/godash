@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix: uint types didn't get checked before but now they do get checked
 * 🎉 feat(internal): CanUint function added
 * ✅ test(maths-multiply): Multiply testcases and benchmarks added
 * 🎉 feat(maths-multiply): Multiply function added

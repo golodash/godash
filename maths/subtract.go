@@ -33,9 +33,11 @@ func Subtract(number1, number2 interface{}) interface{} {
 		var temp float64 = 0
 		temp = number1Value.Convert(reflect.TypeOf(temp)).Float() - number2Value.Convert(reflect.TypeOf(temp)).Float()
 		output = reflect.ValueOf(temp).Convert(outputType)
-	}
-
-	if internal.CanInt(number1Value.Interface()) {
+	} else if internal.CanUint(number1Value.Interface()) {
+		var temp uint64 = 0
+		temp = number1Value.Convert(reflect.TypeOf(temp)).Uint() - number2Value.Convert(reflect.TypeOf(temp)).Uint()
+		output = reflect.ValueOf(temp).Convert(outputType)
+	} else if internal.CanInt(number1Value.Interface()) {
 		var temp int64 = 0
 		temp = number1Value.Convert(reflect.TypeOf(temp)).Int() - number2Value.Convert(reflect.TypeOf(temp)).Int()
 		output = reflect.ValueOf(temp).Convert(outputType)
