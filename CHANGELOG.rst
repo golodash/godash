@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-mean): Mean usescases and benchmarks added
 * 🎉 feat(slices-mean): Mean function added
 * 🐛 fix: uint types didn't get checked before but now they do get checked
 * 🎉 feat(internal): CanUint function added
