@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(internal): CanUint function added
 * ✅ test(maths-multiply): Multiply testcases and benchmarks added
 * 🎉 feat(maths-multiply): Multiply function added
 * ✅ test(maths-round): Round testcases and benchmarks added

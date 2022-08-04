@@ -190,6 +190,13 @@ func CanInt(number interface{}) bool {
 		return true
 	case reflect.Int64:
 		return true
+	}
+	return false
+}
+
+// Returns true if passed argument type is uint
+func CanUint(number interface{}) bool {
+	switch reflect.TypeOf(number).Kind() {
 	case reflect.Uint:
 		return true
 	case reflect.Uint8:
