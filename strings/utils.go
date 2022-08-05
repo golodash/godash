@@ -87,7 +87,11 @@ func CustomDelimitedCase(input string, delimiter uint8, ignore string, screaming
 	return n.String()
 }
 
-// Converts a string to CamelCase
+// Converts a string to CamelCase.
+//
+// Credits: https://github.com/iancoleman/strcase/blob/master/camel.go#L32
+//
+// Complexity: O(n)
 func internalCamelCase(s string, initCase bool) string {
 	s = strings.TrimSpace(s)
 	if s == "" {
