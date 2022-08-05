@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(slices-sum): Sum function added
 * 🐛 fix(slices-mean): Mean and MeanBy functions fixed
 * ✅ test(slices-mean_by_test): MeanBy testcases and benchmarks added
 * 🎉 feat(slices-mean_by): MeanBy function added
