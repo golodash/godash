@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(strings-utils): a general solution function called ToScreamingDelimited added to solve out case changing subject
 * ✅ test(slices-sum_by_test): SumBy testcases and benchmarks added
 * 🎉 feat(slices-sum_by): SumBy function added
 * ✅ test(slices-sum_test): Sum testcases and benchmarks added
