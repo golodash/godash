@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-kebab_case_test): KebabCase testcases and benchmarks added
 * 🎉 feat(strings-kebab_case): KebabCase function added
 * ✅ test(strings-snake_case_test): SnakeCase testcases and banchmarks added
 * 🎉 feat(strings-snake_case): SnakeCase function added
