@@ -11,8 +11,12 @@ import (
 //
 // example for 'function':
 //
+//	type myObject struct {
+//		rank int
+//	}
+//
 //	func returnRank(value1 interface{}) interface{} {
-//		return value1.rank
+//		return value1.(myObject).rank
 //	}
 //
 // Complexity: O(n)
