@@ -1,5 +1,8 @@
 package strings
 
+// Converts string to kebab case.
+//
+// Complexity: O(n)
 func KebabCase(input string) string {
-	return ScreamingDelimited(input, '-', "", false)
+	return CustomDelimitedCase(input, '-', "", false)
 }

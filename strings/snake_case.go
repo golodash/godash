@@ -1,5 +1,8 @@
 package strings
 
+// Converts string to snake case.
+//
+// Complexity: O(n)
 func SnakeCase(input string) string {
-	return ScreamingDelimited(input, '_', "", false)
+	return CustomDelimitedCase(input, '_', "", false)
 }
