@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(strings-kebab_case): KebabCase function added
 * ✅ test(strings-snake_case_test): SnakeCase testcases and banchmarks added
 * 🎉 feat(strings-snake_case): SnakeCase function added
 * 🎉 feat(strings-utils): a general solution function called ToScreamingDelimited added to solve out case changing subject
