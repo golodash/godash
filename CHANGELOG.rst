@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-snake_case_test): SnakeCase testcases and banchmarks added
 * 🎉 feat(strings-snake_case): SnakeCase function added
 * 🎉 feat(strings-utils): a general solution function called ToScreamingDelimited added to solve out case changing subject
 * ✅ test(slices-sum_by_test): SumBy testcases and benchmarks added
