@@ -66,17 +66,17 @@ func TestMean(t *testing.T) {
 		{
 			name: "normal",
 			arr:  []uint{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			want: uint(10),
+			want: uint(1),
 		},
 		{
-			name: "wrong data incompatible data types",
+			name: "float",
 			arr:  []float64{0, 0.2, 0.1, 0.2, 0.1, 0.2, 0.2},
-			want: 1.0,
+			want: 1.0 / 7,
 		},
 		{
 			name: "type based",
 			arr:  []interface{}{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			want: 10.0,
+			want: 1.0,
 		},
 	}
 

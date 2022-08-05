@@ -36,5 +36,10 @@ func Mean(slice interface{}) interface{} {
 		}
 	}
 
-	return sum.Convert(sliceElementType).Interface()
+	average := sum.Float() / float64(sliceValue.Len())
+	if average != float64(int(average)) && (sliceElementType.Kind() != reflect.Float32 || sliceElementType.Kind() != reflect.Float64) {
+		return average
+	}
+
+	return reflect.ValueOf(average).Convert(sliceElementType).Interface()
 }
