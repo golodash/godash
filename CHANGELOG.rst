@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-camel_case_test): CamelCase testcases and benchmarks added
 * 🎉 feat(strings-camel_case): CamelCase function added
 * 🎉 feat(strings-utils): internalCamelCase function added for camel and pascal casing solution
 * 🎉 feat(strings-utils): updating ScreamingDelimited to CustomDelimitedCase
