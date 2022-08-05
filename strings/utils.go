@@ -86,3 +86,49 @@ func CustomDelimitedCase(input string, delimiter uint8, ignore string, screaming
 
 	return n.String()
 }
+
+// Converts a string to CamelCase
+func internalCamelCase(s string, initCase bool) string {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return s
+	}
+
+	var isSpecialDelimiter = func(b byte) bool {
+		return (b == '_' || b == ' ' || b == '-' || b == '.')
+	}
+
+	n := strings.Builder{}
+	n.Grow(len(s))
+	capNext := initCase
+	for i, v := range []byte(s) {
+		vIsCap := v >= 'A' && v <= 'Z'
+		vIsLow := v >= 'a' && v <= 'z'
+		if capNext {
+			if vIsLow {
+				v += 'A'
+				v -= 'a'
+			}
+		} else if i == 0 {
+			if vIsCap {
+				v += 'a'
+				v -= 'A'
+			}
+		}
+
+		if vIsCap || vIsLow {
+			n.WriteByte(v)
+			capNext = false
+		} else if vIsNum := v >= '0' && v <= '9'; vIsNum {
+			n.WriteByte(v)
+			capNext = true
+		} else if !isSpecialDelimiter(v) {
+			n.WriteByte(v)
+			capNext = false
+		} else {
+			capNext = isSpecialDelimiter(v)
+		}
+	}
+
+	return n.String()
+}
