@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(slices-sum_by_test): SumBy testcases and benchmarks added
 * 🎉 feat(slices-sum_by): SumBy function added
 * ✅ test(slices-sum_test): Sum testcases and benchmarks added
 * 🎉 feat(slices-sum): Sum function added
