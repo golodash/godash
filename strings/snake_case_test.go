@@ -39,7 +39,7 @@ type TSnakeCase struct {
 	expected string
 }
 
-var TZipBenchs = []TSnakeCase{
+var TSnakeCaseBenchs = []TSnakeCase{
 	{
 		name:  "10",
 		input: "",
@@ -63,10 +63,10 @@ var TZipBenchs = []TSnakeCase{
 }
 
 func init() {
-	for i := 0; i < len(TZipBenchs); i++ {
-		k, _ := strconv.Atoi(TZipBenchs[i].name)
+	for i := 0; i < len(TSnakeCaseBenchs); i++ {
+		k, _ := strconv.Atoi(TSnakeCaseBenchs[i].name)
 		for j := 0; j < k/10; j++ {
-			TZipBenchs[i].input += "0msa daewq"
+			TSnakeCaseBenchs[i].input += "0msa daewq"
 		}
 	}
 }
@@ -214,7 +214,7 @@ func TestSnakeCase(t *testing.T) {
 }
 
 func BenchmarkSnakeCase(b *testing.B) {
-	for _, sample := range TZipBenchs {
+	for _, sample := range TSnakeCaseBenchs {
 		b.Run(fmt.Sprintf("input_size_%s", sample.name), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				SnakeCase(sample.input)
