@@ -55,6 +55,24 @@ func init() {
 func TestEndsWith(t *testing.T) {
 	var tests = []TEndsWith{
 		{
+			name:     "empty",
+			input:    "",
+			ends:     "",
+			expected: true,
+		},
+		{
+			name:     "ends empty",
+			input:    "test",
+			ends:     "",
+			expected: true,
+		},
+		{
+			name:     "input empty",
+			input:    "",
+			ends:     "te",
+			expected: false,
+		},
+		{
 			name:     "true",
 			input:    "test",
 			ends:     "st",
