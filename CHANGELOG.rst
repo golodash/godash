@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-ends_with): EndsWith testcases and benchmarks added
 * 🎉 feat(strings-ends_with): EndsWith function added
 * ✅ test(strings-pascal_case_test): PascalCase testcases and benchmarks added
 * 🎉 feat(strings-pascal_case): PascalCase function added
