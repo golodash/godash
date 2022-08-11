@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(strings-repeat): Repeat function added
 * ✅ test(strings-starts_with): StartsWith testcases and benchmarks added
 * 🎉 feat(strings-starts_with): StartsWith function added
 * ✅ test(strings-ends_with): added a new testcase to EndsWith function
