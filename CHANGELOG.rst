@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(maths): math package name updated to maths
 * ✅ test(strings-pad_test): Pad testcases and benchmarks added
 * 🎉 feat(strings-pad): Pad function added
 * ✅ test(strings-pad_end_test): PadEnd testcases and benchmarks added
