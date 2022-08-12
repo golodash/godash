@@ -8,13 +8,13 @@ import (
 //
 // Complexity: O(n)
 func UpperFirst(input string) string {
-	trimesInput := strings.Trim(input, " \t\n")
-	if len(trimesInput) == 0 {
-		return trimesInput
+	trimInput := strings.Trim(input, " \t\n")
+	if len(trimInput) == 0 {
+		return trimInput
 	}
 
 	outputBuilder := strings.Builder{}
-	firstLetter := trimesInput[0]
+	firstLetter := trimInput[0]
 	isLow := firstLetter >= 'a' && firstLetter <= 'z'
 
 	if isLow {
@@ -23,8 +23,8 @@ func UpperFirst(input string) string {
 	}
 
 	outputBuilder.WriteByte(firstLetter)
-	if len(trimesInput) > 1 {
-		outputBuilder.WriteString(trimesInput[1:])
+	if len(trimInput) > 1 {
+		outputBuilder.WriteString(trimInput[1:])
 	}
 
 	return outputBuilder.String()
