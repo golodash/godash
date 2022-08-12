@@ -10,7 +10,7 @@ import (
 // The last characters of the truncated string are replaced with the
 // omission string.
 //
-// Complexity: O(1)
+// Complexity: O(n)
 func Truncate(input string, length int, separators []rune, omission string) string {
 	tempInput := strings.TrimSpace(input)
 	if len(tempInput) <= length {
