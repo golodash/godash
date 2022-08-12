@@ -1,6 +1,12 @@
 package strings
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/golodash/godash/internal"
+)
+
+var wordsSeparators = []rune{',', '.', '/', '\\', '\'', '"', ':', ';', ']', '[', '=', '+', '-', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '~', '`', '|', '?', ' ', '\t', '\n', '_', '<', '>', '}', '{'}
 
 // Splits string into an array of its words.
 //
@@ -10,7 +16,7 @@ func Words(input string) []string {
 	sawOneSeparatorLastTime := false
 	wordBuilder := strings.Builder{}
 	for _, letter := range []byte(input) {
-		if isSeparator(letter) {
+		if internal.CustomIsSeparator(rune(letter), wordsSeparators) {
 			if !sawOneSeparatorLastTime && wordBuilder.Len() != 0 {
 				outputSlice = append(outputSlice, wordBuilder.String())
 				wordBuilder.Reset()
@@ -27,15 +33,4 @@ func Words(input string) []string {
 	}
 
 	return outputSlice
-}
-
-var separators = []uint8{',', '.', '/', '\\', '\'', '"', ':', ';', ']', '[', '=', '+', '-', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '~', '`', '|', '?', ' ', '\t', '\n', '_', '<', '>', '}', '{'}
-
-func isSeparator(letter uint8) bool {
-	for _, separator := range separators {
-		if separator == letter {
-			return true
-		}
-	}
-	return false
 }

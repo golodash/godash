@@ -303,3 +303,13 @@ func CompareNumbers(number1, number2 interface{}) Diff {
 		panic(fmt.Sprintf("%s, %s are not numbers to compare", number1, number2))
 	}
 }
+
+func CustomIsSeparator(letter rune, separators []rune) bool {
+	for i := 0; i < len(separators); i++ {
+		if letter == separators[i] {
+			return true
+		}
+	}
+
+	return false
+}
