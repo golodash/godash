@@ -8,11 +8,12 @@ import "strings"
 //
 // n = count
 func Repeat(input string, count int) string {
-	if input == "" {
+	if len(input) == 0 || count < 1 {
 		return ""
 	}
 
-	var outputBuilder strings.Builder
+	outputBuilder := strings.Builder{}
+	outputBuilder.Grow(count * len(input))
 	for i := 0; i < count; i++ {
 		outputBuilder.WriteString(input)
 	}
