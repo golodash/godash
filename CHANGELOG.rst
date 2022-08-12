@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-pad_start_test): PadStart testcases and benchmarks added
 * 🎉 feat(strings-pad_start): PadStart function added
 * ✅ test(strings-truncate_test): Truncate testcases and benchamrks added
 * 🎉 feat(strings-truncate): Truncate function added
