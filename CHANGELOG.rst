@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(numbers-clamp): function added
 * 🐛 fix(numbers-inrange): correct name
 * 🎉 feat(number-inrange): InRange function added
 * 🐛 fix(maths): output of Pow in some scenarious updated and testcases updated
