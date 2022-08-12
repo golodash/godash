@@ -28,7 +28,7 @@ func Ceil(input interface{}, precision int) interface{} {
 
 	if precision > 0 {
 		floatValue := inputValue.Convert(reflect.TypeOf(0.1)).Float()
-		tenPowered := float64(Power(10, precision).(int))
+		tenPowered := Power(10.0, precision).(float64)
 		floatValuePowered := floatValue * tenPowered
 		output := float64(int(floatValuePowered)+1) / tenPowered
 

@@ -16,7 +16,7 @@ func Round(number interface{}, precision int) interface{} {
 
 	numberValue := reflect.ValueOf(number)
 	floatNumber := numberValue.Convert(reflect.TypeOf(1.0)).Float()
-	tenPowered := reflect.ValueOf(Power(10, precision+1)).Convert(reflect.TypeOf(1.0)).Float()
+	tenPowered := reflect.ValueOf(Power(10.0, precision+1)).Float()
 	comparator := int(floatNumber*tenPowered) % 10
 	if comparator < 0 {
 		comparator = -comparator

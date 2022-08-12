@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(maths): output of Pow in some scenarious updated and testcases updated
 * 🐛 fix(maths): math package name updated to maths
 * ✅ test(strings-pad_test): Pad testcases and benchmarks added
 * 🎉 feat(strings-pad): Pad function added

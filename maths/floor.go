@@ -28,7 +28,7 @@ func Floor(input interface{}, precision int) interface{} {
 
 	if precision > 0 {
 		floatValue := inputValue.Convert(reflect.TypeOf(0.1)).Float()
-		tenPowered := float64(Power(10, precision).(int))
+		tenPowered := Power(10.0, precision).(float64)
 		floatValuePowered := floatValue * tenPowered
 		output := float64(int(floatValuePowered)) / tenPowered
 
@@ -39,7 +39,7 @@ func Floor(input interface{}, precision int) interface{} {
 	} else if precision < 0 {
 		precision = -precision
 		intValue := inputValue.Convert(reflect.TypeOf(0)).Int()
-		output := intValue - intValue%int64((Power(10, precision).(int)))
+		output := intValue - intValue%int64(Power(10, precision).(int))
 
 		if isNegative {
 			output = -output
