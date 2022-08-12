@@ -7,7 +7,7 @@ import "strings"
 //
 // Complexity: O(n)
 //
-// n = input % length
+// n = (length - len(input)) / len(pattern)
 func PadStart(input string, length int, pattern string) string {
 	if len(input) >= length || len(pattern) == 0 {
 		return input[len(input)-length:]
