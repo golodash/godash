@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🚀 perf(strings-lower_case): removed an extra function from code execution
 * ✅ test(strings-lower_case_test): LowerCase testcases and benchmarks added
 * 🎉 feat(strings-lower_case): LowerCase function added
 * ✅ test(strings-repeat): Repeat testcases and benchmarks addeed
