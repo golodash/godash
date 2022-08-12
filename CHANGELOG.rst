@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-pad_end_test): PadEnd testcases and benchmarks added
 * 🎉 feat(strings-pad_end): PadEnd function added
 * ✅ test(strings-pad_start_test): a new test case added for PadStart function
 * ✅ test(strings-pad_start_test): PadStart testcases and benchmarks added
