@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(strings-start_case): StartCase function added
 * 🚀 perf(strings-repeat): Repeat function optimization happened
 * 🚀 perf(strings-lower_case): removed an extra function from code execution
 * ✅ test(strings-lower_case_test): LowerCase testcases and benchmarks added
