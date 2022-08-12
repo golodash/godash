@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(strings-lower_case): LowerCase function added
 * ✅ test(strings-repeat): Repeat testcases and benchmarks addeed
 * 🎉 feat(strings-repeat): Repeat function added
 * ✅ test(strings-starts_with): StartsWith testcases and benchmarks added
