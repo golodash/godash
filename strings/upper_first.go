@@ -8,7 +8,7 @@ import (
 //
 // Complexity: O(n)
 func UpperFirst(input string) string {
-	trimInput := strings.Trim(input, " \t\n")
+	trimInput := strings.TrimSpace(input)
 	if len(trimInput) == 0 {
 		return trimInput
 	}
