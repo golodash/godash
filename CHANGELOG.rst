@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(numbers-clamptest): test added
 * 🎉 feat(numbers-random): function added
 * 🎉 feat(numbers-clamp): function added
 * 🐛 fix(numbers-inrange): correct name
