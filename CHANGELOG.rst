@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(strings-upper_first): UpperFirst function added
 * ✅ test(strings-lower_first_test): LowerFirst testcases and benchmarks added
 * 🎉 feat(strings-lower_first): LowerFirst function added
 * ✅ test(strings-start_case_test): StartCase testcases and benchmarks added
