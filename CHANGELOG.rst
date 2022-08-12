@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(strings-truncate_test): Truncate testcases and benchamrks added
 * 🎉 feat(strings-truncate): Truncate function added
 * 🐛 fix(internal-utilities): isCustomSeparator function added to internal package
 * ✅ test(strings-words_test): Words testcases and benchmarks added
