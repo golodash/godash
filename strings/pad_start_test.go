@@ -68,7 +68,14 @@ func TestPadStart(t *testing.T) {
 			expected: "_-_-This is a freaking test just for the fun of it!??",
 		},
 		{
-			name:     "0",
+			name:     "1",
+			input:    "This is a freaking test just for the fun of it!??",
+			length:   54,
+			pattern:  "_-",
+			expected: "-_-_-This is a freaking test just for the fun of it!??",
+		},
+		{
+			name:     "2",
 			input:    "This is a freaking test just for the fun of it!??",
 			length:   44,
 			pattern:  "_-",
