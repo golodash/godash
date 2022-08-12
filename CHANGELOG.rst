@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(number-inrange): InRange function added
 * 🐛 fix(maths): output of Pow in some scenarious updated and testcases updated
 * 🐛 fix(maths): math package name updated to maths
 * ✅ test(strings-pad_test): Pad testcases and benchmarks added
