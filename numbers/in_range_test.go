@@ -51,11 +51,18 @@ func TestInRange(t *testing.T) {
 			want:   false,
 		},
 		{
-			name:   "float int int",
+			name:   "float64 int int",
 			number: 2.1,
 			start:  2,
 			end:    1,
 			want:   false,
+		},
+		{
+			name:   "int float64 float64",
+			number: 2,
+			start:  1.1,
+			end:    4.6,
+			want:   true,
 		},
 		{
 			name:   "float64 float64 float64",
