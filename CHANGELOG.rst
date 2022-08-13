@@ -4,8 +4,13 @@ CHANGELOG
 UNRELEASED
 ----------
 
+
+1.1.1 (2022-08-13)
+------------------
+
 * 🐛 fix(slices-mean_by): MeanBy output expectation updated
 * 🐛 fix: bug fix on Mean and MaxBy and some changes on Intersection functions happened
+
 1.1.0 (2022-08-13)
 ------------------
 

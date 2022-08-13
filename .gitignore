@@ -9,7 +9,6 @@ main_repo
 # go
 
 vendor
-go.sum
 main.go
 
 # node

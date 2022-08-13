@@ -1,4 +1,4 @@
-package maths
+package numbers
 
 import (
 	"reflect"
@@ -9,7 +9,7 @@ import (
 // Check if number is lower than 'upper' and greater than 'lower'.
 //
 // Complexity: O(1)
-func InRange(number, lower, upper interface{}) interface{} {
+func InRange(number, lower, upper interface{}) bool {
 	if !internal.IsNumber(number) {
 		panic("'number' is not a number")
 	}
