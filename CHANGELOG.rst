@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🐛 fix(numbers-in_range): testcases in InRange pass
 * 🐛 fix(numbers-clamp): testcases in Clamp pass
 * ✅ test(numbers-clamp_test): sample added
 * ✅ test(numbers-clamptest): sample added

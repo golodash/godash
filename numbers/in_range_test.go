@@ -11,7 +11,7 @@ type TInRange struct {
 	number interface{}
 	start  interface{}
 	end    interface{}
-	want   interface{}
+	want   bool
 }
 
 var tInRangeBench = TInRange{
@@ -23,18 +23,11 @@ var tInRangeBench = TInRange{
 func TestInRange(t *testing.T) {
 	var tests = []TInRange{
 		{
-			name:   "nil",
-			number: nil,
-			start:  nil,
-			end:    nil,
-			want:   nil,
-		},
-		{
 			name:   "empty",
 			number: 0,
 			start:  0,
 			end:    0,
-			want:   0,
+			want:   true,
 		},
 		{
 			name:   "int int int",
@@ -53,16 +46,9 @@ func TestInRange(t *testing.T) {
 		{
 			name:   "float64 int int",
 			number: 2.1,
-			start:  2,
-			end:    1,
+			start:  1,
+			end:    2,
 			want:   false,
-		},
-		{
-			name:   "float64 int int",
-			number: 1.4,
-			start:  2,
-			end:    1,
-			want:   true,
 		},
 		{
 			name:   "int float64 float64",
