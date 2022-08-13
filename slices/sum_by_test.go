@@ -65,12 +65,12 @@ func TestSumBy(t *testing.T) {
 		{
 			name: "just one item",
 			arr:  []int{0},
-			want: 0,
+			want: 0.0,
 		},
 		{
 			name: "normal",
 			arr:  []uint{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			want: uint(10),
+			want: 10.0,
 		},
 		{
 			name: "wrong data incompatible data types",

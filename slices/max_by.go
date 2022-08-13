@@ -32,7 +32,7 @@ func MaxBy(slice interface{}, function func(interface{}) interface{}) interface{
 	}
 
 	biggest := reflect.ValueOf(function(sliceValue.Index(0).Interface())).Interface()
-	chosenElement := reflect.Zero(sliceValue.Type())
+	chosenElement := sliceValue.Index(0)
 	for i := 0; i < sliceValue.Len(); i++ {
 		element := sliceValue.Index(i)
 		compareValue := reflect.ValueOf(function(element.Interface())).Interface()

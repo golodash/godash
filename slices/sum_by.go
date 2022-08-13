@@ -21,33 +21,24 @@ import (
 //	}
 //
 // Complexity: O(n)
-func SumBy(slice interface{}, function func(interface{}) interface{}) interface{} {
+func SumBy(slice interface{}, function func(interface{}) interface{}) float64 {
 	if !internal.SliceCheck(slice) {
 		panic("'slice' is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)
-	sliceElementType := sliceValue.Type().Elem()
-
-	if sliceElementType.Kind() == reflect.Interface {
-		sliceElementType = reflect.TypeOf(1.0)
-	}
 
 	if sliceValue.Len() == 0 {
-		return reflect.Zero(sliceElementType).Interface()
+		return 0.0
 	}
 
 	floatType := reflect.TypeOf(1.0)
-	sum := reflect.Zero(floatType)
+	sum := 0.0
 	for i := 0; i < sliceValue.Len(); i++ {
-		element := reflect.ValueOf(function(sliceValue.Index(i).Interface()))
+		element := reflect.ValueOf(function(sliceValue.Index(i).Interface())).Convert(floatType).Float()
 
-		if internal.CanFloat(element.Interface()) {
-			sum = reflect.ValueOf(sum.Float() + element.Float())
-		} else {
-			sum = reflect.ValueOf(sum.Float() + element.Convert(floatType).Float())
-		}
+		sum = sum + element
 	}
 
-	return sum.Convert(sliceElementType).Interface()
+	return sum
 }
