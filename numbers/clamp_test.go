@@ -58,6 +58,13 @@ func TestClamp(t *testing.T) {
 			want:   2,
 		},
 		{
+			name:   "float64 int int",
+			number: 1.4,
+			lower:  1,
+			upper:  2,
+			want:   1.4,
+		},
+		{
 			name:   "int float64 float64",
 			number: 2,
 			lower:  1.2,
