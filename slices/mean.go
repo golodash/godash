@@ -9,20 +9,15 @@ import (
 // Computes the mean of the values in slice.
 //
 // Complexity: O(n)
-func Mean(slice interface{}) interface{} {
+func Mean(slice interface{}) float64 {
 	if !internal.SliceCheck(slice) {
 		panic("'slice' is not slice type")
 	}
 
 	sliceValue := reflect.ValueOf(slice)
-	sliceElementType := sliceValue.Type().Elem()
-
-	if sliceElementType.Kind() == reflect.Interface {
-		sliceElementType = reflect.TypeOf(1.0)
-	}
 
 	if sliceValue.Len() == 0 {
-		return reflect.Zero(sliceElementType).Interface()
+		return 0
 	}
 
 	floatType := reflect.TypeOf(1.0)
@@ -37,9 +32,6 @@ func Mean(slice interface{}) interface{} {
 	}
 
 	average := sum.Float() / float64(sliceValue.Len())
-	if average != float64(int(average)) && (sliceElementType.Kind() != reflect.Float32 || sliceElementType.Kind() != reflect.Float64) {
-		return average
-	}
 
-	return reflect.ValueOf(average).Convert(sliceElementType).Interface()
+	return average
 }

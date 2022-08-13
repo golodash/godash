@@ -27,7 +27,7 @@ func Intersection(slices interface{}) interface{} {
 	length := 0
 	for i := 0; i < sliceValue.Len(); i++ {
 		subSlice := reflect.ValueOf(sliceValue.Index(i).Interface())
-		if !internal.SliceCheck(subSlice) {
+		if !internal.SliceCheck(subSlice.Interface()) {
 			continue
 		}
 

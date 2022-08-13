@@ -31,13 +31,16 @@ func MaxBy(slice interface{}, function func(interface{}) interface{}) interface{
 		return nil
 	}
 
-	biggest := reflect.ValueOf(function(sliceValue.Index(0).Interface()))
+	biggest := reflect.ValueOf(function(sliceValue.Index(0).Interface())).Interface()
+	chosenElement := reflect.Zero(sliceValue.Type())
 	for i := 0; i < sliceValue.Len(); i++ {
-		element := reflect.ValueOf(function(sliceValue.Index(i).Interface()))
-		if res := internal.CompareNumbers(element.Interface(), biggest.Interface()); res == internal.Higher {
-			biggest = element
+		element := sliceValue.Index(i)
+		compareValue := reflect.ValueOf(function(element.Interface())).Interface()
+		if res := internal.CompareNumbers(compareValue, biggest); res == internal.Higher {
+			biggest = compareValue
+			chosenElement = element
 		}
 	}
 
-	return biggest.Interface()
+	return chosenElement.Interface()
 }

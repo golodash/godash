@@ -61,12 +61,12 @@ func TestMean(t *testing.T) {
 		{
 			name: "just one item",
 			arr:  []int{0},
-			want: 0,
+			want: 0.0,
 		},
 		{
 			name: "normal",
 			arr:  []uint{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			want: uint(1),
+			want: 1.0,
 		},
 		{
 			name: "float",
