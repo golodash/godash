@@ -20,25 +20,21 @@ func Clamp(number, lower, upper interface{}) interface{} {
 		panic("'upper' is not a number")
 	}
 
-	numberValue := reflect.ValueOf(number).Convert(reflect.TypeOf(1.0)).Float()
-	lowerValue := reflect.ValueOf(lower).Convert(reflect.TypeOf(1.0)).Float()
-	upperValue := reflect.ValueOf(upper).Convert(reflect.TypeOf(1.0)).Float()
+	numberFloat := reflect.ValueOf(number).Convert(reflect.TypeOf(1.0)).Float()
+	lowerFloat := reflect.ValueOf(lower).Convert(reflect.TypeOf(1.0)).Float()
+	upperFloat := reflect.ValueOf(upper).Convert(reflect.TypeOf(1.0)).Float()
 
-	if lowerValue <= upperValue {
-		if numberValue <= lowerValue {
-			return lowerValue
-		} else if numberValue >= upperValue {
-			return upperValue
-		} else {
-			return numberValue
-		}
+	if lowerFloat > upperFloat {
+		panic("'upper' has to be higher or equal higher than 'lower'")
+	}
+
+	outputType := internal.GetOutputNumberType(reflect.Zero(internal.GetOutputNumberType(number, lower)).Interface(), upper)
+
+	if numberFloat <= lowerFloat {
+		return reflect.ValueOf(lowerFloat).Convert(outputType).Interface()
+	} else if numberFloat >= upperFloat {
+		return reflect.ValueOf(upperFloat).Convert(outputType).Interface()
 	} else {
-		if numberValue <= upperValue {
-			return upperValue
-		} else if numberValue >= lowerValue {
-			return lowerValue
-		} else {
-			return numberValue
-		}
+		return reflect.ValueOf(numberFloat).Convert(outputType).Interface()
 	}
 }

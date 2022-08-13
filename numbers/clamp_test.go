@@ -23,13 +23,6 @@ var tClampBench = TClamp{
 func TestClamp(t *testing.T) {
 	var tests = []TClamp{
 		{
-			name:   "nil",
-			number: nil,
-			lower:  nil,
-			upper:  nil,
-			want:   nil,
-		},
-		{
 			name:   "empty",
 			number: 0,
 			lower:  0,
@@ -37,25 +30,25 @@ func TestClamp(t *testing.T) {
 			want:   0,
 		},
 		{
-			name:   "int int int",
+			name:   "int int int negative",
 			number: -7,
 			lower:  -5,
 			upper:  -2,
 			want:   -5,
 		},
 		{
-			name:   "int int int",
-			number: -3,
-			lower:  -5,
-			upper:  -2,
-			want:   -3,
+			name:   "int int int positive",
+			number: 3,
+			lower:  2,
+			upper:  5,
+			want:   3,
 		},
 		{
 			name:   "float64 int int",
 			number: 2.1,
 			lower:  1,
 			upper:  2,
-			want:   2,
+			want:   2.0,
 		},
 		{
 			name:   "float64 int int",
@@ -69,7 +62,7 @@ func TestClamp(t *testing.T) {
 			number: 2,
 			lower:  1.2,
 			upper:  2.5,
-			want:   2,
+			want:   2.0,
 		},
 		{
 			name:   "int float64 float64",
