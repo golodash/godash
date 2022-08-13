@@ -15,9 +15,14 @@ Simply write:
 go get github.com/golodash/godash
 ```
 
+Note: version 1.X.X is compatible with go version 1.17 and higher.
+
 ## Progress
 
-- [X] Currently added 55 functions in `slices` package.
+- [X] `slices` package with different functions added.
+- [X] `maths` package with different functions added.
+- [X] `strings` package with different functions added.
+- [X] `numbers` package with different functions added.
 - [X] Added different test cases and benchmarks for every function. (not for alias functions)
 - [X] Library added to pkg.go.dev.
 

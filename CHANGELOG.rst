@@ -4,99 +4,49 @@ CHANGELOG
 UNRELEASED
 ----------
 
-* 🐛 fix(numbers-random): testcases in Random pass
-* 🐛 fix(numbers-in_range): testcases in InRange pass
-* 🐛 fix(numbers-clamp): testcases in Clamp pass
-* ✅ test(numbers-clamp_test): sample added
-* ✅ test(numbers-clamptest): sample added
-* ✅ test(nubers-inrangetest): sample added
-* ✅ test(numbers-inrangetest): sample added
-* ✅ test(numbers-inrangetest): test added
-* ✅ test(numbers-clamptest): test added
-* 🎉 feat(numbers-random): function added
-* 🎉 feat(numbers-clamp): function added
-* 🐛 fix(numbers-inrange): correct name
-* 🎉 feat(number-inrange): InRange function added
-* 🐛 fix(maths): output of Pow in some scenarious updated and testcases updated
-* 🐛 fix(maths): math package name updated to maths
-* ✅ test(strings-pad_test): Pad testcases and benchmarks added
+1.1.0 (2022-08-13)
+------------------
+
 * 🎉 feat(strings-pad): Pad function added
-* ✅ test(strings-pad_end_test): PadEnd testcases and benchmarks added
+* ✅ test(slices): all test cases and benchmarks added for numbers, strings and maths packages
 * 🎉 feat(strings-pad_end): PadEnd function added
-* ✅ test(strings-pad_start_test): a new test case added for PadStart function
-* ✅ test(strings-pad_start_test): PadStart testcases and benchmarks added
 * 🎉 feat(strings-pad_start): PadStart function added
-* ✅ test(strings-truncate_test): Truncate testcases and benchamrks added
 * 🎉 feat(strings-truncate): Truncate function added
-* 🐛 fix(internal-utilities): isCustomSeparator function added to internal package
-* ✅ test(strings-words_test): Words testcases and benchmarks added
 * 🎉 feat(strings-words): Words function added
-* ✅ test(strings-upper_first_test): UpperFirst testcases and benchmarks added
 * 🎉 feat(strings-upper_first): UpperFirst function added
-* ✅ test(strings-lower_first_test): LowerFirst testcases and benchmarks added
 * 🎉 feat(strings-lower_first): LowerFirst function added
-* ✅ test(strings-start_case_test): StartCase testcases and benchmarks added
 * 🎉 feat(strings-start_case): StartCase function added
 * 🚀 perf(strings-repeat): Repeat function optimization happened
 * 🚀 perf(strings-lower_case): removed an extra function from code execution
-* ✅ test(strings-lower_case_test): LowerCase testcases and benchmarks added
 * 🎉 feat(strings-lower_case): LowerCase function added
-* ✅ test(strings-repeat): Repeat testcases and benchmarks addeed
 * 🎉 feat(strings-repeat): Repeat function added
-* ✅ test(strings-starts_with): StartsWith testcases and benchmarks added
 * 🎉 feat(strings-starts_with): StartsWith function added
-* ✅ test(strings-ends_with): added a new testcase to EndsWith function
-* ✅ test(strings-ends_with): EndsWith testcases and benchmarks added
 * 🎉 feat(strings-ends_with): EndsWith function added
-* ✅ test(strings-pascal_case_test): PascalCase testcases and benchmarks added
 * 🎉 feat(strings-pascal_case): PascalCase function added
-* ✅ test(strings-camel_case_test): CamelCase testcases and benchmarks added
 * 🎉 feat(strings-camel_case): CamelCase function added
 * 🎉 feat(strings-utils): internalCamelCase function added for camel and pascal casing solution
 * 🎉 feat(strings-utils): updating ScreamingDelimited to CustomDelimitedCase
-* ✅ test(strings-kebab_case_test): KebabCase testcases and benchmarks added
 * 🎉 feat(strings-kebab_case): KebabCase function added
-* ✅ test(strings-snake_case_test): SnakeCase testcases and banchmarks added
 * 🎉 feat(strings-snake_case): SnakeCase function added
 * 🎉 feat(strings-utils): a general solution function called ToScreamingDelimited added to solve out case changing subject
-* ✅ test(slices-sum_by_test): SumBy testcases and benchmarks added
 * 🎉 feat(slices-sum_by): SumBy function added
-* ✅ test(slices-sum_test): Sum testcases and benchmarks added
 * 🎉 feat(slices-sum): Sum function added
-* 🐛 fix(slices-mean): Mean and MeanBy functions fixed
-* ✅ test(slices-mean_by_test): MeanBy testcases and benchmarks added
 * 🎉 feat(slices-mean_by): MeanBy function added
-* ✅ test(slices-mean): Mean usescases and benchmarks added
 * 🎉 feat(slices-mean): Mean function added
-* 🐛 fix: uint types didn't get checked before but now they do get checked
 * 🎉 feat(internal): CanUint function added
-* ✅ test(maths-multiply): Multiply testcases and benchmarks added
 * 🎉 feat(maths-multiply): Multiply function added
-* ✅ test(maths-round): Round testcases and benchmarks added
 * 🎉 feat(maths-round): Round function added
-* ✅ test(maths): added two test cases for Floor and Ceil functions
-* 🐛 fix(maths-power): fixed returning float if output was float
-* ✅ test(maths-subtract): subtract testcases and benchmarks added
 * 🎉 feat(maths-subtract): subtract function added
-* ✅ test(slices-min_by): MinBy testcases and benchmarks added
 * 🎉 feat(slices-min_by): MinBy function added
-* ✅ test(slices-min): Min testcases and benchmarks added
 * 🎉 feat(slices-min): Min function added
-* ✅ test(slices-max_by): MaxBy testcases and benchmarks added
 * 🎉 feat(slices-max_by): MaxBy function added
-* ✅ test(slices-max): Max testcases and benchmarks added
 * 🎉 feat(slices-max): Max function added
 * 🎉 feat(internal): added CompareNumbers and GetNumberTypeRank and GetOutputNumberType functions
-* ✅ test(maths-floor): Floor benchmarks and test cases added
 * 🎉 feat(maths-floor): Floor function added
-* ✅ test(math-divide): divide testcases and benchmarks added
 * 🎉 feat(math-divide): divide function added
-* ✅ test(math-add): Add testcases and benchmarks added
 * 🎉 feat(math-add): Add function added
-* 🐛 fix(math): CanInt and CanFloat added to internal package to fix go 1.17 not having those functions inside reflect package
-* ✅ test(math-ceil): ceil testcases and benchmarks added
+* 🎉 feat(internal): CanInt and CanFloat added to internal package to fix go 1.17 not having those functions inside reflect package
 * 🎉 feat(math-ceil): ceil function added
-* ✅ test(math-power): power testcases and benchmarks added
 * 🎉 feat(math-power): power function added
 
 1.0.1 (2022-07-19)
