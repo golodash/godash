@@ -8,7 +8,7 @@ import (
 
 var wordsSeparators = []rune{',', '.', '/', '\\', '\'', '"', ':', ';', ']', '[', '=', '+', '-', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '~', '`', '|', '?', ' ', '\t', '\n', '_', '<', '>', '}', '{'}
 
-// Splits string into an array of its words.
+// Splits string into a slice of its words.
 //
 // Complexity: O(n)
 func Words(input string) []string {
