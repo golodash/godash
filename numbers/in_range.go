@@ -25,7 +25,7 @@ func InRange(number, lower, upper interface{}) interface{} {
 	upperFloat := reflect.ValueOf(upper).Convert(reflect.TypeOf(1.0)).Float()
 
 	if lowerFloat > upperFloat {
-		panic("'upper' has to be higher or equal higher than 'lower'")
+		panic("'upper' has to be higher or equal to 'lower'")
 	}
 
 	if numberFloat >= lowerFloat && numberFloat <= upperFloat {

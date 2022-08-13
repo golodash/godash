@@ -25,7 +25,7 @@ func Clamp(number, lower, upper interface{}) interface{} {
 	upperFloat := reflect.ValueOf(upper).Convert(reflect.TypeOf(1.0)).Float()
 
 	if lowerFloat > upperFloat {
-		panic("'upper' has to be higher or equal higher than 'lower'")
+		panic("'upper' has to be higher or equal to 'lower'")
 	}
 
 	outputType := internal.GetOutputNumberType(reflect.Zero(internal.GetOutputNumberType(number, lower)).Interface(), upper)
