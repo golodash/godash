@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(numbers-clamp_test): sample added
 * ✅ test(numbers-clamptest): sample added
 * ✅ test(nubers-inrangetest): sample added
 * ✅ test(numbers-inrangetest): sample added

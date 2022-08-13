@@ -85,6 +85,13 @@ func TestClamp(t *testing.T) {
 			upper:  1.3,
 			want:   1.1,
 		},
+		{
+			name:   "float64 float64 float64",
+			number: 1.2,
+			lower:  1.1,
+			upper:  1.3,
+			want:   1.2,
+		},
 	}
 
 	for _, subject := range tests {
