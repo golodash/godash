@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(generals-same): Same test cases and benchmarks added
 * 🎉 feat(generals-same): Same function added
 
 1.1.1 (2022-08-13)
