@@ -3,6 +3,7 @@ package slices
 import (
 	"reflect"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -17,7 +18,7 @@ func FindIndex(slice, value interface{}) int {
 
 	sliceValue := reflect.ValueOf(slice)
 	for i := 0; i < sliceValue.Len(); i++ {
-		if internal.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value) {
+		if generals.Same(reflect.ValueOf(sliceValue.Index(i).Interface()).Interface(), value) {
 			return i
 		}
 	}

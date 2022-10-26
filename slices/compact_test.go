@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -103,7 +104,7 @@ func TestCompact(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := Compact(subject.arr, subject.except)
 
-			if !internal.Same(got, subject.want) {
+			if !generals.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/golodash/godash/internal"
+	"github.com/golodash/godash/generals"
 )
 
 type TPullAt struct {
@@ -104,12 +104,12 @@ func TestPullAt(t *testing.T) {
 			}(t, subject.wantSlice, subject.wantRems)
 			gotSlice, gotRems := PullAt(subject.arr, subject.rems)
 
-			if !internal.Same(gotSlice, subject.wantSlice) {
+			if !generals.Same(gotSlice, subject.wantSlice) {
 				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems)
 				return
 			}
 
-			if !internal.Same(gotRems, subject.wantRems) {
+			if !generals.Same(gotRems, subject.wantRems) {
 				t.Errorf("gotSlice = %v, gotRem = %v, wantSlice = %v, wantRems = %v", gotSlice, gotRems, subject.wantSlice, subject.wantRems)
 				return
 			}

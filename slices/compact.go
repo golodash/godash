@@ -3,6 +3,7 @@ package slices
 import (
 	"reflect"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -44,7 +45,7 @@ func Compact(slice, excepts interface{}) interface{} {
 	j := 0
 	for i := 0; i < length; i++ {
 		for k := 0; k < len(falsey); k++ {
-			if internal.Same(sliceValue.Index(i).Interface(), falsey[k]) {
+			if generals.Same(sliceValue.Index(i).Interface(), falsey[k]) {
 				if i == j {
 					j = i + 1
 					continue

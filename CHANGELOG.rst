@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(generals-same): Same function added
 
 1.1.1 (2022-08-13)
 ------------------

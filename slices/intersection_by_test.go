@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -38,7 +39,7 @@ var tIntersectionByBenchs = []TIntersectionBy{
 }
 
 func sameIntersectionByTest(value1, value2 interface{}) bool {
-	ok := internal.Same(value1, value2)
+	ok := generals.Same(value1, value2)
 	return ok
 }
 
@@ -90,7 +91,7 @@ func TestIntersectionBy(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := IntersectionBy(subject.arr, sameIntersectionByTest)
 
-			if !internal.Same(got, subject.want) {
+			if !generals.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

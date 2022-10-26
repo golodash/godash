@@ -3,6 +3,7 @@ package maths
 import (
 	"testing"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -69,7 +70,7 @@ func TestSubtract(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := Subtract(subject.number1, subject.number2)
 
-			if !internal.Same(got, subject.want) {
+			if !generals.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

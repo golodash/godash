@@ -3,6 +3,7 @@ package slices
 import (
 	"reflect"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -53,7 +54,7 @@ func indexOf(slice, value interface{}, from int, ltr bool) int {
 	}
 
 	for i := from; compare(i, until); i += count {
-		if !internal.Same(sliceValue.Index(i).Interface(), value) {
+		if !generals.Same(sliceValue.Index(i).Interface(), value) {
 			continue
 		} else {
 			return i

@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -109,7 +110,7 @@ func TestPad(t *testing.T) {
 			defer internal.DeferTestCases(t, sample.expected)
 			got := Pad(sample.input, sample.length, sample.pattern)
 
-			if !internal.Same(got, sample.expected) {
+			if !generals.Same(got, sample.expected) {
 				t.Errorf("got = %v, wanted = %v", got, sample.expected)
 				return
 			}

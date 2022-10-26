@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -95,7 +96,7 @@ func TestSortedLastIndexBy(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.want)
 			got := SortedLastIndexBy(subject.arr, subject.value, compareSortedLastIndexByTest)
 
-			if !internal.Same(got, subject.want) {
+			if !generals.Same(got, subject.want) {
 				t.Errorf("got = %v, wanted = %v", got, subject.want)
 				return
 			}

@@ -3,6 +3,7 @@ package slices
 import (
 	"reflect"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -27,7 +28,7 @@ func Pull(slice, values interface{}) interface{} {
 	for i := 0; i < sliceValue.Len(); i++ {
 		add := true
 		for j := 0; j < valuesValue.Len(); j++ {
-			if internal.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()) {
+			if generals.Same(sliceValue.Index(i).Interface(), valuesValue.Index(j).Interface()) {
 				add = false
 				break
 			}

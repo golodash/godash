@@ -3,6 +3,7 @@ package slices
 import (
 	"reflect"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -30,7 +31,7 @@ func Difference(slice, notIncluded interface{}) interface{} {
 		}
 	firstLoop:
 		for j := 0; j < notInValue.Len(); j++ {
-			if internal.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface()) {
+			if generals.Same(sliceValue.Index(i).Interface(), notInValue.Index(j).Interface()) {
 				sliceValue = reflect.AppendSlice(sliceValue.Slice(0, i), sliceValue.Slice(i+1, sliceValue.Len()))
 				i++
 				break firstLoop

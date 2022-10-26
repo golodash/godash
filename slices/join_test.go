@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/golodash/godash/generals"
 	"github.com/golodash/godash/internal"
 )
 
@@ -80,7 +81,7 @@ func TestJoin(t *testing.T) {
 			defer internal.DeferTestCases(t, subject.expected)
 			got := Join(subject.arg1, subject.arg2)
 
-			if !internal.Same(got, subject.expected) {
+			if !generals.Same(got, subject.expected) {
 				t.Errorf("got = %v, wanted = %v", got, subject.expected)
 				return
 			}
