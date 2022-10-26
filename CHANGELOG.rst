@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(generals-duplicate): Duplicate test cases and benchmarks added
 * 🎉 feat(generals-duplicate): Duplicate function added
 * ✅ test(generals-same): Same test cases and benchmarks added
 * 🎉 feat(generals-same): Same function added
