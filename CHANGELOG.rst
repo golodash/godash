@@ -4,9 +4,11 @@ CHANGELOG
 UNRELEASED
 ----------
 
-* ✅ test(generals-duplicate): Duplicate test cases and benchmarks added
+
+1.2 (2022-10-26)
+------------------
+
 * 🎉 feat(generals-duplicate): Duplicate function added
-* ✅ test(generals-same): Same test cases and benchmarks added
 * 🎉 feat(generals-same): Same function added
 
 1.1.1 (2022-08-13)
