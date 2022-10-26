@@ -98,10 +98,16 @@ func TestSame(t *testing.T) {
 			want:   true,
 		},
 		{
-			name:   "value1ay slice",
+			name:   "array slice",
 			value1: [3]int{1, 2, 3},
 			value2: []int{1, 2, 3},
 			want:   false,
+		},
+		{
+			name:   "array array",
+			value1: [3]int{1, 2, 3},
+			value2: [3]int{1, 2, 3},
+			want:   true,
 		},
 		{
 			name:   "slice slice",
