@@ -7,6 +7,14 @@ import (
 	"github.com/jinzhu/copier"
 )
 
+// Takes almost any variable as input and returns a duplicate of the same
+// passed variable in return.
+//
+// Worst-Case Complexity: O(n)
+//
+// Best-Case Complexity: O(1)
+//
+// n = length of `input`
 func Duplicate(input interface{}) interface{} {
 	inputType := reflect.TypeOf(input)
 	inputValue := reflect.ValueOf(input)

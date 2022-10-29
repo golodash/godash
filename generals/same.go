@@ -2,7 +2,8 @@ package generals
 
 import "reflect"
 
-// Determines if passed variables are exactly the same.
+// Determines if passed variables are exactly the same in terms of
+// values and their types.
 //
 // Worst-Case Complexity: O(n)
 //
