@@ -4,7 +4,8 @@ CHANGELOG
 UNRELEASED
 ----------
 
-* 🎉 feat(functions): wrap_func added
+* ✅ test(functions): WrapFunc test cases and benchmarks added
+* 🎉 feat(functions): WrapFunc added
 
 1.2.0 (2022-10-26)
 ------------------
