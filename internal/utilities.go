@@ -228,3 +228,7 @@ func CustomIsSeparator(letter rune, separators []rune) bool {
 func IsPrimitive(kind reflect.Kind) bool {
 	return IsNumberType(kind) || kind == reflect.String || kind == reflect.Bool
 }
+
+func IsFunc(function interface{}) bool {
+	return reflect.ValueOf(function).IsValid() && reflect.TypeOf(function).Kind() == reflect.Func
+}

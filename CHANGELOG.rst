@@ -4,8 +4,9 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(functions): wrap_func added
 
-1.2 (2022-10-26)
+1.2.0 (2022-10-26)
 ------------------
 
 * 🎉 feat(generals-duplicate): Duplicate function added
