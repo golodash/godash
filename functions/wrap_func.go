@@ -6,6 +6,11 @@ import (
 	"github.com/golodash/godash/internal"
 )
 
+// Returns a function that invokes `function`, with passed `inputs` arguments.
+//
+// Complexity: O(n)
+//
+// n = length of `inputs`
 func WrapFunc(function interface{}, inputs ...interface{}) func() []interface{} {
 	if ok := internal.IsFunc(function); !ok {
 		panic("`function` input is not a function")
