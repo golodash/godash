@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* ✅ test(functions): test cases and benchmarks for Once added
 * 🎉 feat(functions): Once function added
 * ✅ test(functions): test cases and benchmarks for run_after added
 * 🎉 feat(functions): run_after added
