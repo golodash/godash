@@ -4,6 +4,7 @@ CHANGELOG
 UNRELEASED
 ----------
 
+* 🎉 feat(functions): run_after added
 * ✅ test(functions): WrapFunc test cases and benchmarks added
 * 🎉 feat(functions): WrapFunc added
 
