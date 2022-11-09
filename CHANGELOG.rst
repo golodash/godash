@@ -4,18 +4,20 @@ CHANGELOG
 UNRELEASED
 ----------
 
-* ✅ test(functions): test cases and benchmarks for Once added
+
+1.3.0 (2022-11-09)
+------------------
+
+* ✅ test(functions): test cases and benchmarks for all of them added
 * 🎉 feat(functions): Once function added
-* ✅ test(functions): test cases and benchmarks for run_after added
 * 🎉 feat(functions): run_after added
-* ✅ test(functions): WrapFunc test cases and benchmarks added
 * 🎉 feat(functions): WrapFunc added
 
 1.2.0 (2022-10-26)
 ------------------
 
-* 🎉 feat(generals-duplicate): Duplicate function added
-* 🎉 feat(generals-same): Same function added
+* 🎉 feat(generals): Duplicate function added
+* 🎉 feat(generals): Same function added
 
 1.1.1 (2022-08-13)
 ------------------

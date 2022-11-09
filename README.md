@@ -19,6 +19,7 @@ Note: version 1.X.X is compatible with go version 1.17 and higher.
 
 ## Progress
 
+- [X] `functions` package with different functions added.
 - [X] `generals` package with different functions added.
 - [X] `maths` package with different functions added.
 - [X] `numbers` package with different functions added.
