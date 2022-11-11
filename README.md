@@ -4,9 +4,10 @@
 <img src="images/golang.png"></img>
 </p>
 
-Godash is inspired by [lodash](https://github.com/lodash/lodash) nodejs utility library delivering modularity.
+Godash is inspired by utility library [lodash](https://github.com/lodash/lodash).
 
-Basically we are going to use their documentation and recreate what they did in nodejs, inside golang and of course if anyone wants to add more tools than lodash documentation, please feel free to create an issue, fork and contribute.
+This library has many functions which make your life easier as a developer and
+solved different usual problems that every programmers face with them in their journey.
 
 ## How to install
 
@@ -17,19 +18,6 @@ go get github.com/golodash/godash
 
 Note: version 1.X.X is compatible with go version 1.17 and higher.
 
-## Progress
-
-- [X] `functions` package with different functions added.
-- [X] `generals` package with different functions added.
-- [X] `maths` package with different functions added.
-- [X] `numbers` package with different functions added.
-- [X] `slices` package with different functions added.
-- [X] `strings` package with different functions added.
-- [X] Added different test cases and benchmarks for every function. (not for alias functions)
-- [X] Library added to pkg.go.dev.
-
 ## Documentation
 
 Whole documentation can be accessed in [godash.maktoobgar.ir](https://godash.maktoobgar.ir) web address.
-
-**Note**: If documentation is not ready for your desired function, use function's documentation which is a comment on top of the function until all documents get ready.
